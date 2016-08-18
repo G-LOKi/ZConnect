@@ -14,7 +14,7 @@ public class logIn extends AppCompatActivity {
 
     private void TestUpload(){
         int i =1+2;
+        int me= i + 2;
 
     }
 }
-
