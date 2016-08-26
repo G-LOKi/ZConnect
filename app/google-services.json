@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "112592057338",
+    "firebase_url": "https://zconnect-9182a.firebaseio.com",
+    "project_id": "zconnect-9182a",
+    "storage_bucket": "zconnect-9182a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112592057338:android:31bf526774cd5d7c",
+        "android_client_info": {
+          "package_name": "com.zconnect.login.zconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "112592057338-1k0jgnj9jd2cm0bllmcemjtjocjae3ou.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zconnect.login.zconnect",
+            "certificate_hash": "9BD8FD8347CD2021778BE4A046F7683A1BBE9781"
+          }
+        },
+        {
+          "client_id": "112592057338-vf3g87snpaace3a6ahicqmtk8etv5rso.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN4D_YoowJIcdtX-2tCuCoOEOTId_e-Xs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "112592057338-vf3g87snpaace3a6ahicqmtk8etv5rso.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
