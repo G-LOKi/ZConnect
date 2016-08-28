@@ -26,7 +26,9 @@ public class logo extends AppCompatActivity {
         new Timer().schedule(new TimerTask(){
             public void run() {
                 startActivity(new Intent(logo.this, logIn.class));
+                finish();
             }
         }, 2000);
+
     }
 }
