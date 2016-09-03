@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile files('libs/zbar.jar')
     compile 'com.android.support:appcompat-v7:24.2.0'
@@ -29,10 +29,7 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:9.4.0'
     compile 'com.google.android.gms:play-services-auth:9.4.0'
     compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.android.support:design:24.2.0'
 }
-
-
-
-
 
 apply plugin: 'com.google.gms.google-services'

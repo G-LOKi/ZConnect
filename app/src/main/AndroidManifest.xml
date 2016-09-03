@@ -29,7 +29,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QRcode"></activity>
+        <activity android:name=".comunitylist">
+
+            <intent-filter>
+                <action android:name="com.zconnect.login.zconnect.comunitylist" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".QRcode">
+            <intent-filter>
+                <action android:name="com.zconnect.login.zconnect.QRcode" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>

@@ -24,7 +24,7 @@ public class CamEvent implements Camera.PreviewCallback {
     }
 
     @Override
-    public void onPreviewframe(byte[] data, Camera camera)  {
+    public void onPreviewFrame(byte[] data, Camera camera)  {
 
         Camera.Parameters camPara= camera.getParameters();
         Camera.Size size = camPara.getPreviewSize();
@@ -49,4 +49,5 @@ public class CamEvent implements Camera.PreviewCallback {
             camera.stopPreview();
         }
     }
+
 }
