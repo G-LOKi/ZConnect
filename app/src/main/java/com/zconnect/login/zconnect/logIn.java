@@ -27,6 +27,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class logIn extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
@@ -44,30 +51,12 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private ProgressDialog mProgressDialog;
-
-
-
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-
-
-        //Open New Activity
-//    public void onClickListener()
-//    {
-//        open_new = (Button)findViewById(R.id.opennew);
-//        open_new.setOnClickListener(){
-//        View.OnClickListener onClickListener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(com.zconnect.login.zconnect.infotool);
-//                startActivity(intent);
-//            }
-//        };
-//    };
-//    }
 
         // Views
         mStatusTextView = (TextView) findViewById(R.id.status);
@@ -100,6 +89,7 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
 
         //initialising mAuth
         mAuth = FirebaseAuth.getInstance();
+
         // Start auth_State_Listener
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -118,6 +108,9 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         };
 
     }
+
+
+
 
 
     @Override
@@ -160,29 +153,69 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         showProgressDialog();
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+        mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithCredential", task.getException());
-                            Toast.makeText(logIn.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        hideProgressDialog();
-                    }
-                });
+                // If sign in fails, display a message to the user. If sign in succeeds
+                // the auth state listener will be notified and logic to handle the
+                // signed in user can be handled in the listener.
+                if (!task.isSuccessful()) {
+                    Log.w(TAG, "signInWithCredential", task.getException());
+                    Toast.makeText(logIn.this, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    mDatabase = FirebaseDatabase.getInstance().getReference();
+
+                }
+                hideProgressDialog();
+            }
+        });
+    }
+
+    @IgnoreExtraProperties
+    public class Post {
+
+        public String uid;
+        public String author;
+        public String title;
+        public String body;
+        public int starCount = 0;
+        public Map<String, Boolean> stars = new HashMap<>();
+
+        public Post() {
+            // Default constructor required for calls to DataSnapshot.getValue(Post.class)
+        }
+
+        public Post(String uid, String author, String title, String body) {
+            this.uid = uid;
+            this.author = author;
+            this.title = title;
+            this.body = body;
+        }
+
+        @Exclude
+        public Map<String, Object> toMap() {
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("uid", uid);
+            result.put("author", author);
+            result.put("title", title);
+            result.put("body", body);
+            result.put("starCount", starCount);
+            result.put("stars", stars);
+
+            return result;
+        }
+
     }
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
 
     public void signOut() {
         // Firebase sign out
@@ -192,10 +225,10 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(@NonNull Status status) {
-                        Toast.makeText(logIn.this, "Sign Out",
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(logIn.this, "Sign Out", Toast.LENGTH_LONG).show();
                     }
-                });
+                }
+        );
     }
 
     private void revokeAccess() {
@@ -209,25 +242,23 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
                     public void onResult(@NonNull Status status) {
                         updateUI(null);
                     }
-                });
+                }
+        );
     }
 
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
-//            Toast.makeText(logIn.this, "this is my Toast message!!! =)",
-//                    Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(logIn.this,comunitylist.class);
-                startActivity(intent);
+            Intent intent = new Intent(logIn.this,comunitylist.class);
+            startActivity(intent);
 
-//                mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
-//                mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-//                findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-//                findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+    //                mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
+    //                mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+    //                findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+    //                findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
 
-    }
-
-            else {
+        }
+        else {
 //                Intent intent = new Intent(logIn.this,logIn.class);
 //                startActivity(intent);
             mStatusTextView.setText(R.string.signed_out);
@@ -235,7 +266,7 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
 
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-            }
+        }
     }
 
     @Override
@@ -255,33 +286,6 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
             }
 
     }
-
-
-
-//
-//    private void handleSignInResult(GoogleSignInResult result) {
-//        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-//        if (result.isSuccess()) {
-//            // Signed in successfully, show authenticated UI.
-//            GoogleSignInAccount acct = result.getSignInAccount();
-//            mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
-//            updateUI(null);
-//            // Google Sign In was successful, authenticate with Firebase
-//            GoogleSignInAccount account = result.getSignInAccount();
-//            firebaseAuthWithGoogle(account);
-//        }
-
-//        else {
-//            // Signed out, show unauthenticated UI.
-//            updateUI(null);
-//        }
-//
-//    }
-
-
-
-
-
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -311,7 +315,6 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
-
 
 }
 
