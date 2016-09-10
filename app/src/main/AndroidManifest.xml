@@ -30,7 +30,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".comunitylist">
-
             <intent-filter>
                 <action android:name="com.zconnect.login.zconnect.comunitylist" />
 
@@ -43,7 +42,13 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Phonebook">
+            <intent-filter>
+                <action android:name="com.zconnect.login.zconnect.Phonebook" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -7,27 +7,31 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#0099cc"
+    android:background="#e465e5"
 
-    tools:context="com.zconnect.login.zconnect.logIn">
+    tools:context="com.zconnect.login.zconnect.logIn"
+    android:clickable="false"
+    android:touchscreenBlocksFocus="false">
 
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
+        android:background="@drawable/loginbutton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:layout_marginBottom="135dp"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="127dp"
         android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_alignEnd="@+id/textView"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="ZConnect"
+        style="@style/zfont"
         android:id="@+id/textView"
         android:layout_gravity="center"
         android:textIsSelectable="false"

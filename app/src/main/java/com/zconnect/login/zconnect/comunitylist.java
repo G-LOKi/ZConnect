@@ -34,6 +34,7 @@ public class comunitylist extends AppCompatActivity implements View.OnClickListe
     private com.google.android.gms.common.SignInButton signInButton;
     private Button signOutButton;
     private Button disconnectButton;
+    private Button phonebookButton;
 
     private static final String TAG = "SignOutActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -56,6 +57,8 @@ public class comunitylist extends AppCompatActivity implements View.OnClickListe
         signOutButton.setOnClickListener(this);
         disconnectButton.setOnClickListener(this);
 
+        phonebookButton = (Button)findViewById(R.id.phonebook_button);
+        phonebookButton.setOnClickListener(this);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -212,6 +215,10 @@ public class comunitylist extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.disconnect_button:
                 revokeAccess();
+                break;
+            case R.id.phonebook_button:
+                Intent intent = new Intent(comunitylist.this,Phonebook.class);
+                startActivity(intent);
                 break;
         }
 
