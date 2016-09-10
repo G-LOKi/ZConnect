@@ -59,8 +59,8 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         setContentView(R.layout.activity_log_in);
 
         // Views
-        //mStatusTextView = (TextView) findViewById(R.id.status);
-        //mDetailTextView = (TextView) findViewById(R.id.detail);
+        mStatusTextView = (TextView) findViewById(R.id.status);
+        mDetailTextView = (TextView) findViewById(R.id.detail);
 
         //Buttons
 
@@ -264,8 +264,8 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
             mStatusTextView.setText(R.string.signed_out);
             mDetailTextView.setText(null);
 
-//            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         }
     }
 
