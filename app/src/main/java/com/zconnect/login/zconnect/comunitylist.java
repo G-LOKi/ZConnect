@@ -5,9 +5,18 @@ package com.zconnect.login.zconnect;
         import android.support.annotation.NonNull;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
+        import android.util.DisplayMetrics;
         import android.util.Log;
+        import android.view.Gravity;
         import android.view.View;
+        import android.view.animation.Animation;
+        import android.view.animation.TranslateAnimation;
         import android.widget.Button;
+        import android.widget.FrameLayout;
+        import android.widget.ImageView;
+        import android.widget.LinearLayout;
+        import android.widget.ListView;
+        import android.widget.RelativeLayout;
         import android.widget.TextView;
         import android.widget.Toast;
 
@@ -33,8 +42,6 @@ public class comunitylist extends AppCompatActivity implements View.OnClickListe
     private GoogleApiClient mGoogleApiClient;
     private com.google.android.gms.common.SignInButton signInButton;
     private Button signOutButton;
-    private Button disconnectButton;
-    private Button phonebookButton;
 
     private static final String TAG = "SignOutActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -44,21 +51,90 @@ public class comunitylist extends AppCompatActivity implements View.OnClickListe
     private ProgressDialog mProgressDialog;
 
 
+/////Menu Bar
 
+    private LinearLayout slidingPanel;
+    private boolean isExpanded;
+    private DisplayMetrics metrics;
+    private ListView listView;
+    private RelativeLayout headerPanel;
+    private RelativeLayout menuPanel;
+    private int panelWidth;
+    private ImageView menuViewButton;
+
+    FrameLayout.LayoutParams menuPanelParameters;
+    FrameLayout.LayoutParams slidingPanelParameters;
+    LinearLayout.LayoutParams headerPanelParameters ;
+    LinearLayout.LayoutParams listViewParameters;
+/////MenuBar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comunitylist);
 
+        /////MenuBar
+
+        //Initialize
+        metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        panelWidth = (int) ((metrics.widthPixels)*0.33);
+
+        headerPanel = (RelativeLayout) findViewById(R.id.header);
+        headerPanelParameters = (LinearLayout.LayoutParams) headerPanel.getLayoutParams();
+        headerPanelParameters.width = metrics.widthPixels;
+        headerPanel.setLayoutParams(headerPanelParameters);
+
+        menuPanel = (RelativeLayout) findViewById(R.id.menuPanel);
+        menuPanelParameters = (FrameLayout.LayoutParams) menuPanel.getLayoutParams();
+        menuPanelParameters.gravity = Gravity.RIGHT;
+        menuPanelParameters.width = panelWidth;
+
+        menuPanel.setLayoutParams(menuPanelParameters);
+
+        slidingPanel = (LinearLayout) findViewById(R.id.slidingPanel);
+        slidingPanelParameters = (FrameLayout.LayoutParams) slidingPanel.getLayoutParams();
+        slidingPanelParameters.width = metrics.widthPixels;
+        slidingPanelParameters.gravity = Gravity.LEFT;
+        slidingPanel.setLayoutParams(slidingPanelParameters);
+
+        listView = (ListView) findViewById(R.id.list);
+        listViewParameters = (LinearLayout.LayoutParams) listView.getLayoutParams();
+        listViewParameters.width = metrics.widthPixels;
+        listView.setLayoutParams(listViewParameters);
+
+
+        //Slide the Panel
+        menuViewButton = (ImageView) findViewById(R.id.menuViewButton);
+        menuViewButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(!isExpanded){
+                    isExpanded = true;
+
+                    //Expand
+                    new ExpandAnimation(slidingPanel, panelWidth,
+                            Animation.RELATIVE_TO_PARENT, 0.0f,
+                            Animation.RELATIVE_TO_PARENT, -0.33f, 0, 0.0f, 0, 0.0f);
+                    // if you want left to right just remove ( - ) before 0.33f
+                }else{
+                    isExpanded = false;
+
+                    //Collapse
+                    new CollapseAnimation(slidingPanel,panelWidth,
+                            TranslateAnimation.RELATIVE_TO_PARENT,-0.33f,
+                            TranslateAnimation.RELATIVE_TO_PARENT, 0.0f, 0, 0.0f, 0, 0.0f);
+                    // if you want left to right just remove ( - ) before 0.33f
+
+                }
+            }
+        });
+
+
+        /////MenuBar
         //Buttons
         signOutButton = (Button) findViewById(R.id.sign_out_button);
-        disconnectButton = (Button) findViewById((R.id.disconnect_button));
         signOutButton.setOnClickListener(this);
-        disconnectButton.setOnClickListener(this);
 
-        phonebookButton = (Button)findViewById(R.id.phonebook_button);
-        phonebookButton.setOnClickListener(this);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -95,6 +171,8 @@ public class comunitylist extends AppCompatActivity implements View.OnClickListe
         };
 
     }
+
+
 
 
     @Override
@@ -215,10 +293,6 @@ public class comunitylist extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.disconnect_button:
                 revokeAccess();
-                break;
-            case R.id.phonebook_button:
-                Intent intent = new Intent(comunitylist.this,Phonebook.class);
-                startActivity(intent);
                 break;
         }
 

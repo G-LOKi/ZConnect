@@ -27,23 +27,27 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class logIn extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
     private GoogleApiClient mGoogleApiClient;
     private com.google.android.gms.common.SignInButton signInButton;
     private Button signOutButton;
-    private Button disconnectButton;
 
-    private TextView mStatusTextView;
-    private TextView mDetailTextView;
+
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -52,25 +56,20 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
 
     private ProgressDialog mProgressDialog;
     private DatabaseReference mDatabase;
+    String parent = "/ZConnect";
+    int a=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        // Views
-        mStatusTextView = (TextView) findViewById(R.id.status);
-        mDetailTextView = (TextView) findViewById(R.id.detail);
-
         //Buttons
 
         signInButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.sign_in_button);
         signOutButton = (Button) findViewById(R.id.sign_out_button);
-        disconnectButton = (Button) findViewById((R.id.disconnect_button));
         signInButton.setOnClickListener(this);
         signOutButton.setOnClickListener(this);
-        disconnectButton.setOnClickListener(this);
-
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -89,6 +88,7 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
 
         //initialising mAuth
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
 
         // Start auth_State_Listener
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -108,9 +108,6 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         };
 
     }
-
-
-
 
 
     @Override
@@ -153,35 +150,32 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         showProgressDialog();
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
-                // If sign in fails, display a message to the user. If sign in succeeds
-                // the auth state listener will be notified and logic to handle the
-                // signed in user can be handled in the listener.
-                if (!task.isSuccessful()) {
-                    Log.w(TAG, "signInWithCredential", task.getException());
-                    Toast.makeText(logIn.this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-                }else
-                {
-                    mDatabase = FirebaseDatabase.getInstance().getReference();
-
-                }
-                hideProgressDialog();
-            }
-        });
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithCredential", task.getException());
+                            Toast.makeText(logIn.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        hideProgressDialog();
+                    }
+                });
     }
+
+
 
     @IgnoreExtraProperties
     public class Post {
 
         public String uid;
-        public String author;
-        public String title;
-        public String body;
+        public String email;
         public int starCount = 0;
         public Map<String, Boolean> stars = new HashMap<>();
 
@@ -189,26 +183,37 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
             // Default constructor required for calls to DataSnapshot.getValue(Post.class)
         }
 
-        public Post(String uid, String author, String title, String body) {
+        public Post(String uid, String email) {
             this.uid = uid;
-            this.author = author;
-            this.title = title;
-            this.body = body;
-        }
+            this.email = email;
+    }
 
         @Exclude
         public Map<String, Object> toMap() {
             HashMap<String, Object> result = new HashMap<>();
             result.put("uid", uid);
-            result.put("author", author);
-            result.put("title", title);
-            result.put("body", body);
+            result.put("email", email);
             result.put("starCount", starCount);
             result.put("stars", stars);
 
             return result;
         }
 
+    }
+
+    private void writeNewPost(String userId, String email) {
+        // Create new post at /user-posts/$userid/$postid and at
+        // /posts/$postid simultaneously
+        String key = mDatabase.child("posts").push().getKey();
+        Post post = new Post(userId, email);
+        Map<String, Object> postValues = post.toMap();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+
+
+        childUpdates.put("/" + userId, postValues  );
+
+        mDatabase.updateChildren(childUpdates);
     }
 
     private void signIn() {
@@ -249,8 +254,20 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
+            checkUser();
             Intent intent = new Intent(logIn.this,comunitylist.class);
             startActivity(intent);
+
+//                DataSnapshot data
+//                System.out.println(data.getName() + ":" + data.getValue());
+//                if (data.hasChildren()) {
+//                    Iterator<DataSnapshot> it = data.getChildren().iterator();
+//                    while (it.hasNext()) {
+//                        DataSnapshot dataSnapshot = (DataSnapshot) it.next();
+//                        printData(dataSnapshot);
+//                    }
+//                }
+
 
     //                mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
     //                mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
@@ -261,13 +278,43 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         else {
 //                Intent intent = new Intent(logIn.this,logIn.class);
 //                startActivity(intent);
-            mStatusTextView.setText(R.string.signed_out);
-            mDetailTextView.setText(null);
+//            mStatusTextView.setText(R.string.signed_out);
+//            mDetailTextView.setText(null);
 
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-        }
+            }
     }
+
+    public void checkUser(){
+        final FirebaseUser user = mAuth.getCurrentUser();
+
+        final String user_id = user.getUid();
+        final String email = user.getEmail();
+
+//        DataSnapshot dataSnapshot = null;
+//        if (dataSnapshot.hasChild(user_id))
+//        {}
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChild(user_id))
+                {
+                    writeNewPost(user_id,email);
+                    Intent intent = new Intent(logIn.this,comunitylist.class);
+                    startActivity(intent);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     @Override
     public void onClick(View view) {
