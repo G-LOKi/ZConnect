@@ -26,9 +26,9 @@ public class logo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_logo);
 
-        android.support.v7.app.ActionBar AB=getSupportActionBar();
+        //android.support.v7.app.ActionBar AB=getSupportActionBar();
 
-        AB.hide();
+       // AB.hide();
 
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
