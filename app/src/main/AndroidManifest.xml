@@ -2,10 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zconnect.login.zconnect">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-
 
     <application
         android:allowBackup="true"
@@ -14,8 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
-        <!--Logo Activity in the starting-->
+        <!-- Logo Activity in the starting -->
         <activity
             android:name=".logo"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -23,29 +20,33 @@
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-
-        <!--Login Page-->
+        <!-- Login Page -->
         <activity android:name=".logIn">
             <intent-filter>
                 <action android:name="com.zconnect.login.zconnect.logIn" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-
-        <!--main home page-->
+        <!-- main home page -->
         <activity android:name=".home">
             <intent-filter>
                 <action android:name="com.zconnect.login.zconnect.comunitylist" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
+        <activity
+            android:name=".StoreRoom"
+            android:label="@string/title_activity_store_room"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".AddProduct"></activity>
     </application>
 
 </manifest>

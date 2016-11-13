@@ -17,6 +17,7 @@ package com.zconnect.login.zconnect;
         import android.widget.LinearLayout;
         import android.widget.ListView;
         import android.widget.RelativeLayout;
+        import android.widget.TextView;
         import android.widget.Toast;
 
         import com.google.android.gms.auth.api.Auth;
@@ -70,7 +71,7 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comunitylist);
+        setContentView(R.layout.activity_home);
 
         /////MenuBar
 
@@ -168,6 +169,19 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
                 updateUI(user);
             }
         };
+
+        final TextView storeroom_item_1 = (TextView) findViewById(R.id.menu_item_1);
+        storeroom_item_1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(home.this, StoreRoom.class);
+                startActivity(intent);
+                // request your webservice here. Possible use of AsyncTask and ProgressDialog
+                // show the result here - dialog or Toast
+            }
+
+        });
 
     }
 
@@ -349,6 +363,7 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
+
 
 
 }

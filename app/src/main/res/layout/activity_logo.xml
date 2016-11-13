@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="@color/colorPrimary"
     tools:context="com.zconnect.login.zconnect.logo">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -20,6 +20,6 @@
         android:layout_centerHorizontal="true"
         android:textIsSelectable="false"
         android:textSize="50dp"
-        android:textColor="@color/abc_secondary_text_material_dark" />
+        android:textColor="@color/white" />
 
 </FrameLayout>
