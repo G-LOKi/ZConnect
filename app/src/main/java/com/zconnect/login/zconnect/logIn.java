@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -36,10 +35,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class logIn extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
@@ -47,17 +43,15 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
     private com.google.android.gms.common.SignInButton signInButton;
     private Button signOutButton;
 
-
-
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private ProgressDialog mProgressDialog;
     private DatabaseReference mDatabase;
     String parent = "/ZConnect";
-    int a=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +59,9 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         setContentView(R.layout.activity_log_in);
 
         //Buttons
-
         signInButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.sign_in_button);
-        signOutButton = (Button) findViewById(R.id.sign_out_button);
         signInButton.setOnClickListener(this);
-        signOutButton.setOnClickListener(this);
+
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -86,26 +78,31 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        //initialising mAuth
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
 
-        // Start auth_State_Listener
+        //initialising mAuth which is about authentication status
+        mAuth = FirebaseAuth.getInstance();
+
+
+        // Start auth State Listener
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d(TAG, "onAuthStateChanged: Signed In:" + user.getUid());
                 } else {
                     // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    Log.d(TAG, "onAuthStateChanged: Signed Out");
                 }
                 // Exclude
                 updateUI(user);
             }
         };
+
+
+        // Getting Database Reference
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(parent + "/Users");
 
     }
 
@@ -113,12 +110,15 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
     @Override
     public void onStart() {
         super.onStart();
+        //Starting authStateListener
         mAuth.addAuthStateListener(mAuthListener);
     }
+
 
     @Override
     public void onStop() {
         super.onStop();
+        // Stopping auth State Listener
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
@@ -128,28 +128,34 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...)
         if (requestCode == RC_SIGN_IN) {
+
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+
             //handleSignInResult(result);
             if (result.isSuccess()) {
-//            // Signed in successfully, show authenticated UI.
-//            Google Sign In was successful, authenticate with Firebase
+                //Signed in successfully, show authenticated UI.
+                //Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             }else {
-
-                    updateUI(null);
+                //Signing in Unsuccessful , show Login Page UI.
+                updateUI(null);
             }
         }
     }
 
+    // Authenticating with firebase using google account
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
-        showProgressDialog();
+        showProgressDialog(); //Display Loading
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -211,7 +217,7 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         Map<String, Object> childUpdates = new HashMap<>();
 
 
-        childUpdates.put("/" + userId, postValues  );
+        childUpdates.put("/Users" + userId, postValues  );
 
         mDatabase.updateChildren(childUpdates);
     }
@@ -255,35 +261,10 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         hideProgressDialog();
         if (user != null) {
             checkUser();
-            Intent intent = new Intent(logIn.this,comunitylist.class);
+            Intent intent = new Intent(logIn.this,home.class);
             startActivity(intent);
-
-//                DataSnapshot data
-//                System.out.println(data.getName() + ":" + data.getValue());
-//                if (data.hasChildren()) {
-//                    Iterator<DataSnapshot> it = data.getChildren().iterator();
-//                    while (it.hasNext()) {
-//                        DataSnapshot dataSnapshot = (DataSnapshot) it.next();
-//                        printData(dataSnapshot);
-//                    }
-//                }
-
-
-    //                mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
-    //                mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-    //                findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-    //                findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-
         }
-        else {
-//                Intent intent = new Intent(logIn.this,logIn.class);
-//                startActivity(intent);
-//            mStatusTextView.setText(R.string.signed_out);
-//            mDetailTextView.setText(null);
 
-            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-            }
     }
 
     public void checkUser(){
@@ -292,17 +273,13 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         final String user_id = user.getUid();
         final String email = user.getEmail();
 
-//        DataSnapshot dataSnapshot = null;
-//        if (dataSnapshot.hasChild(user_id))
-//        {}
-
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild(user_id))
                 {
                     writeNewPost(user_id,email);
-                    Intent intent = new Intent(logIn.this,comunitylist.class);
+                    Intent intent = new Intent(logIn.this,home.class);
                     startActivity(intent);
 
                 }
@@ -324,12 +301,6 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
                     signIn();
                     break;
 
-                case R.id.sign_out_button:
-                    signOut();
-                    break;
-                case R.id.disconnect_button:
-                    revokeAccess();
-                    break;
             }
 
     }

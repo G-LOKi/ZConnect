@@ -11,7 +11,7 @@ android:layout_height="match_parent"
 android:layout_weight="1"
 android:background="@color/material_grey_50"
 
-tools:context="com.zconnect.login.zconnect.comunitylist"
+tools:context=".home"
 
 
     android:padding="0dp">

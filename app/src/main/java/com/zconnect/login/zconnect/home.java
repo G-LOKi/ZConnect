@@ -17,7 +17,6 @@ package com.zconnect.login.zconnect;
         import android.widget.LinearLayout;
         import android.widget.ListView;
         import android.widget.RelativeLayout;
-        import android.widget.TextView;
         import android.widget.Toast;
 
         import com.google.android.gms.auth.api.Auth;
@@ -37,7 +36,7 @@ package com.zconnect.login.zconnect;
         import com.google.firebase.auth.FirebaseUser;
         import com.google.firebase.auth.GoogleAuthProvider;
 
-public class comunitylist extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
+public class home extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
     private GoogleApiClient mGoogleApiClient;
     private com.google.android.gms.common.SignInButton signInButton;
@@ -226,7 +225,7 @@ public class comunitylist extends AppCompatActivity implements View.OnClickListe
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithCredential", task.getException());
-                            Toast.makeText(comunitylist.this, "Authentication failed.",
+                            Toast.makeText(home.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                         hideProgressDialog();
@@ -265,7 +264,7 @@ public class comunitylist extends AppCompatActivity implements View.OnClickListe
         hideProgressDialog();
         if (user != null) {
 
-//            Intent intent = new Intent(comunitylist.this,comunitylist.class);
+//            Intent intent = new Intent(home.this,home.class);
 //            startActivity(intent);
 
 //                mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
@@ -279,7 +278,7 @@ public class comunitylist extends AppCompatActivity implements View.OnClickListe
 //                Intent intent = new Intent(logIn.this,logIn.class);
 //                startActivity(intent);
 
-            Intent intent = new Intent(comunitylist.this,logIn.class);
+            Intent intent = new Intent(home.this,logIn.class);
             startActivity(intent);
         }
     }
@@ -290,9 +289,6 @@ public class comunitylist extends AppCompatActivity implements View.OnClickListe
         {
             case R.id.sign_out_button:
                 signOut();
-                break;
-            case R.id.disconnect_button:
-                revokeAccess();
                 break;
         }
 

@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zconnect.login.zconnect">
 
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+
 
     <application
         android:allowBackup="true"
@@ -11,39 +13,39 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".logIn">
-            <intent-filter>
-                <action android:name="com.zconnect.login.zconnect.logIn" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+
+        <!--Logo Activity in the starting-->
         <activity
             android:name=".logo"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_logo"
+            android:label="@string/app_name"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".comunitylist">
+
+
+        <!--Login Page-->
+        <activity android:name=".logIn">
+            <intent-filter>
+                <action android:name="com.zconnect.login.zconnect.logIn" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <!--main home page-->
+        <activity android:name=".home">
             <intent-filter>
                 <action android:name="com.zconnect.login.zconnect.comunitylist" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".QRcode">
-            <intent-filter>
-                <action android:name="com.zconnect.login.zconnect.QRcode" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".test"></activity>
+
     </application>
 
 </manifest>
