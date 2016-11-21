@@ -3,11 +3,11 @@ package com.zconnect.login.zconnect;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -46,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
+        FloatingActionButton post =(FloatingActionButton) findViewById(R.id.add_event);
+                post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, Post_activity.class));
+
+            }
+        });
 
         mEventList.setLayoutManager(linearLayoutManager);
     }
@@ -106,20 +114,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.add_menu,menu);
         return super.onCreateOptionsMenu(menu);
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()== R.id.action_add)
-        {
-            startActivity(new Intent(MainActivity.this, Post_activity.class));
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public  void start_intent(Intent intent)
-    {
-        startActivity(intent);
     }
 
     public static class eventViewHolder extends RecyclerView.ViewHolder
