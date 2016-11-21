@@ -32,31 +32,13 @@
 
 
         <!--Login Page-->
-        <activity android:name=".MainActivity"
-            android:theme = "@style/AppTheme">
-            <intent-filter>
-                <action android:name="com.zconnect.login.zconnect.MainActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-
-            </intent-filter>
-
-
-        </activity>
-
-        <activity android:name=".Post_activity">
-            <intent-filter>
-                <action android:name="com.zconnect.login.zconnect.Post_activity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
         <activity android:name=".logIn">
             <intent-filter>
                 <action android:name="com.zconnect.login.zconnect.logIn" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
 
         <!--main home page-->
         <activity android:name=".home">
