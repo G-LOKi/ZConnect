@@ -89,8 +89,7 @@ public class AddProduct extends AppCompatActivity {
                     newPost.child("Image").setValue(downloadUri.toString());
 
                     mProgress.dismiss();
-
-
+                    startActivity(new Intent(AddProduct.this,StoreRoom.class));
                 }
             });
         }
