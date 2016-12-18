@@ -1,57 +1,63 @@
 package com.zconnect.login.zconnect;
 
-        import android.app.ProgressDialog;
-        import android.content.Intent;
-        import android.support.annotation.NonNull;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.util.DisplayMetrics;
-        import android.util.Log;
-        import android.view.Gravity;
-        import android.view.View;
-        import android.view.animation.Animation;
-        import android.view.animation.TranslateAnimation;
-        import android.widget.Button;
-        import android.widget.FrameLayout;
-        import android.widget.ImageView;
-        import android.widget.LinearLayout;
-        import android.widget.ListView;
-        import android.widget.RelativeLayout;
-        import android.widget.Toast;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.google.android.gms.auth.api.Auth;
-        import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-        import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-        import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-
-        import com.google.android.gms.common.ConnectionResult;
-        import com.google.android.gms.common.api.GoogleApiClient;
-        import com.google.android.gms.common.api.ResultCallback;
-        import com.google.android.gms.common.api.Status;
-        import com.google.android.gms.tasks.OnCompleteListener;
-        import com.google.android.gms.tasks.Task;
-        import com.google.firebase.auth.AuthCredential;
-        import com.google.firebase.auth.AuthResult;
-        import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.auth.FirebaseUser;
-        import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class home extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
-    private GoogleApiClient mGoogleApiClient;
-    private com.google.android.gms.common.SignInButton signInButton;
-    private Button signOutButton;
-
     private static final String TAG = "SignOutActivity";
     private static final int RC_SIGN_IN = 9001;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-
-    private ProgressDialog mProgressDialog;
+    FrameLayout.LayoutParams menuPanelParameters;
+    FrameLayout.LayoutParams slidingPanelParameters;
+    LinearLayout.LayoutParams headerPanelParameters ;
+    LinearLayout.LayoutParams listViewParameters;
+    private GoogleApiClient mGoogleApiClient;
+    private SignInButton signInButton;
 
 
 /////Menu Bar
-
+    private Button signOutButton;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private ProgressDialog mProgressDialog;
     private LinearLayout slidingPanel;
     private boolean isExpanded;
     private DisplayMetrics metrics;
@@ -60,24 +66,28 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
     private RelativeLayout menuPanel;
     private int panelWidth;
     private ImageView menuViewButton;
-
-    FrameLayout.LayoutParams menuPanelParameters;
-    FrameLayout.LayoutParams slidingPanelParameters;
-    LinearLayout.LayoutParams headerPanelParameters ;
-    LinearLayout.LayoutParams listViewParameters;
 /////MenuBar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comunitylist);
+        TextView events = (TextView) findViewById(R.id.menu_item_1);
+        events.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent eventActivity;
+                eventActivity = new Intent(home.this,MainActivity.class);
+                startActivity(eventActivity);
+            }
+        });
 
         /////MenuBar
 
         //Initialize
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        panelWidth = (int) ((metrics.widthPixels)*0.33);
+        panelWidth = (int) ((metrics.widthPixels) * 0.33);
 
         headerPanel = (RelativeLayout) findViewById(R.id.header);
         headerPanelParameters = (LinearLayout.LayoutParams) headerPanel.getLayoutParams();
@@ -107,7 +117,7 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
         menuViewButton = (ImageView) findViewById(R.id.menuViewButton);
         menuViewButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!isExpanded){
+                if (!isExpanded) {
                     isExpanded = true;
 
                     //Expand
@@ -115,12 +125,12 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
                             Animation.RELATIVE_TO_PARENT, 0.0f,
                             Animation.RELATIVE_TO_PARENT, -0.33f, 0, 0.0f, 0, 0.0f);
                     // if you want left to right just remove ( - ) before 0.33f
-                }else{
+                } else {
                     isExpanded = false;
 
                     //Collapse
-                    new CollapseAnimation(slidingPanel,panelWidth,
-                            TranslateAnimation.RELATIVE_TO_PARENT,-0.33f,
+                    new CollapseAnimation(slidingPanel, panelWidth,
+                            TranslateAnimation.RELATIVE_TO_PARENT, -0.33f,
                             TranslateAnimation.RELATIVE_TO_PARENT, 0.0f, 0, 0.0f, 0, 0.0f);
                     // if you want left to right just remove ( - ) before 0.33f
 
@@ -145,10 +155,12 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
 
         // Build a GoogleApiClient with access to the Google Sign-In API and the
         // options specified by gso.
+        // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+                .addApi(AppIndex.API).build();
 
         //initialising mAuth
         mAuth = FirebaseAuth.getInstance();
@@ -176,16 +188,26 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
 
     @Override
     public void onStart() {
-        super.onStart();
+        super.onStart();// ATTENTION: This was auto-generated to implement the App Indexing API.
+// See https://g.co/AppIndexing/AndroidStudio for more information.
+        mGoogleApiClient.connect();
         mAuth.addAuthStateListener(mAuthListener);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.start(mGoogleApiClient, getIndexApiAction());
     }
 
     @Override
     public void onStop() {
-        super.onStop();
+        super.onStop();// ATTENTION: This was auto-generated to implement the App Indexing API.
+// See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(mGoogleApiClient, getIndexApiAction());
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        mGoogleApiClient.disconnect();
     }
 
 
@@ -351,6 +373,21 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
     }
 
 
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("home Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
 }
 
 
