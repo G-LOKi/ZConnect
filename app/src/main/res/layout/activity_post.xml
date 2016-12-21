@@ -51,7 +51,7 @@
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
         android:cropToPadding="false"
-        app:srcCompat="@mipmap/ic_add_black_24dp" />
+        app:srcCompat="@mipmap/ic_add_circle_black_24dp" />
 
     <EditText
         android:id="@+id/eventDetails"

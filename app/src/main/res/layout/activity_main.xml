@@ -25,7 +25,7 @@
         android:clickable="true"
         android:paddingBottom="15dp"
         android:paddingLeft="100dp"
-        android:src="@mipmap/ic_add_black_24dp"
+        android:src="@mipmap/ic_add_circle_black_24dp"
         />
 
 
