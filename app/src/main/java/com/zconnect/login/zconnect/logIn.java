@@ -2,9 +2,9 @@ package com.zconnect.login.zconnect;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +14,6 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
@@ -39,19 +38,16 @@ import java.util.Map;
 
 public class logIn extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
+    private static final String TAG = "SignInActivity";
+    private static final int RC_SIGN_IN = 9001;
+    String parent = "/ZConnect";
     private GoogleApiClient mGoogleApiClient;
     private com.google.android.gms.common.SignInButton signInButton;
     private Button signOutButton;
-
-    private static final String TAG = "SignInActivity";
-    private static final int RC_SIGN_IN = 9001;
-
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
     private ProgressDialog mProgressDialog;
     private DatabaseReference mDatabase;
-    String parent = "/ZConnect";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +57,8 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         //Buttons
         signInButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(this);
-
-
+        Button button = (Button) findViewById(R.id.button2);
+        button.setOnClickListener(this);
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -175,38 +171,6 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
                 });
     }
 
-
-
-    @IgnoreExtraProperties
-    public class Post {
-
-        public String uid;
-        public String email;
-        public int starCount = 0;
-        public Map<String, Boolean> stars = new HashMap<>();
-
-        public Post() {
-            // Default constructor required for calls to DataSnapshot.getValue(Post.class)
-        }
-
-        public Post(String uid, String email) {
-            this.uid = uid;
-            this.email = email;
-    }
-
-        @Exclude
-        public Map<String, Object> toMap() {
-            HashMap<String, Object> result = new HashMap<>();
-            result.put("uid", uid);
-            result.put("email", email);
-            result.put("starCount", starCount);
-            result.put("stars", stars);
-
-            return result;
-        }
-
-    }
-
     private void writeNewPost(String userId, String email) {
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
@@ -226,7 +190,6 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-
 
     public void signOut() {
         // Firebase sign out
@@ -292,7 +255,6 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         });
     }
 
-
     @Override
     public void onClick(View view) {
             switch (view.getId())
@@ -302,7 +264,10 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
                     break;
 
             }
-
+        if (view.getId() == R.id.button2) {
+            Intent intent = new Intent(this, Phonebook.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -312,7 +277,6 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
-
 
     public void showProgressDialog() {
         if (mProgressDialog == null) {
@@ -332,6 +296,36 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
 
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    @IgnoreExtraProperties
+    public class Post {
+
+        public String uid;
+        public String email;
+        public int starCount = 0;
+        public Map<String, Boolean> stars = new HashMap<>();
+
+        public Post() {
+            // Default constructor required for calls to DataSnapshot.getValue(Post.class)
+        }
+
+        public Post(String uid, String email) {
+            this.uid = uid;
+            this.email = email;
+        }
+
+        @Exclude
+        public Map<String, Object> toMap() {
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("uid", uid);
+            result.put("email", email);
+            result.put("starCount", starCount);
+            result.put("stars", stars);
+
+            return result;
+        }
+
     }
 
 }
