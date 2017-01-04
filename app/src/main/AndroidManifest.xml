@@ -45,6 +45,10 @@
         <activity
             android:name=".Phonebook"
             android:label="@string/title_activity_phonebook"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".AddContact"
+            android:label="@string/title_activity_add_contact"
             android:theme="@style/AppTheme"></activity>
     </application>
 
