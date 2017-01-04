@@ -11,6 +11,10 @@ import android.view.View;
 import android.view.WindowManager;
 
 public class AddContact extends AppCompatActivity {
+    private android.support.design.widget.TextInputEditText editTextName;
+    private android.support.design.widget.TextInputEditText editTextEmail;
+    private android.support.design.widget.TextInputEditText editTextDetails;
+    private android.support.design.widget.TextInputEditText editTextNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
