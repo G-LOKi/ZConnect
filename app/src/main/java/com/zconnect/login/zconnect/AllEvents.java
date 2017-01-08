@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 
-public class StoreRoom extends AppCompatActivity {
+public class AllEvents extends AppCompatActivity {
 
     private RecyclerView mProductList;
     private DatabaseReference mDatabase;
@@ -40,7 +39,7 @@ public class StoreRoom extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StoreRoom.this, AddProduct.class);
+                Intent intent = new Intent(AllEvents.this, AddEvent.class);
                 startActivity(intent);
             }
         });
@@ -52,43 +51,42 @@ public class StoreRoom extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<Product,ProductViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Product, ProductViewHolder>(
-
-                Product.class,
-                R.layout.products_row,
-                ProductViewHolder.class,
+        FirebaseRecyclerAdapter<Event,EventViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>(
+                Event.class,
+                R.layout.events_row,
+                EventViewHolder.class,
                 mDatabase
         ) {
             @Override
-            protected void populateViewHolder(ProductViewHolder viewHolder, Product model, int position) {
-                viewHolder.setProductName(model.getProductName());
-                viewHolder.setProductDesc(model.getProductDescription());
-                viewHolder.setImage(getApplicationContext(), model.getImage());
+            protected void populateViewHolder(EventViewHolder viewHolder, Event model, int position) {
+                viewHolder.setProductName(model.getEventName());
+                viewHolder.setProductDesc(model.getEventDescription());
+                viewHolder.setImage(getApplicationContext(), model.getEventImage());
             }
         };
         mProductList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder{
+    public static class EventViewHolder extends RecyclerView.ViewHolder{
 
 
         View mView;
 
-        public ProductViewHolder(View itemView) {
+        public EventViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
         }
 
         public void setProductName(String productName){
 
-            TextView post_name = (TextView) mView.findViewById(R.id.productName);
+            TextView post_name = (TextView) mView.findViewById(R.id.event);
             post_name.setText(productName);
 
         }
 
         public void setProductDesc(String productDesc){
 
-            TextView post_desc = (TextView) mView.findViewById(R.id.productDescription);
+            TextView post_desc = (TextView) mView.findViewById(R.id.description);
             post_desc.setText(productDesc);
 
         }

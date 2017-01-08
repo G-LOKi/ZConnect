@@ -1242,7 +1242,7 @@ instanceKlass com/android/ide/common/res2/DataItem
 instanceKlass com/android/ide/common/resources/configuration/Configurable
 instanceKlass com/android/ide/common/resources/configuration/ResourceQualifier
 instanceKlass com/android/ide/common/res2/DataMerger
-instanceKlass java/awt/image/RenderedImage
+instanceKlass java/awt/eventImage/RenderedImage
 instanceKlass com/android/builder/png/VectorDrawableRenderer
 instanceKlass com/android/build/gradle/internal/tasks/IncrementalTask$2
 instanceKlass com/android/build/gradle/internal/tasks/IncrementalTask$1
@@ -4919,11 +4919,11 @@ instanceKlass java/awt/im/InputContext
 instanceKlass java/awt/dnd/DropTarget
 instanceKlass java/awt/dnd/DropTargetListener
 instanceKlass java/awt/Cursor
-instanceKlass java/awt/image/ColorModel
-instanceKlass java/awt/image/BufferStrategy
+instanceKlass java/awt/eventImage/ColorModel
+instanceKlass java/awt/eventImage/BufferStrategy
 instanceKlass javax/accessibility/AccessibleStateSet
 instanceKlass java/awt/ImageCapabilities
-instanceKlass java/awt/image/ImageProducer
+instanceKlass java/awt/eventImage/ImageProducer
 instanceKlass java/awt/BufferCapabilities
 instanceKlass java/awt/event/MouseWheelListener
 instanceKlass java/awt/event/MouseMotionListener
@@ -4971,7 +4971,7 @@ instanceKlass javax/swing/ComboBoxModel
 instanceKlass javax/swing/SwingConstants
 instanceKlass java/awt/Component
 instanceKlass java/awt/MenuContainer
-instanceKlass java/awt/image/ImageObserver
+instanceKlass java/awt/eventImage/ImageObserver
 instanceKlass javax/swing/TransferHandler$HasGetTransferHandler
 instanceKlass javax/accessibility/Accessible
 instanceKlass java/awt/event/ActionListener

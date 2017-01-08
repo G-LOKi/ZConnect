@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.zconnect.login.zconnect.StoreRoom"
+    tools:context="com.zconnect.login.zconnect.AllEvents"
     tools:showIn="@layout/activity_store_room">
 
     <android.support.v7.widget.RecyclerView

@@ -175,7 +175,7 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(home.this, StoreRoom.class);
+                Intent intent = new Intent(home.this, AllEvents.class);
                 startActivity(intent);
                 // request your webservice here. Possible use of AsyncTask and ProgressDialog
                 // show the result here - dialog or Toast

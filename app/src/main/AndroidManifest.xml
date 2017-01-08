@@ -43,10 +43,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StoreRoom"
+            android:name=".AllEvents"
             android:label="@string/title_activity_store_room"
             android:theme="@style/AppTheme" />
-        <activity android:name=".AddProduct"></activity>
+        <activity android:name=".AddEvent"></activity>
     </application>
 
 </manifest>

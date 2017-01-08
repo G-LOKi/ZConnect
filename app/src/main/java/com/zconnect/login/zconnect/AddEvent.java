@@ -10,43 +10,52 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
+import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class AddProduct extends AppCompatActivity {
+import java.util.Date;
+
+public class AddEvent extends AppCompatActivity {
 
     private Uri mImageUri = null;
 
     private ImageButton mAddImage;
     private Button mPostBtn;
 
-    private EditText mProductName;
-    private EditText mProductDescription;
+    private EditText mEventName;
+    private EditText mEventDescription;
 
     private StorageReference mStorage;
     private DatabaseReference mDatabase;
     private ProgressDialog mProgress;
 
-
+    private Button CalendarButton;
     private static final int GALLERY_REQUEST = 7;
+
+    String eventDate;
+    int dateInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_product);
+        setContentView(R.layout.activity_add_event);
 
         mAddImage = (ImageButton)findViewById(R.id.imageButton);
-        mProductName = (EditText)findViewById(R.id.nameOfProduct);
-        mProductDescription = (EditText)findViewById(R.id.description);
+        mEventName = (EditText)findViewById(R.id.EventName);
+        mEventDescription = (EditText)findViewById(R.id.EventDescription);
         mPostBtn = (Button)findViewById(R.id.postButton);
         mStorage = FirebaseStorage.getInstance().getReference();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/Events");
+
+        CalendarButton = (Button)findViewById(R.id.Calender_button);
 
         mProgress = new ProgressDialog(this);
 
@@ -59,6 +68,17 @@ public class AddProduct extends AppCompatActivity {
             }
         });
 
+        CalendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new SlideDateTimePicker.Builder(getSupportFragmentManager())
+                        .setListener(listener)
+                        .setInitialDate(new Date())
+                        .build()
+                        .show();
+            }
+        });
+
         mPostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,30 +86,46 @@ public class AddProduct extends AppCompatActivity {
                 startPosting();
             }
         });
+
+
+
     }
+
+    private SlideDateTimeListener listener = new SlideDateTimeListener() {
+        @Override
+        public void onDateTimeSet(Date date) {
+            eventDate = date.toString();
+            Toast.makeText(AddEvent.this, eventDate, Toast.LENGTH_SHORT).show();
+            dateInt = (date.getYear()*100)+(10*date.getMonth())+date.getDay();
+        }
+    };
+
 
     private void startPosting() {
 
         mProgress.setMessage("JccJc");
         mProgress.show();
-        final String productNameValue = mProductName.getText().toString().trim();
-        final String productDescriptionValue = mProductDescription.getText().toString().trim();
+        final String eventNameValue = mEventName.getText().toString().trim();
+        final String eventDescriptionValue = mEventDescription.getText().toString().trim();
 
-        if(!TextUtils.isEmpty(productNameValue) && !TextUtils.isEmpty(productDescriptionValue)&& mImageUri!=null)
+        if(!TextUtils.isEmpty(eventNameValue) && !TextUtils.isEmpty(eventDescriptionValue)&& mImageUri!=null)
         {
-            StorageReference filepath = mStorage.child("ProductImage").child(mImageUri.getLastPathSegment());
+      //1
+            StorageReference filepath = mStorage.child("EventImage").child(mImageUri.getLastPathSegment());
             filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
 
                     DatabaseReference newPost = mDatabase.push();
-                    newPost.child("ProductName").setValue(productNameValue);
-                    newPost.child("ProductDescription").setValue(productDescriptionValue);
-                    newPost.child("Image").setValue(downloadUri.toString());
+                    newPost.child("EventName").setValue(eventNameValue);
+                    newPost.child("EventDescription").setValue(eventDescriptionValue);
+                    newPost.child("EventImage").setValue(downloadUri.toString());
+                    newPost.child("Date").setValue(eventDate.trim());
+                    newPost.child("IntFormatDate").setValue(dateInt);
 
                     mProgress.dismiss();
-                    startActivity(new Intent(AddProduct.this,StoreRoom.class));
+                    startActivity(new Intent(AddEvent.this,AllEvents.class));
                 }
             });
         }
@@ -107,5 +143,6 @@ public class AddProduct extends AppCompatActivity {
 
         }
     }
+
 
 }

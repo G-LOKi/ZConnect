@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/productName"
+            android:id="@+id/event"
             android:text="Product Name"
             android:padding="10dp"
             android:textSize="18dp"
@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/productDescription"
+            android:id="@+id/description"
             android:text="Product Description"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
