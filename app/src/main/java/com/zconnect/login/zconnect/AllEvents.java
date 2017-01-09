@@ -130,7 +130,7 @@ public class AllEvents extends AppCompatActivity {
             Reminder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    
+
                 }
             });
         }
