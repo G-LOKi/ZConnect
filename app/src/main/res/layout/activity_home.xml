@@ -63,7 +63,7 @@ tools:context=".home"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:layout_below="@+id/menu_title_1"
-            android:background="#b5b5b5"/>
+            android:background="#b5b5b5" />
 
         <TextView
             android:id="@+id/menu_item_1"

@@ -41,7 +41,7 @@ public class AddEvent extends AppCompatActivity {
     private static final int GALLERY_REQUEST = 7;
 
     String eventDate;
-    int dateInt;
+    String dateString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +96,7 @@ public class AddEvent extends AppCompatActivity {
         public void onDateTimeSet(Date date) {
             eventDate = date.toString();
             Toast.makeText(AddEvent.this, eventDate, Toast.LENGTH_SHORT).show();
-            dateInt = (date.getYear()*100)+(10*date.getMonth())+date.getDay();
+            dateString = String.valueOf((date.getYear()*10000)+(100*date.getMonth())+date.getDay());
         }
     };
 
@@ -121,8 +121,8 @@ public class AddEvent extends AppCompatActivity {
                     newPost.child("EventName").setValue(eventNameValue);
                     newPost.child("EventDescription").setValue(eventDescriptionValue);
                     newPost.child("EventImage").setValue(downloadUri.toString());
-                    newPost.child("Date").setValue(eventDate.trim());
-                    newPost.child("IntFormatDate").setValue(dateInt);
+                    newPost.child("EventDate").setValue(eventDate);
+                    newPost.child("FormatDate").setValue(dateString);
 
                     mProgress.dismiss();
                     startActivity(new Intent(AddEvent.this,AllEvents.class));

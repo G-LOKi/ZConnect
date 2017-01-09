@@ -170,8 +170,8 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
             }
         };
 
-        final TextView storeroom_item_1 = (TextView) findViewById(R.id.menu_item_1);
-        storeroom_item_1.setOnClickListener(new View.OnClickListener() {
+        final TextView menu_item_2 = (TextView) findViewById(R.id.menu_item_2);
+        menu_item_2.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.zconnect.login.zconnect.AllEvents"
-    tools:showIn="@layout/activity_store_room">
+    tools:showIn="@layout/activity_all_events">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/productList"></android.support.v7.widget.RecyclerView>
+        android:id="@+id/eventList"></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

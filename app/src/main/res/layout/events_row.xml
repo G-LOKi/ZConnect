@@ -8,30 +8,77 @@
         android:layout_margin="20dp"
         android:orientation="vertical">
 
-        <ImageView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:id="@+id/postImg"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:background="@drawable/input_outline"/>
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:id="@+id/postImg"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:background="@drawable/input_outline"/>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/event"
+                android:layout_gravity="bottom"
+                android:text="Event Name"
+                android:padding="12dp"
+                android:textSize="22dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/gradient_shape"/>
+
+            <!--<ImageView-->
+                <!--android:id="@+id/gradient"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!---->
+                <!--/>-->
+
+        </FrameLayout>
+
         <TextView
+            android:text="Event Date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/event"
-            android:text="Product Name"
-            android:padding="10dp"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+            android:id="@+id/date"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/grey"
+            android:textAlignment="textEnd"
+
+            />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/description"
-            android:text="Product Description"
-            android:paddingLeft="10dp"
+            android:text="Event Description"
+            android:paddingLeft="0dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
-            android:textSize="14dp" />
+            android:textColor="@color/authui_inputTextColorDarkDisabled"
+            android:paddingTop="5dp"
+            android:textSize="16dp"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="right"/>
+
+        <Button
+            android:text="Reminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reminder"
+            android:onClick="onDateSelectedClickEvent"
+            />
+
 
     </LinearLayout>
 
