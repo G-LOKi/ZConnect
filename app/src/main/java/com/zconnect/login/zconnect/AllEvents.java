@@ -5,7 +5,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,11 +28,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 
 public class AllEvents extends AppCompatActivity {
@@ -39,15 +59,20 @@ public class AllEvents extends AppCompatActivity {
     private DatabaseReference mPrivileges;
     boolean flag=false;
 
+
     private Button Reminder;
         @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_events);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mEventList = (RecyclerView) findViewById(R.id.eventList);
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+
+            mEventList = (RecyclerView) findViewById(R.id.eventList);
             mEventList.setHasFixedSize(true);
             mEventList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -76,9 +101,6 @@ public class AllEvents extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-
-
                 if (flag){
                     Intent intent = new Intent(AllEvents.this, AddEvent.class);
                     startActivity(intent);
@@ -101,8 +123,35 @@ public class AllEvents extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
 
-                        Toast.makeText(AllEvents.this, "Request Sent", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+
+
+
+                        //checks if user is online
+                        if(!isOnline()) {
+                            Toast.makeText(AllEvents.this, "Request not Sent. Check Internet Connection", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+
+                            GMail ob = new GMail("zconnectmailer@gmail.com", "Cool@coder01", "garg.lokesh96@gmail.com", "SUBJECT", "LITE");
+                            try {
+                                MimeMessage message = ob.createEmailMessage();
+                            } catch (MessagingException e) {
+                                e.printStackTrace();
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                ob.sendEmail();
+                            } catch (MessagingException e) {
+                                e.printStackTrace();
+                            }
+
+                            Toast.makeText(AllEvents.this, "Request Sent", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+
+
                     }
                 });
                 // Set other dialog properties
@@ -116,6 +165,16 @@ public class AllEvents extends AppCompatActivity {
         });
 
 
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
     }
 
     @Override
