@@ -210,7 +210,6 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
     private void writeNewPost(String userId, String email) {
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
-        String key = mDatabase.child("posts").push().getKey();
         Post post = new Post(userId, email);
         Map<String, Object> postValues = post.toMap();
 

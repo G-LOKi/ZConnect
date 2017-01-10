@@ -20,11 +20,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -34,7 +40,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -59,6 +67,7 @@ public class AllEvents extends AppCompatActivity {
     private DatabaseReference mPrivileges;
     boolean flag=false;
 
+    private DatabaseReference mRequest;
 
     private Button Reminder;
         @Override
@@ -71,20 +80,22 @@ public class AllEvents extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-
+            //get current user
+            final String emailId = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             mEventList = (RecyclerView) findViewById(R.id.eventList);
             mEventList.setHasFixedSize(true);
             mEventList.setLayoutManager(new LinearLayoutManager(this));
 
             mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/Events/Posts");
             mPrivileges = FirebaseDatabase.getInstance().getReference().child("ZConnect/Events/Privileges");
+            mRequest = FirebaseDatabase.getInstance().getReference().child("ZConnect/Events/");
 
             mPrivileges.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     for (DataSnapshot child: snapshot.getChildren()) {
 
-                        if (child.getValue().equals("garg.lokesh96@gmal.com"))
+                        if (child.getValue().equals(emailId))
                         {
                             flag=true;
                         }
@@ -106,6 +117,8 @@ public class AllEvents extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else{
+
+
                 // 1. Instantiate an AlertDialog.Builder with its constructor
                 AlertDialog.Builder builder = new AlertDialog.Builder(AllEvents.this);
 
@@ -130,28 +143,31 @@ public class AllEvents extends AppCompatActivity {
                         if(!isOnline()) {
                             Toast.makeText(AllEvents.this, "Request not Sent. Check Internet Connection", Toast.LENGTH_LONG).show();
                         }
-                        else
-                        {
+                        else {
+//                                mRequest = FirebaseDatabase.getInstance().getReference().child("ZConnect/Events/Requests");
+//                                DatabaseReference newPost = mRequest.push();
+//                                newPost.child("Email").setValue(emailId);
+                            writeNewPost(emailId);
 
-                            GMail ob = new GMail("zconnectmailer@gmail.com", "Cool@coder01", "garg.lokesh96@gmail.com", "SUBJECT", "LITE");
-                            try {
-                                MimeMessage message = ob.createEmailMessage();
-                            } catch (MessagingException e) {
-                                e.printStackTrace();
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                ob.sendEmail();
-                            } catch (MessagingException e) {
-                                e.printStackTrace();
-                            }
 
+//                            GMail ob = new GMail("zconnectmailer@gmail.com", "Cool@coder01", "garg.lokesh96@gmail.com", "SUBJECT", "LITE");
+//                            try {
+//                                MimeMessage message = ob.createEmailMessage();
+//                            } catch (MessagingException e) {
+//                                e.printStackTrace();
+//                            } catch (UnsupportedEncodingException e) {
+//                                e.printStackTrace();
+//                            }
+//                            try {
+//                                ob.sendEmail();
+//                            } catch (MessagingException e) {
+//                                e.printStackTrace();
+//                            }
+//
                             Toast.makeText(AllEvents.this, "Request Sent", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+
                         }
-
-
                     }
                 });
                 // Set other dialog properties
@@ -166,6 +182,48 @@ public class AllEvents extends AppCompatActivity {
 
 
     }
+
+    @IgnoreExtraProperties
+    public class Post {
+
+        public String email;
+        public Map<String, Boolean> stars = new HashMap<>();
+
+        public Post() {
+            // Default constructor required for calls to DataSnapshot.getValue(Post.class)
+        }
+
+        public Post( String email) {
+
+            this.email = email;
+        }
+
+        @Exclude
+        public Map<String, Object> toMap() {
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("email", email);
+            result.put("stars", stars);
+            return result;
+        }
+
+    }
+
+    private void writeNewPost(String email) {
+        // Create new post at /user-posts/$userid/$postid and at
+        // /posts/$postid simultaneously
+        Post post = new Post( email);
+        Map<String, Object> postValues = post.toMap();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+
+
+        childUpdates.put( "/Requests" , postValues  );
+
+        mRequest.updateChildren(childUpdates);
+    }
+
+
+
 
     public boolean isOnline() {
         ConnectivityManager cm =
