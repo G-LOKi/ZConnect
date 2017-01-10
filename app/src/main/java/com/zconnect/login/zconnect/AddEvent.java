@@ -53,7 +53,7 @@ public class AddEvent extends AppCompatActivity {
         mEventDescription = (EditText)findViewById(R.id.EventDescription);
         mPostBtn = (Button)findViewById(R.id.postButton);
         mStorage = FirebaseStorage.getInstance().getReference();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/Events");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/Events/Posts");
 
         CalendarButton = (Button)findViewById(R.id.Calender_button);
 

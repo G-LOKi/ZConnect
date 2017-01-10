@@ -1,7 +1,9 @@
 package com.zconnect.login.zconnect;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,12 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -30,6 +36,8 @@ public class AllEvents extends AppCompatActivity {
 
     private RecyclerView mEventList;
     private DatabaseReference mDatabase;
+    private DatabaseReference mPrivileges;
+    boolean flag=false;
 
     private Button Reminder;
         @Override
@@ -43,15 +51,67 @@ public class AllEvents extends AppCompatActivity {
             mEventList.setHasFixedSize(true);
             mEventList.setLayoutManager(new LinearLayoutManager(this));
 
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/Events");
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/Events/Posts");
+            mPrivileges = FirebaseDatabase.getInstance().getReference().child("ZConnect/Events/Privileges");
 
+            mPrivileges.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    for (DataSnapshot child: snapshot.getChildren()) {
+
+                        if (child.getValue().equals("garg.lokesh96@gmal.com"))
+                        {
+                            flag=true;
+                        }
+
+                    } //prints "Do you have data? You'll love Firebase."
+                }
+                @Override public void onCancelled(DatabaseError error) {
+
+                }
+            });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AllEvents.this, AddEvent.class);
-                startActivity(intent);
+
+
+
+
+                if (flag){
+                    Intent intent = new Intent(AllEvents.this, AddEvent.class);
+                    startActivity(intent);
+                }
+                else{
+                // 1. Instantiate an AlertDialog.Builder with its constructor
+                AlertDialog.Builder builder = new AlertDialog.Builder(AllEvents.this);
+
+                // 2. Chain together various setter methods to set the dialog characteristics
+                builder.setMessage(R.string.dialog_message)
+                        .setTitle(R.string.dialog_title);
+
+                // Add the buttons
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton(R.string.request, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+
+                        Toast.makeText(AllEvents.this, "Request Sent", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+                // Set other dialog properties
+
+
+                // Create the AlertDialog
+                AlertDialog dialog = builder.create();
+                dialog.show();}
+
             }
         });
 
@@ -74,7 +134,21 @@ public class AllEvents extends AppCompatActivity {
                 viewHolder.setEventDesc(model.getEventDescription());
                 viewHolder.setEventImage(getApplicationContext(), model.getEventImage());
                 viewHolder.setEventDate(model.getEventDate());
-                viewHolder.setEventReminder(model.getEventDate(), model.getEventDescription(), model.getEventName());
+
+//                SimpleDateFormat outputFormat = new SimpleDateFormat("EEE MM dd HH:mm:ss");
+//                try {
+//
+//                    String simpleDate = model.getSimpleDate();
+//
+//                    Date endDate = outputFormat.parse(simpleDate);
+//                    viewHolder.setEventReminder(model.getEventDescription(), model.getEventName(), endDate);
+//
+//                }
+//                catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+
+
             }
 
         };
@@ -124,17 +198,44 @@ public class AllEvents extends AppCompatActivity {
 //            post_date.setText(date);
         }
 
-        public void setEventReminder(String eventDate,String eventDescription, String eventName)
-        {
-            Button Reminder = (Button) mView.findViewById(R.id.reminder);
-            Reminder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
-        }
-
+//        public void setEventReminder(final String eventDescription, final String eventName, final Date simpleDate)
+//        {
+//            Button Reminder = (Button) mView.findViewById(R.id.reminder);
+//            Reminder.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                                addReminderInCalendar(eventName,eventDescription,simpleDate,mView.getContext());
+//
+//                    }
+//
+//            });
+//
+//        }
+//
+//        private void addReminderInCalendar(String title, String desc, Date simpleDate, Context context) {
+//            Calendar cal = Calendar.getInstance();
+//
+//
+//            Intent intent = new Intent(Intent.ACTION_EDIT);
+//            intent.setType("vnd.android.cursor.item/event");
+//            intent.putExtra("beginTime", cal.getTimeInMillis()+simpleDate.getTime());
+//            intent.putExtra("allDay", false);
+//            intent.putExtra("rrule", "FREQ=DAILY");
+//            intent.putExtra("endTime", cal.getTimeInMillis()+simpleDate.getTime()+60*60*1000);
+//            intent.putExtra("title",title);
+//            intent.putExtra("description",desc);
+//            context.startActivity(intent);
+//
+//            // Display event id.
+//            //Toast.makeText(getApplicationContext(), "Event added :: ID :: " + event.getLastPathSegment(), Toast.LENGTH_SHORT).show();
+//
+//            /** Adding reminder for event added. *
+//             }
+//             /** Returns Calendar Base URI, supports both new and old OS. */
+//
+//
+//        }
     }
 
 

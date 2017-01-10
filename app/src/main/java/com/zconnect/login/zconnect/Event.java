@@ -38,6 +38,18 @@ public class Event {
         return  date;
     }
 
+    public String getSimpleDate() {
+        String[] tokenizedDate = EventDate.split("\\s");
+        int i=0;
+        String date = "";
+        while(i<4)
+        {
+            date = date + " " + tokenizedDate[i];
+            i++;
+        }
+        return  date;
+    }
+
     public String getEventName() {
         return EventName;
     }

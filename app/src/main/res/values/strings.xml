@@ -68,5 +68,9 @@
     <string name="description">Hurrey</string>
     <string name="title_activity_store_room">StoreRoom</string>
     <string name="add_name">Add name</string>
+    <string name="dialog_message">You don\'t priveges to post.</string>
+    <string name="dialog_title">Access Denied</string>
+    <string name="ok">OK</string>
+    <string name="request">Request</string>
 
 </resources>
