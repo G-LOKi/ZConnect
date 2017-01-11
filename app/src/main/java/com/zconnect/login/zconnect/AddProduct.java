@@ -84,6 +84,8 @@ public class AddProduct extends AppCompatActivity {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
 
                     DatabaseReference newPost = mDatabase.push();
+                    String key = newPost.getKey();
+                    newPost.child("Key").setValue(key);
                     newPost.child("ProductName").setValue(productNameValue);
                     newPost.child("ProductDescription").setValue(productDescriptionValue);
                     newPost.child("Image").setValue(downloadUri.toString());

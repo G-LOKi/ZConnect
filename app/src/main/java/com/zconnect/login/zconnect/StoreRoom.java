@@ -10,10 +10,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -23,6 +28,7 @@ public class StoreRoom extends AppCompatActivity {
 
     private RecyclerView mProductList;
     private DatabaseReference mDatabase;
+
         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +67,7 @@ public class StoreRoom extends AppCompatActivity {
         ) {
             @Override
             protected void populateViewHolder(ProductViewHolder viewHolder, Product model, int position) {
+                viewHolder.setSwitch(model.getKey());
                 viewHolder.setProductName(model.getProductName());
                 viewHolder.setProductDesc(model.getProductDescription());
                 viewHolder.setImage(getApplicationContext(), model.getImage());
@@ -71,13 +78,58 @@ public class StoreRoom extends AppCompatActivity {
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder{
 
-
+        private DatabaseReference ReserveReference;
         View mView;
-
+        private Switch mReserve;
+        private TextView ReserveStatus;
+        private FirebaseAuth mAuth;
         public ProductViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
         }
+
+        public void setSwitch(String key)
+        {
+            ReserveStatus = (TextView) mView.findViewById(R.id.switch1);
+            mReserve = (Switch) mView.findViewById(R.id.switch1);
+
+            //set the switch to ON
+            mReserve.setChecked(true);
+            //attach a listener to check for changes in state
+            mReserve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                    ReserveReference = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
+                    mAuth = FirebaseAuth.getInstance();
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    String userId = user.getUid();
+                    DataSnapshot
+
+
+                    if(isChecked){
+                        ReserveStatus.setText("Product Reserved");
+
+
+
+                        DatabaseReference newPost = ReserveReference.
+
+                    }else{
+                        ReserveStatus.setText("Reserve Now");
+                    }
+                }
+            });
+
+            //check the current state before we display the screen
+            if(mReserve.isChecked()){
+                ReserveStatus.setText("Switch is currently ON");
+            }
+            else {
+                ReserveStatus.setText("Switch is currently OFF");
+            }
+
+        };
 
         public void setProductName(String productName){
 
@@ -101,6 +153,7 @@ public class StoreRoom extends AppCompatActivity {
 
 
         }
+
     }
 
 
