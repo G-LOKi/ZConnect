@@ -27,7 +27,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class StoreRoom extends AppCompatActivity {
@@ -97,15 +99,15 @@ public class StoreRoom extends AppCompatActivity {
             mView = itemView;
         }
 
-        public void setSwitch(String key)
+        public void setSwitch(final String key)
         {
 
             ReserveStatus = (TextView) mView.findViewById(R.id.switch1);
             mReserve = (Switch) mView.findViewById(R.id.switch1);
-
             //set the switch to ON
-            mReserve.setChecked(true);
+            mReserve.setChecked(false);
             //attach a listener to check for changes in state
+
             mReserve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                 @Override
@@ -116,31 +118,45 @@ public class StoreRoom extends AppCompatActivity {
                     FirebaseUser user = mAuth.getCurrentUser();
                     final String userId = user.getUid();
 
-                    ReserveReference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            ReservedUid = (String)dataSnapshot.child(userId +"/Reserved").getValue();
-                            keyList = ReservedUid.split("\\s");
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
+//                    ReserveReference.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            ReservedUid = (String)dataSnapshot.child(userId +"/Reserved").getValue();
+//
+////                            if(ReservedUid == null)
+////                                ReservedUid = "";
+//                            keyList = ReservedUid.split("\\s");
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
 
 
                     if(isChecked){
                         ReserveStatus.setText("Product Reserved");
-                        List list = (List) Arrays.asList(keyList);
-                        list.add(userId);
-                        ReservedUid = TextUtils.join(", ", list);
-                        DatabaseReference newPost = ReserveReference.child(userId + "Reserved");
-                        newPost.setValue()
+//                        List list = (List) Arrays.asList(keyList);
+//                        list.add(key);
+//                        ReservedUid = TextUtils.join(" ", list);
+//                        DatabaseReference newPost = ReserveReference.child(userId);
+//                        Map<String, Object> childUpdates = new HashMap<>();
+//                        childUpdates.put("Reserved", ReservedUid);
+//                        newPost.updateChildren(childUpdates);
 
 
-                    }else{
+
+                    } else{
                         ReserveStatus.setText("Reserve Now");
+//                        List list = (List) Arrays.asList(keyList);
+//                        //remove
+//                        list.remove(userId);
+//                        ReservedUid = TextUtils.join(", ", list);
+//                        DatabaseReference newPost = ReserveReference.child(userId);
+//                        Map<String, Object> childUpdates = new HashMap<>();
+//                        childUpdates.put("Reserved", ReservedUid);
+//                        newPost.updateChildren(childUpdates);
                     }
                 }
             });
