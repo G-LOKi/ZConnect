@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,6 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormatSymbols;
@@ -251,6 +254,8 @@ public class AllEvents extends AppCompatActivity {
                 viewHolder.setEventDesc(model.getEventDescription());
                 viewHolder.setEventImage(getApplicationContext(), model.getEventImage());
                 viewHolder.setEventDate(model.getEventDate());
+                viewHolder.openEvent(model.getKey());
+//                key=model.getKey();
 
 //                SimpleDateFormat outputFormat = new SimpleDateFormat("EEE MM dd HH:mm:ss");
 //                try {
@@ -281,6 +286,22 @@ public class AllEvents extends AppCompatActivity {
             super(itemView);
             mView = itemView;
         }
+        public void openEvent(final String key){
+        mView.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick (View view){
+
+                    Intent i = new Intent(mView.getContext(), OpenEventDetail.class);
+                    i.putExtra("key", key);
+                    mView.getContext().startActivity(i);
+                    }
+                });
+            }
+
+
+
 
         public void setEventName(String eventName){
 
@@ -302,6 +323,7 @@ public class AllEvents extends AppCompatActivity {
             ImageView post_image = (ImageView) mView.findViewById(R.id.postImg);
             Picasso.with(ctx).load(image).into(post_image);
         }
+
 
         public void setEventDate(String eventDate)
         {

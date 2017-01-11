@@ -86,9 +86,6 @@ public class AddEvent extends AppCompatActivity {
                 startPosting();
             }
         });
-
-
-
     }
 
     private SlideDateTimeListener listener = new SlideDateTimeListener() {
@@ -102,7 +99,6 @@ public class AddEvent extends AppCompatActivity {
 
 
     private void startPosting() {
-
         mProgress.setMessage("JccJc");
         mProgress.show();
         final String eventNameValue = mEventName.getText().toString().trim();
@@ -116,20 +112,21 @@ public class AddEvent extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
-
                     DatabaseReference newPost = mDatabase.push();
+                    String key = newPost.getKey();
+                    newPost.child("Key").setValue(key);
                     newPost.child("EventName").setValue(eventNameValue);
                     newPost.child("EventDescription").setValue(eventDescriptionValue);
                     newPost.child("EventImage").setValue(downloadUri.toString());
                     newPost.child("EventDate").setValue(eventDate);
                     newPost.child("FormatDate").setValue(dateString);
 
+
                     mProgress.dismiss();
                     startActivity(new Intent(AddEvent.this,AllEvents.class));
                 }
             });
         }
-
      }
 
     @Override

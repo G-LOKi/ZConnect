@@ -1,28 +1,23 @@
 package com.zconnect.login.zconnect;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 
 /**
  * Created by Lokesh Garg on 14-11-2016.
  */
 public class Event {
-    private String EventName, EventDescription, EventImage, EventDate, FormatDate;
+    private String EventName, EventDescription, EventImage, EventDate, FormatDate, Key;
 
     public Event(){
 
     }
 
-    public Event(String eventName, String eventDescription, String eventImage, String eventDate, String formatDate) {
+    public Event(String eventName, String eventDescription, String eventImage, String eventDate, String formatDate, String key) {
         EventName = eventName;
         EventDescription = eventDescription;
         EventImage = eventImage;
         EventDate = eventDate;
         FormatDate = formatDate;
+        Key = key;
 
     }
 
@@ -49,6 +44,8 @@ public class Event {
         }
         return  date;
     }
+
+    public String getKey() { return Key; }
 
     public String getEventName() {
         return EventName;
