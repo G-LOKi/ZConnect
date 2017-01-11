@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -24,6 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 public class StoreRoom extends AppCompatActivity {
@@ -85,6 +89,9 @@ public class StoreRoom extends AppCompatActivity {
         private Switch mReserve;
         private TextView ReserveStatus;
         private FirebaseAuth mAuth;
+        String [] keyList;
+        String ReservedUid;
+
         public ProductViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
@@ -92,6 +99,7 @@ public class StoreRoom extends AppCompatActivity {
 
         public void setSwitch(String key)
         {
+
             ReserveStatus = (TextView) mView.findViewById(R.id.switch1);
             mReserve = (Switch) mView.findViewById(R.id.switch1);
 
@@ -107,25 +115,29 @@ public class StoreRoom extends AppCompatActivity {
                     mAuth = FirebaseAuth.getInstance();
                     FirebaseUser user = mAuth.getCurrentUser();
                     final String userId = user.getUid();
+
                     ReserveReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            String ReservedUid = (String)dataSnapshot.getValue("Reserved");
+                            ReservedUid = (String)dataSnapshot.child(userId +"/Reserved").getValue();
+                            keyList = ReservedUid.split("\\s");
                         }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
                         }
-                    })
+                    });
 
 
                     if(isChecked){
                         ReserveStatus.setText("Product Reserved");
+                        List list = (List) Arrays.asList(keyList);
+                        list.add(userId);
+                        ReservedUid = TextUtils.join(", ", list);
+                        DatabaseReference newPost = ReserveReference.child(userId + "Reserved");
+                        newPost.setValue()
 
-
-
-                        DatabaseReference newPost = ReserveReference.
 
                     }else{
                         ReserveStatus.setText("Reserve Now");
