@@ -153,7 +153,7 @@ public class AllEvents extends AppCompatActivity {
                             writeNewPost(emailId);
 
 
-//                            GMail ob = new GMail("zconnectmailer@gmail.com", "Cool@coder01", "garg.lokesh96@gmail.com", "SUBJECT", "LITE");
+//                            Gmail ob = new Gmail("zconnectmailer@gmail.com", "Cool@coder01", "garg.lokesh96@gmail.com", "SUBJECT", "LITE");
 //                            try {
 //                                MimeMessage message = ob.createEmailMessage();
 //                            } catch (MessagingException e) {
