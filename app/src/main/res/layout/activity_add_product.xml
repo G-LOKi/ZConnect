@@ -39,6 +39,7 @@
         android:layout_centerHorizontal="true"
         android:padding="10dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:background="@drawable/input_outline"
         android:hint="add description"
         android:layout_margin="7dp" />
@@ -53,4 +54,15 @@
         android:layout_centerHorizontal="true"
         android:textColor="#ffffff"
         android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/PriceColoumn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/description"
+        android:layout_alignStart="@+id/description"
+        android:layout_below="@+id/description"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Price" />
 </RelativeLayout>

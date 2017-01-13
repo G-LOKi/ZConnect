@@ -15,23 +15,29 @@
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
             android:background="@drawable/input_outline"/>
+
         <TextView
+            android:id="@+id/productName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/productName"
-            android:text="Product Name"
             android:padding="10dp"
             android:textSize="18dp"
             android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/productDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/productDescription"
-            android:text="Product Description"
+            android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingBottom="10dp"
             android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/PriceDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
 
     </LinearLayout>
 

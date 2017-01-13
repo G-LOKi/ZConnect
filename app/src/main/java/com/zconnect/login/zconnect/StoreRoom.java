@@ -64,6 +64,7 @@ public class StoreRoom extends AppCompatActivity {
                 viewHolder.setProductName(model.getProductName());
                 viewHolder.setProductDesc(model.getProductDescription());
                 viewHolder.setImage(getApplicationContext(), model.getImage());
+                viewHolder.setPrice(getApplicationContext(),model.getPrice());
             }
         };
         mProductList.setAdapter(firebaseRecyclerAdapter);
@@ -100,6 +101,11 @@ public class StoreRoom extends AppCompatActivity {
             Picasso.with(ctx).load(image).into(post_image);
 
 
+        }
+        public void setPrice(Context ctx , String Price)
+        {
+            TextView post_price = (TextView) mView.findViewById(R.id.PriceDisplay);
+            post_price.setText(Price);
         }
     }
 

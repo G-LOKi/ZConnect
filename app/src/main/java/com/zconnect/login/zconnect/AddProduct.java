@@ -28,10 +28,11 @@ public class AddProduct extends AppCompatActivity {
 
     private EditText mProductName;
     private EditText mProductDescription;
-
+    private EditText mProductPrice;
     private StorageReference mStorage;
     private DatabaseReference mDatabase;
     private ProgressDialog mProgress;
+
 
 
     private static final int GALLERY_REQUEST = 7;
@@ -44,6 +45,7 @@ public class AddProduct extends AppCompatActivity {
         mAddImage = (ImageButton)findViewById(R.id.imageButton);
         mProductName = (EditText)findViewById(R.id.nameOfProduct);
         mProductDescription = (EditText)findViewById(R.id.description);
+        mProductPrice = (EditText)findViewById(R.id.PriceColoumn);
         mPostBtn = (Button)findViewById(R.id.postButton);
         mStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
@@ -74,6 +76,7 @@ public class AddProduct extends AppCompatActivity {
         mProgress.show();
         final String productNameValue = mProductName.getText().toString().trim();
         final String productDescriptionValue = mProductDescription.getText().toString().trim();
+        final String productPrice = mProductPrice.getText().toString().trim();
 
         if(!TextUtils.isEmpty(productNameValue) && !TextUtils.isEmpty(productDescriptionValue)&& mImageUri!=null)
         {
@@ -83,10 +86,24 @@ public class AddProduct extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
 
-                    DatabaseReference newPost = mDatabase.push();
+                    { DatabaseReference newPost = mDatabase.push();
                     newPost.child("ProductName").setValue(productNameValue);
                     newPost.child("ProductDescription").setValue(productDescriptionValue);
                     newPost.child("Image").setValue(downloadUri.toString());
+                        newPost.child("Price").setValue(productPrice);
+                    }
+                    {//In Everything
+                        DatabaseReference newEvent = mDatabase.child("Everything").push();
+                        newEvent.child("type").setValue(0);
+                        newEvent.child("Title").setValue(productNameValue);
+                        newEvent.child("Description").setValue(productPrice);
+                        newEvent.child("Day").setValue(null);
+                        newEvent.child("Month").setValue(null);
+                        newEvent.child("Year").setValue(null);
+                        newEvent.child("Hour").setValue(null);
+                        newEvent.child("Minute").setValue(null);
+                        newEvent.child("Image_Url").setValue(downloadUri.toString());
+                    }
 
                     mProgress.dismiss();
                     startActivity(new Intent(AddProduct.this,StoreRoom.class));
