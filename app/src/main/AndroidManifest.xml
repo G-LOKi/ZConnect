@@ -46,7 +46,11 @@
             android:name=".StoreRoom"
             android:label="@string/title_activity_store_room"
             android:theme="@style/AppTheme" />
-        <activity android:name=".AddProduct"></activity>
+        <activity android:name=".AddProduct" />
+        <activity
+            android:name=".TabStoreRoom"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

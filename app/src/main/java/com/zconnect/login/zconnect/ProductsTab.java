@@ -1,17 +1,17 @@
 package com.zconnect.login.zconnect;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -34,50 +34,66 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class StoreRoom extends AppCompatActivity {
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class ProductsTab extends Fragment {
+
 
     private RecyclerView mProductList;
     private DatabaseReference mDatabase;
 
-        @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_store_room);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        mProductList = (RecyclerView) findViewById(R.id.productList);
-            mProductList.setHasFixedSize(true);
-            mProductList.setLayoutManager(new LinearLayoutManager(this));
-
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StoreRoom.this, AddProduct.class);
-                startActivity(intent);
-            }
-        });
+    public ProductsTab() {
+        // Required empty public constructor
+    }
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.activity_store_room, container, false);
+
+        //super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_store_room);
+        //Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        mProductList = (RecyclerView) view.findViewById(R.id.productList);
+        mProductList.setHasFixedSize(true);
+        mProductList.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
+
+//        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), AddProduct.class);
+//                startActivity(intent);
+//            }
+//        });
+        return view;
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<Product,ProductViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Product, ProductViewHolder>(
+        FirebaseRecyclerAdapter<Product,ProductsTab.ProductViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Product, ProductsTab.ProductViewHolder>(
 
                 Product.class,
                 R.layout.products_row,
-                ProductViewHolder.class,
+                ProductsTab.ProductViewHolder.class,
                 mDatabase
         ) {
 
             @Override
-            protected void populateViewHolder(ProductViewHolder viewHolder, Product model, int position) {
+            protected void populateViewHolder(ProductsTab.ProductViewHolder viewHolder, Product model, int position) {
                 viewHolder.defaultSwitch(model.getKey());
                 viewHolder.setSwitch(model.getKey());
                 viewHolder.setProductName(model.getProductName());
@@ -88,6 +104,7 @@ public class StoreRoom extends AppCompatActivity {
         };
         mProductList.setAdapter(firebaseRecyclerAdapter);
     }
+
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder{
 
@@ -195,7 +212,7 @@ public class StoreRoom extends AppCompatActivity {
                         Toast.makeText(mView.getContext(), key, Toast.LENGTH_SHORT).show();
                         List<String> list = new ArrayList<String>(Arrays.asList(keyList));
                         if (!list.contains(key))
-                        list.add(key);
+                            list.add(key);
 
                         ReservedUid = TextUtils.join(" ", list);
 
@@ -209,7 +226,7 @@ public class StoreRoom extends AppCompatActivity {
 
                     } else{
                         ReserveStatus.setText("Reserve Now");
-                           List<String> list = new ArrayList<String>(Arrays.asList(keyList));
+                        List<String> list = new ArrayList<String>(Arrays.asList(keyList));
 //                        //remove
                         list.remove(key);
 
@@ -244,7 +261,7 @@ public class StoreRoom extends AppCompatActivity {
 
         }
 
-        public void setImage(Context ctx,String image){
+        public void setImage(Context ctx, String image){
 
 
             ImageView post_image = (ImageView) mView.findViewById(R.id.postImg);
@@ -254,6 +271,5 @@ public class StoreRoom extends AppCompatActivity {
         }
 
     }
-
 
 }
