@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +33,7 @@ public class AddProduct extends AppCompatActivity {
     private StorageReference mStorage;
     private DatabaseReference mDatabase;
     private ProgressDialog mProgress;
+    private Spinner spinner1;
 
 
     private static final int GALLERY_REQUEST = 7;
@@ -47,6 +49,7 @@ public class AddProduct extends AppCompatActivity {
         mPostBtn = (Button)findViewById(R.id.postButton);
         mStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
+        spinner1 = (Spinner) findViewById(R.id.spinner1);
 
         mProgress = new ProgressDialog(this);
 
@@ -85,6 +88,7 @@ public class AddProduct extends AppCompatActivity {
 
                     DatabaseReference newPost = mDatabase.push();
                     String key = newPost.getKey();
+                    newPost.child("Category").setValue(String.valueOf(spinner1.getSelectedItem()));
                     newPost.child("Key").setValue(key);
                     newPost.child("ProductName").setValue(productNameValue);
                     newPost.child("ProductDescription").setValue(productDescriptionValue);

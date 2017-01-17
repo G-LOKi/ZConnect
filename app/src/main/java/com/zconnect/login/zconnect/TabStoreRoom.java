@@ -3,7 +3,6 @@ package com.zconnect.login.zconnect;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -11,13 +10,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 
@@ -37,12 +33,17 @@ public class TabStoreRoom extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    Toolbar mActionBarToolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_tab_store_room);
+        mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mActionBarToolbar);
+        getSupportActionBar().setTitle("StoreRoom");
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
@@ -155,6 +156,9 @@ public class TabStoreRoom extends AppCompatActivity {
                 case 1:
                     ReservedTab reservedTab = new ReservedTab();
                     return reservedTab;
+                case 2:
+                    CategoriesTab categoriesTab = new CategoriesTab();
+                    return categoriesTab;
                 default:
                     return null;
             }
@@ -167,7 +171,7 @@ public class TabStoreRoom extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
@@ -177,6 +181,8 @@ public class TabStoreRoom extends AppCompatActivity {
                     return "Products";
                 case 1:
                     return "Reserved Products";
+                case 2:
+                    return "Categories";
             }
             return null;
         }

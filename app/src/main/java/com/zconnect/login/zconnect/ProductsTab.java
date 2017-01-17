@@ -36,10 +36,6 @@ import java.util.Map;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ProductsTab extends Fragment {
 
 
@@ -49,7 +45,6 @@ public class ProductsTab extends Fragment {
     public ProductsTab() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,8 +56,6 @@ public class ProductsTab extends Fragment {
 
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_store_room);
-        //Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
         mProductList = (RecyclerView) view.findViewById(R.id.productList);
         mProductList.setHasFixedSize(true);
         mProductList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -130,26 +123,26 @@ public class ProductsTab extends Fragment {
             mAuth = FirebaseAuth.getInstance();
             FirebaseUser user = mAuth.getCurrentUser();
             final String userId = user.getUid();
-//            Toast.makeText(mView.getContext(), userId, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(mView.getContext(), userId, Toast.LENGTH_SHORT).show();
 
             ReserveReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ReservedUid = (String)dataSnapshot.child(userId +"/Reserved").getValue();
-//                    Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
 
 //                    if(ReservedUid == null)
 //                        ReservedUid = "   ";
 
                     keyList = ReservedUid.split(" ");
 
-                    Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
                     //check the current state before we display the screen
                     List<String> list = new ArrayList<String>(Arrays.asList(keyList));
                     if (list.contains(key))
                     {
                         mReserve.setChecked(true);
-                        Toast.makeText(mView.getContext(), "Contains Id", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mView.getContext(), "Contains Id", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         mReserve.setChecked(false);
@@ -175,20 +168,18 @@ public class ProductsTab extends Fragment {
             mAuth = FirebaseAuth.getInstance();
             FirebaseUser user = mAuth.getCurrentUser();
             final String userId = user.getUid();
-            Toast.makeText(mView.getContext(), userId, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mView.getContext(), userId, Toast.LENGTH_SHORT).show();
 
             ReserveReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ReservedUid = (String)dataSnapshot.child(userId +"/Reserved").getValue();
-                    Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
 
                     if(ReservedUid == null)
                         ReservedUid = "   ";
 
                     keyList = ReservedUid.split(" ");
-
-
 
                 }
 
@@ -209,14 +200,14 @@ public class ProductsTab extends Fragment {
 
                     if(isChecked){
                         ReserveStatus.setText("Product Reserved");
-                        Toast.makeText(mView.getContext(), key, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mView.getContext(), key, Toast.LENGTH_SHORT).show();
                         List<String> list = new ArrayList<String>(Arrays.asList(keyList));
                         if (!list.contains(key))
                             list.add(key);
 
                         ReservedUid = TextUtils.join(" ", list);
 
-                        Toast.makeText(mView.getContext(),ReservedUid, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mView.getContext(),ReservedUid, Toast.LENGTH_SHORT).show();
                         DatabaseReference newPost = ReserveReference.child(userId);
                         Map<String, Object> childUpdates = new HashMap<>();
                         childUpdates.put("Reserved", ReservedUid);

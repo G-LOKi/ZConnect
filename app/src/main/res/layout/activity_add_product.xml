@@ -39,6 +39,7 @@
         android:layout_centerHorizontal="true"
         android:padding="10dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:background="@drawable/input_outline"
         android:hint="add description"
         android:layout_margin="7dp" />
@@ -53,4 +54,16 @@
         android:layout_centerHorizontal="true"
         android:textColor="#ffffff"
         android:textSize="20dp" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/categories"
+        android:prompt="@string/category_prompt"
+        android:layout_above="@+id/postButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="31dp" />
+
 </RelativeLayout>
