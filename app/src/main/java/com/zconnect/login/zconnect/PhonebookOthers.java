@@ -23,9 +23,10 @@ import static android.view.View.VISIBLE;
 
 public class PhonebookOthers extends Fragment {
     Vector<PhonebookItem> phonebookItems = new Vector<>();
+    Vector<PhonebookDisplayItem> phonebookDisplayItems = new Vector<>();
     private PhonebookAdapter adapter;
     private RecyclerView recyclerView;
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("ZConnect").child("Phonebook").child("Others");
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("ZConnect").child("Phonebook");
     private ProgressBar progressBar;
 
     public PhonebookOthers() {
@@ -71,9 +72,16 @@ public class PhonebookOthers extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 progressBar.setVisibility(VISIBLE);
                 phonebookItems.clear();
+                phonebookDisplayItems.clear();
                 for (DataSnapshot shot : dataSnapshot.getChildren()) {
 
-                    phonebookItems.add(shot.getValue(PhonebookItem.class));
+                    phonebookDisplayItems.add(shot.getValue(PhonebookDisplayItem.class));
+                }
+                for (int i = 0; i < phonebookDisplayItems.size(); i++) {
+                    if (phonebookDisplayItems.get(i).getCategory().equals("O")) {
+                        phonebookItems.add(new PhonebookItem(phonebookDisplayItems.get(i).getImageurl(), phonebookDisplayItems.get(i).getName(), phonebookDisplayItems.get(i).getNumber(), phonebookDisplayItems.get(i)));
+                    }
+
                 }
                 adapter.notifyDataSetChanged();
                 progressBar.setVisibility(INVISIBLE);

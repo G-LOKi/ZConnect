@@ -8,21 +8,29 @@ public class PhonebookItem {
     String imgurl;
     String name;
     String number;
+    PhonebookDisplayItem phonebookDisplayItem;
 
-    public PhonebookItem(String imgurl, String name, String number) {
+    public PhonebookItem(String imgurl, String name, String number, PhonebookDisplayItem phonebookDisplayItem) {
         this.imgurl = imgurl;
         this.name = name;
         this.number = number;
+        this.phonebookDisplayItem = phonebookDisplayItem;
     }
 
     public PhonebookItem() {
-        this.imgurl = "";
-        this.name = "";
-        this.number = "";
+    }
+
+    public PhonebookDisplayItem getPhonebookDisplayItem() {
+        return phonebookDisplayItem;
+    }
+
+    public void setPhonebookDisplayItem(PhonebookDisplayItem phonebookDisplayItem) {
+        this.phonebookDisplayItem = phonebookDisplayItem;
     }
 
     public String getImgurl() {
-        return imgurl;
+        if (phonebookDisplayItem != null) return phonebookDisplayItem.getImageurl();
+        else return "";
     }
 
     public void setImgurl(String imgurl) {
@@ -30,7 +38,8 @@ public class PhonebookItem {
     }
 
     public String getName() {
-        return name;
+        if (phonebookDisplayItem != null) return phonebookDisplayItem.getName();
+        else return "";
     }
 
     public void setName(String name) {
@@ -38,7 +47,8 @@ public class PhonebookItem {
     }
 
     public String getNumber() {
-        return number;
+        if (phonebookDisplayItem != null) return phonebookDisplayItem.getNumber();
+        else return "";
     }
 
     public void setNumber(String number) {

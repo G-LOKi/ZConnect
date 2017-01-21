@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,10 @@ import static android.view.View.VISIBLE;
 
 public class PhonebookAdmin extends Fragment {
     Vector<PhonebookItem> phonebookItems = new Vector<>();
+    Vector<PhonebookDisplayItem> phonebookDisplayItems = new Vector<>();
     private PhonebookAdapter adapter;
     private RecyclerView recyclerView;
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("ZConnect").child("Phonebook").child("Admin");
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("ZConnect").child("Phonebook");
     private ProgressBar progressBar;
 
     public PhonebookAdmin() {
@@ -71,9 +73,17 @@ public class PhonebookAdmin extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 progressBar.setVisibility(VISIBLE);
                 phonebookItems.clear();
+                phonebookDisplayItems.clear();
                 for (DataSnapshot shot : dataSnapshot.getChildren()) {
 
-                    phonebookItems.add(shot.getValue(PhonebookItem.class));
+                    phonebookDisplayItems.add(shot.getValue(PhonebookDisplayItem.class));
+                }
+                for (int i = 0; i < phonebookDisplayItems.size(); i++) {
+                    Log.v("tag", phonebookDisplayItems.get(i).getCategory());
+                    if (phonebookDisplayItems.get(i).getCategory().equals("A")) {
+                        phonebookItems.add(new PhonebookItem(phonebookDisplayItems.get(i).getImageurl(), phonebookDisplayItems.get(i).getName(), phonebookDisplayItems.get(i).getNumber(), phonebookDisplayItems.get(i)));
+                    }
+
                 }
                 adapter.notifyDataSetChanged();
                 progressBar.setVisibility(INVISIBLE);

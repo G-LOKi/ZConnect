@@ -95,10 +95,6 @@ public class Phonebook extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-
-    /**
-     * Custom class to manage fragments , DayZERO, DayONE, DayTWO, DayTHREE
-     */
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
