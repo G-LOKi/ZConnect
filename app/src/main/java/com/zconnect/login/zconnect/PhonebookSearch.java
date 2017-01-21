@@ -5,8 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -89,8 +88,8 @@ public class PhonebookSearch extends AppCompatActivity {
         searchAdapter = new PhonebookAdapter(searchContact, PhonebookSearch.this);
 
         searchEventList.setHasFixedSize(true);
-        searchEventList.setLayoutManager(new LinearLayoutManager(PhonebookSearch.this));
-        searchEventList.setItemAnimator(new DefaultItemAnimator());
+        searchEventList.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
+        //Setup layout manager. VERY IMP ALWAYS
         searchEventList.setAdapter(searchAdapter);
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 
