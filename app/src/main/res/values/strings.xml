@@ -80,11 +80,14 @@
         <item>Electronics</item>
         <item>BeanBags</item>
         <item>Speakers and Headphones</item>
+        <item>Fashion</item>
         <item>Storage</item>
         <item>Books</item>
         <item>Lab Coats</item>
-        <item>Room nessecities</item>
+        <item>Room Necessities</item>
+        <item>Novels</item>
         <item>Others</item>
+
     </string-array>
 
 </resources>

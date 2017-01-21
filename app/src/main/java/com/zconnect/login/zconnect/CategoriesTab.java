@@ -2,25 +2,20 @@ package com.zconnect.login.zconnect;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Switch;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.squareup.picasso.Picasso;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
+import java.util.ArrayList;
 
 
 /**
@@ -28,10 +23,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 public class CategoriesTab extends Fragment {
 
-    DatabaseReference mDatabase;
-    private RecyclerView mProductList;
-
-
+    GridView category;
 
     public CategoriesTab() {
         // Required empty public constructor
@@ -41,82 +33,105 @@ public class CategoriesTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_store_room, container, false);
-        mProductList = (RecyclerView) view.findViewById(R.id.productList);
-        mProductList.setHasFixedSize(true);
-        mProductList.setLayoutManager(new LinearLayoutManager(getContext()));
+        View view = inflater.inflate(R.layout.fragment_categories_tab, container, false);
+        category = (GridView) view.findViewById(R.id.category_grid);
+        category.setAdapter(new CategoryAdapter(getContext()));
+//        category.setOnItemClickListener(this);
 
-
-        // Inflate the layout for this fragment
         return view;
     }
+//    @Override
+//    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//        Intent intent = new Intent(this.getActivity(),StoreRoom.class);
+//        viewHolder holder = (viewHolder) view.getTag();
+//        EachCategory temp = (EachCategory) holder.categoryImage.getTag();
+////        intent.putExtra("category",temp.categoryName);
+//        startActivity(intent);
+//        Toast.makeText(this.getContext(),temp.categoryName, Toast.LENGTH_SHORT).show();
+//    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
-
-        Query mQueryCat = mDatabase.orderByChild("category").equalTo("");
-
-        FirebaseRecyclerAdapter<Product, ReservedTab.ProductViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Product, ReservedTab.ProductViewHolder>(
-                Product.class,
-                R.layout.reserved_products_row,
-                ReservedTab.ProductViewHolder.class,
-                mQueryCat
-        ) {
-            @Override
-            protected void populateViewHolder(ReservedTab.ProductViewHolder viewHolder, Product model, int position) {
-
-                    viewHolder.setProductName(model.getProductName());
-                    viewHolder.setProductDesc(model.getProductDescription());
-                    viewHolder.setImage(getApplicationContext(), model.getImage());
-
-            }
-        };
-        mProductList.setAdapter(firebaseRecyclerAdapter);
+}
+class EachCategory
+{
+    int categoryIcon;
+    String categoryName;
+    EachCategory (int categoryIcon,String categoryName){
+        this.categoryIcon = categoryIcon;
+        this.categoryName = categoryName;
     }
+}
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder{
-
-
-        private DatabaseReference ReserveReference;
-        View mView;
-        private Switch mReserve;
-        private TextView ReserveStatus;
-        private FirebaseAuth mAuth;
-        String [] keyList;
-        String ReservedUid;
-
-        public ProductViewHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
-
-        }
-
-        public void setProductName(String productName){
-
-            TextView post_name = (TextView) mView.findViewById(R.id.productName);
-            post_name.setText(productName);
-
-        }
-
-        public void setProductDesc(String productDesc){
-
-            TextView post_desc = (TextView) mView.findViewById(R.id.productDescription);
-            post_desc.setText(productDesc);
-
-        }
-
-        public void setImage(Context ctx, String image){
-
-
-            ImageView post_image = (ImageView) mView.findViewById(R.id.postImg);
-            Picasso.with(ctx).load(image).into(post_image);
-
-
-        }
-
+class viewHolder
+{
+    ImageView categoryImage;
+    viewHolder(View view){
+        categoryImage = (ImageView) view.findViewById(R.id.categoryImage);
     }
 
 }
+
+    class CategoryAdapter extends BaseAdapter{
+
+        ArrayList<EachCategory> list;
+        Context context;
+
+        CategoryAdapter(Context context){
+            this.context=context;
+            list =new ArrayList<EachCategory>();
+            Resources res= context.getResources();
+            String [] categoriesNames = res.getStringArray(R.array.categories);
+            int [] categoriesIcons = {R.drawable.electronics,R.drawable.beanbags,R.drawable.speakers,R.drawable.fashion,R.drawable.storage,R.drawable.books,R.drawable.labcoats,R.drawable.roomnecessities,R.drawable.novels,R.drawable.others};
+            for (int i=0;i<10;i++){
+                EachCategory tempCategory = new EachCategory(categoriesIcons[i],categoriesNames[i]);
+                list.add(tempCategory);
+            }
+        }
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return list.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            View row=view;
+            viewHolder holder =null;
+            if (row==null)
+            {
+                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+               row=inflater.inflate(R.layout.single_category,viewGroup,false);
+                holder = new viewHolder(row);
+                row.setTag(holder);
+            }else
+            {
+
+                holder = (viewHolder) row.getTag();
+            }
+            final EachCategory temp= list.get(i);
+            holder.categoryImage.setImageResource(temp.categoryIcon);
+            row.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(),StoreRoom.class);
+                    intent.putExtra("Category",temp.categoryName);
+                    context.startActivity(intent);
+
+                }
+            });
+            return row;
+
+        }
+    }

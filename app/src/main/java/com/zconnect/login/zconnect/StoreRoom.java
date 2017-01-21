@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -39,27 +40,37 @@ public class StoreRoom extends AppCompatActivity {
 
     private RecyclerView mProductList;
     private DatabaseReference mDatabase;
+    public String category;
+    Query queryCategory;
 
-        @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_room);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+            Intent intent =getIntent();
+            if (intent!=null)
+            {
+                category= intent.getStringExtra("Category");
+            }
+        Toast.makeText(this, category, Toast.LENGTH_SHORT).show();
         mProductList = (RecyclerView) findViewById(R.id.productList);
             mProductList.setHasFixedSize(true);
             mProductList.setLayoutManager(new LinearLayoutManager(this));
 
             mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StoreRoom.this, AddProduct.class);
-                startActivity(intent);
-            }
-        });
+            queryCategory = mDatabase.orderByChild("Category").equalTo(category);
+
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(StoreRoom.this, AddProduct.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
     }
@@ -73,7 +84,7 @@ public class StoreRoom extends AppCompatActivity {
                 Product.class,
                 R.layout.products_row,
                 ProductViewHolder.class,
-                mDatabase
+                queryCategory
         ) {
 
             @Override
@@ -126,13 +137,13 @@ public class StoreRoom extends AppCompatActivity {
 
                     keyList = ReservedUid.split(" ");
 
-                    Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
                     //check the current state before we display the screen
                     List<String> list = new ArrayList<String>(Arrays.asList(keyList));
                     if (list.contains(key))
                     {
                         mReserve.setChecked(true);
-                        Toast.makeText(mView.getContext(), "Contains Id", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mView.getContext(), "Contains Id", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         mReserve.setChecked(false);
@@ -158,13 +169,13 @@ public class StoreRoom extends AppCompatActivity {
             mAuth = FirebaseAuth.getInstance();
             FirebaseUser user = mAuth.getCurrentUser();
             final String userId = user.getUid();
-            Toast.makeText(mView.getContext(), userId, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mView.getContext(), userId, Toast.LENGTH_SHORT).show();
 
             ReserveReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ReservedUid = (String)dataSnapshot.child(userId +"/Reserved").getValue();
-                    Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
 
                     if(ReservedUid == null)
                         ReservedUid = "   ";
@@ -192,14 +203,14 @@ public class StoreRoom extends AppCompatActivity {
 
                     if(isChecked){
                         ReserveStatus.setText("Product Reserved");
-                        Toast.makeText(mView.getContext(), key, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mView.getContext(), key, Toast.LENGTH_SHORT).show();
                         List<String> list = new ArrayList<String>(Arrays.asList(keyList));
                         if (!list.contains(key))
                         list.add(key);
 
                         ReservedUid = TextUtils.join(" ", list);
 
-                        Toast.makeText(mView.getContext(),ReservedUid, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mView.getContext(),ReservedUid, Toast.LENGTH_SHORT).show();
                         DatabaseReference newPost = ReserveReference.child(userId);
                         Map<String, Object> childUpdates = new HashMap<>();
                         childUpdates.put("Reserved", ReservedUid);
