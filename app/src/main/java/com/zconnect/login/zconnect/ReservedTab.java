@@ -2,36 +2,26 @@ package com.zconnect.login.zconnect;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -44,6 +34,7 @@ public class ReservedTab extends Fragment {
     private FirebaseAuth mAuth;
     String reserveString;
     Query query;
+    private ImageButton DeleteButton;
 
     public ReservedTab() {
         // Required empty public constructor
@@ -99,16 +90,28 @@ public class ReservedTab extends Fragment {
                 query
         ) {
             @Override
-            protected void populateViewHolder(ProductViewHolder viewHolder, Product model, int position) {
+            protected void populateViewHolder(final ProductViewHolder viewHolder, Product model, int position) {
 
+                    final String product_key = getRef(position).getKey();
 
 //               if(reserveList.contains(model.getKey())) {
                     viewHolder.setProductName(model.getProductName());
                     viewHolder.setProductDesc(model.getProductDescription());
                     viewHolder.setImage(getApplicationContext(), model.getImage());
-
 //                }else {
 //               }
+                viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        viewHolder.ReserveReference = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom/"+product_key+"/UsersReserved");
+
+                        mAuth = FirebaseAuth.getInstance();
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        final String userId = user.getUid();
+                        viewHolder.ReserveReference.child(userId).removeValue();
+                    }
+                });
 
             }
         };
@@ -122,6 +125,7 @@ public class ReservedTab extends Fragment {
         View mView;
         private Switch mReserve;
         private TextView ReserveStatus;
+        private ImageButton deleteButton;
         private FirebaseAuth mAuth;
         String [] keyList;
         String ReservedUid;
@@ -129,7 +133,8 @@ public class ReservedTab extends Fragment {
         public ProductViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-
+            //to delete reserved items
+            deleteButton = (ImageButton)mView.findViewById(R.id.delete);
         }
 
         public void setProductName(String productName){
