@@ -1,4 +1,4 @@
-package com.zconnect.login.zconnect;
+package com.zconnect.login.zconnect.Phonebook_File;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.zconnect.login.zconnect.R;
 
 import java.util.Vector;
 
@@ -21,7 +22,7 @@ import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 
-public class PhonebookAdmin extends Fragment {
+public class PhonebookOthers extends Fragment {
     Vector<PhonebookItem> phonebookItems = new Vector<>();
     Vector<PhonebookDisplayItem> phonebookDisplayItems = new Vector<>();
     private PhonebookAdapter adapter;
@@ -29,19 +30,19 @@ public class PhonebookAdmin extends Fragment {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("ZConnect").child("Phonebook");
     private ProgressBar progressBar;
 
-    public PhonebookAdmin() {
+    public PhonebookOthers() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //Create Fragment view
-        View view = inflater.inflate(R.layout.fragment_phonebook_admin, container, false);
+        View view = inflater.inflate(R.layout.fragment_phonebook_others, container, false);
 
         //Reference views---------------------------------------------------------------------------
-        recyclerView = (RecyclerView) view.findViewById(R.id.admin_phone_rv);
-        progressBar = (ProgressBar) view.findViewById(R.id.admin_phone_progress);
+        recyclerView = (RecyclerView) view.findViewById(R.id.others_phone_rv);
+        progressBar = (ProgressBar) view.findViewById(R.id.others_phone_progress);
 
         //MAIN--------------------------------------------------------------------------------------
 
@@ -59,7 +60,7 @@ public class PhonebookAdmin extends Fragment {
 
 
         return view;
-
+        // Inflate the layout for this fragment
 
     }
 
@@ -78,7 +79,7 @@ public class PhonebookAdmin extends Fragment {
                     phonebookDisplayItems.add(shot.getValue(PhonebookDisplayItem.class));
                 }
                 for (int i = 0; i < phonebookDisplayItems.size(); i++) {
-                    if (phonebookDisplayItems.get(i).getCategory() != null && phonebookDisplayItems.get(i).getCategory().equals("A")) {
+                    if (phonebookDisplayItems.get(i).getCategory() != null && phonebookDisplayItems.get(i).getCategory().equals("O")) {
                         phonebookItems.add(new PhonebookItem(phonebookDisplayItems.get(i).getImageurl(), phonebookDisplayItems.get(i).getName(), phonebookDisplayItems.get(i).getNumber(), phonebookDisplayItems.get(i)));
                     }
 

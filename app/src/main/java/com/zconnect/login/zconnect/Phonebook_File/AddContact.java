@@ -1,4 +1,4 @@
-package com.zconnect.login.zconnect;
+package com.zconnect.login.zconnect.Phonebook_File;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -28,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.zconnect.login.zconnect.R;
 
 public class AddContact extends AppCompatActivity {
     public static final int SELECT_PICTURE = 1;
@@ -162,8 +163,8 @@ public class AddContact extends AppCompatActivity {
         email = editTextEmail.getText().toString().trim();
         details = editTextDetails.getText().toString().trim();
         number = editTextNumber.getText().toString().trim();
-        imageurl = imageuri.toString();
-        if (name != null && number != null && email != null && details != null && category != null && imageurl != null) {
+//        imageurl = imageuri.toString();
+        if (name != null && number != null && email != null && details != null && category != null && imageuri != null) {
             StorageReference filepath = mStorage.child("PhonebookImage").child(imageuri.getLastPathSegment());
             filepath.putFile(imageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
