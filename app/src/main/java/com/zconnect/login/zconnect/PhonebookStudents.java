@@ -77,7 +77,7 @@ public class PhonebookStudents extends Fragment {
                     phonebookDisplayItems.add(shot.getValue(PhonebookDisplayItem.class));
                 }
                 for (int i = 0; i < phonebookDisplayItems.size(); i++) {
-                    if (phonebookDisplayItems.get(i).getCategory().equals("S")) {
+                    if (phonebookDisplayItems.get(i).getCategory() != null && phonebookDisplayItems.get(i).getCategory().equals("S")) {
                         phonebookItems.add(new PhonebookItem(phonebookDisplayItems.get(i).getImageurl(), phonebookDisplayItems.get(i).getName(), phonebookDisplayItems.get(i).getNumber(), phonebookDisplayItems.get(i)));
                     }
 
