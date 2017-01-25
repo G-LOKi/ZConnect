@@ -1,20 +1,13 @@
 package com.zconnect.login.zconnect;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import com.zconnect.login.zconnect.Shop.ShopDetails;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.zconnect.login.zconnect.Shop.Details_of_shop.ShopDetails;
 
 
 public class logo extends AppCompatActivity {
