@@ -95,6 +95,7 @@ public class TabStoreRoom extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_storeroom) {
            // Add the onclicklistner code
+            startActivity(new Intent(TabStoreRoom.this, MyProducts.class));
             return true;
         }
 

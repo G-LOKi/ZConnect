@@ -180,24 +180,7 @@ public class ProductsTab extends Fragment {
                         mReserve.setChecked(false);
                     }
                     mReserve.setOnCheckedChangeListener(mListener);
-//                    ReservedUid = (String)dataSnapshot.child(userId +"/Reserved").getValue();
-//
-////                    if(ReservedUid == null)
-////                        ReservedUid = "   ";
-//
-//                    keyList = ReservedUid.split(" ");
-//
-//                    // Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
-//                    //check the current state before we display the screen
-//                    List<String> list = new ArrayList<String>(Arrays.asList(keyList));
-//                    if (list.contains(key))
-//                    {
-//                        mReserve.setChecked(true);
-//                        //Toast.makeText(mView.getContext(), "Contains Id", Toast.LENGTH_SHORT).show();
-//                    }
-//                    else {
-//                        mReserve.setChecked(false);
-//                    }
+
                 }
 
                 @Override

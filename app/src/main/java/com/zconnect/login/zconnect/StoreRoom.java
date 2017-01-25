@@ -42,6 +42,8 @@ public class StoreRoom extends AppCompatActivity {
     private DatabaseReference mDatabase;
     public String category;
     Query queryCategory;
+    private FirebaseAuth mAuth;
+    private boolean flag=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +61,12 @@ public class StoreRoom extends AppCompatActivity {
             mProductList.setHasFixedSize(true);
             mProductList.setLayoutManager(new LinearLayoutManager(this));
 
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
+        mAuth = FirebaseAuth.getInstance();
 
+
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
             queryCategory = mDatabase.orderByChild("Category").equalTo(category);
+        mDatabase.keepSynced(true);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -89,12 +94,42 @@ public class StoreRoom extends AppCompatActivity {
         ) {
 
             @Override
-            protected void populateViewHolder(ProductViewHolder viewHolder, Product model, int position) {
+            protected void populateViewHolder(ProductViewHolder viewHolder, final Product model, int position) {
                 viewHolder.defaultSwitch(model.getKey());
-                viewHolder.setSwitch(model.getKey());
+                //viewHolder.setSwitch(model.getKey());
                 viewHolder.setProductName(model.getProductName());
                 viewHolder.setProductDesc(model.getProductDescription());
                 viewHolder.setImage(getApplicationContext(), model.getImage());
+
+                viewHolder.mListener = new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        flag = true;
+
+                        mDatabase.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                if (flag) {
+                                    if (dataSnapshot.child(model.getKey()).child("UsersReserved").hasChild(mAuth.getCurrentUser().getUid())) {
+                                        mDatabase.child(model.getKey()).child("UsersReserved").child(mAuth.getCurrentUser().getUid()).removeValue();
+                                        flag = false;
+                                    } else {
+
+                                        mDatabase.child(model.getKey()).child("UsersReserved").child(mAuth.getCurrentUser().getUid()).setValue(mAuth.getCurrentUser().getDisplayName());
+                                        flag = false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                };
+                viewHolder.mReserve.setOnCheckedChangeListener(viewHolder.mListener);
 
             }
         };
@@ -103,144 +138,56 @@ public class StoreRoom extends AppCompatActivity {
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder{
 
-        private DatabaseReference ReserveReference;
         View mView;
         private Switch mReserve;
         private TextView ReserveStatus;
+        private DatabaseReference StoreRoom= FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
         private FirebaseAuth mAuth;
         String [] keyList;
         String ReservedUid;
+        public CompoundButton.OnCheckedChangeListener mListener;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
+            mReserve = (Switch)mView.findViewById(R.id.switch1);
+            ReserveStatus = (TextView)mView.findViewById(R.id.switch1);
+            StoreRoom.keepSynced(true);
 
         }
 
         public void defaultSwitch(final String key)
         {
-            ReserveStatus = (TextView) mView.findViewById(R.id.switch1);
-            mReserve = (Switch) mView.findViewById(R.id.switch1);
-            ReserveReference = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
+            // Getting User ID
             mAuth = FirebaseAuth.getInstance();
             FirebaseUser user = mAuth.getCurrentUser();
             final String userId = user.getUid();
-//            Toast.makeText(mView.getContext(), userId, Toast.LENGTH_SHORT).show();
 
-            ReserveReference.addValueEventListener(new ValueEventListener() {
+            //Getting  data from database
+            StoreRoom.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    ReservedUid = (String)dataSnapshot.child(userId +"/Reserved").getValue();
-//                    Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
-
-//                    if(ReservedUid == null)
-//                        ReservedUid = "   ";
-
-                    keyList = ReservedUid.split(" ");
-
-//                    Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
-                    //check the current state before we display the screen
-                    List<String> list = new ArrayList<String>(Arrays.asList(keyList));
-                    if (list.contains(key))
+                    mReserve.setOnCheckedChangeListener(null);
+                    if(dataSnapshot.child(key).child("UsersReserved").hasChild(userId))
                     {
                         mReserve.setChecked(true);
-//                        Toast.makeText(mView.getContext(), "Contains Id", Toast.LENGTH_SHORT).show();
                     }
-                    else {
+                    else{
                         mReserve.setChecked(false);
                     }
+                    mReserve.setOnCheckedChangeListener(mListener);
+
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
+
             });
 
 
         }
-        public void setSwitch(final String key)
-        {
-            ReserveStatus = (TextView) mView.findViewById(R.id.switch1);
-            mReserve = (Switch) mView.findViewById(R.id.switch1);
-            //set the switch to ON
-
-            //attach a listener to check for changes in state
-            ReserveReference = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
-            mAuth = FirebaseAuth.getInstance();
-            FirebaseUser user = mAuth.getCurrentUser();
-            final String userId = user.getUid();
-//            Toast.makeText(mView.getContext(), userId, Toast.LENGTH_SHORT).show();
-
-            ReserveReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    ReservedUid = (String)dataSnapshot.child(userId +"/Reserved").getValue();
-//                    Toast.makeText(mView.getContext(), ReservedUid, Toast.LENGTH_SHORT).show();
-
-                    if(ReservedUid == null)
-                        ReservedUid = "   ";
-
-                    keyList = ReservedUid.split(" ");
-
-
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-
-
-            mReserve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-
-
-                    if(isChecked){
-                        ReserveStatus.setText("Product Reserved");
-//                        Toast.makeText(mView.getContext(), key, Toast.LENGTH_SHORT).show();
-                        List<String> list = new ArrayList<String>(Arrays.asList(keyList));
-                        if (!list.contains(key))
-                        list.add(key);
-
-                        ReservedUid = TextUtils.join(" ", list);
-
-//                        Toast.makeText(mView.getContext(),ReservedUid, Toast.LENGTH_SHORT).show();
-                        DatabaseReference newPost = ReserveReference.child(userId);
-                        Map<String, Object> childUpdates = new HashMap<>();
-                        childUpdates.put("Reserved", ReservedUid);
-                        newPost.updateChildren(childUpdates);
-
-
-
-                    } else{
-                        ReserveStatus.setText("Reserve Now");
-                           List<String> list = new ArrayList<String>(Arrays.asList(keyList));
-//                        //remove
-                        list.remove(key);
-
-                        ReservedUid = TextUtils.join(" ", list);
-                        DatabaseReference newPost = ReserveReference.child(userId);
-                        Map<String, Object> childUpdates = new HashMap<>();
-                        childUpdates.put("Reserved", ReservedUid);
-                        newPost.updateChildren(childUpdates);
-                    }
-
-
-                }
-            });
-
-
-
-
-        };
-
 
         public void setProductName(String productName){
 

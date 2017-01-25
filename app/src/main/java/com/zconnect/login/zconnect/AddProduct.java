@@ -34,6 +34,7 @@ public class AddProduct extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private ProgressDialog mProgress;
     private Spinner spinner1;
+    private FirebaseAuth mAuth;
 
 
     private static final int GALLERY_REQUEST = 7;
@@ -50,7 +51,7 @@ public class AddProduct extends AppCompatActivity {
         mStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
         spinner1 = (Spinner) findViewById(R.id.spinner1);
-
+        mAuth = FirebaseAuth.getInstance();
         mProgress = new ProgressDialog(this);
 
         mAddImage.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +94,7 @@ public class AddProduct extends AppCompatActivity {
                     newPost.child("ProductName").setValue(productNameValue);
                     newPost.child("ProductDescription").setValue(productDescriptionValue);
                     newPost.child("Image").setValue(downloadUri.toString());
+                    newPost.child("PostedBy").setValue(mAuth.getCurrentUser().getUid());
 
                     mProgress.dismiss();
                     startActivity(new Intent(AddProduct.this,TabStoreRoom.class));
