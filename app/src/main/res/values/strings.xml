@@ -63,8 +63,9 @@
     <string name="action_settings">Settings</string>
     <string name="zconnect">ZConnect</string>
     <string name="menu_title">Features</string>
-    <string name="item_1">item1</string>
-    <string name="item_2">item 2</string>
+    <string name="item_1">Store room</string>
+    <string name="item_2">Events</string>
+    <string name="item_3">Phonebook</string>
     <string name="description">Hurrey</string>
     <string name="title_activity_phonebook">Phonebook</string>
     <string name="section_format">Hello World from section: %1$d</string>
@@ -73,5 +74,28 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_add_contact">AddContact</string>
     <string name="title_activity_phonebook_display">PhonebookDisplay</string>
+    <string name="title_activity_store_room">StoreRoom</string>
+    <string name="add_name">Add name</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!--&lt;!&ndash; TODO: Remove or change this placeholder text &ndash;&gt;-->
+    <!--<string name="hello_blank_fragment">Hello blank fragment</string>-->
+    <string name="category_prompt">Choose category</string>
+
+
+    <string-array name="categories">
+        <item>Electronics</item>
+        <item>BeanBags</item>
+        <item>Speakers and Headphones</item>
+        <item>Fashion</item>
+        <item>Storage</item>
+        <item>Books</item>
+        <item>Lab Coats</item>
+        <item>Room Necessities</item>
+        <item>Novels</item>
+        <item>Others</item>
+
+    </string-array>
 
 </resources>

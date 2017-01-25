@@ -1,23 +1,24 @@
 package com.zconnect.login.zconnect;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
+        import android.app.ProgressDialog;
+        import android.content.Intent;
+        import android.support.annotation.NonNull;
+        import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
+        import android.util.DisplayMetrics;
+        import android.util.Log;
+        import android.view.Gravity;
+        import android.view.View;
+        import android.view.animation.Animation;
+        import android.view.animation.TranslateAnimation;
+        import android.widget.Button;
+        import android.widget.FrameLayout;
+        import android.widget.ImageView;
+        import android.widget.LinearLayout;
+        import android.widget.ListView;
+        import android.widget.RelativeLayout;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -38,21 +39,20 @@ import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
 
 public class home extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
-    private static final String TAG = "SignOutActivity";
-    private static final int RC_SIGN_IN = 9001;
-    FrameLayout.LayoutParams menuPanelParameters;
-    FrameLayout.LayoutParams slidingPanelParameters;
-    LinearLayout.LayoutParams headerPanelParameters;
-    LinearLayout.LayoutParams listViewParameters;
     private GoogleApiClient mGoogleApiClient;
     private com.google.android.gms.common.SignInButton signInButton;
-
-
-    /////Menu Bar
     private Button signOutButton;
+
+    private static final String TAG = "SignOutActivity";
+    private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
     private ProgressDialog mProgressDialog;
+
+
+/////Menu Bar
+
     private LinearLayout slidingPanel;
     private boolean isExpanded;
     private DisplayMetrics metrics;
@@ -61,12 +61,17 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
     private RelativeLayout menuPanel;
     private int panelWidth;
     private ImageView menuViewButton;
+
+    FrameLayout.LayoutParams menuPanelParameters;
+    FrameLayout.LayoutParams slidingPanelParameters;
+    LinearLayout.LayoutParams headerPanelParameters ;
+    LinearLayout.LayoutParams listViewParameters;
 /////MenuBar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comunitylist);
+        setContentView(R.layout.activity_home);
 
         /////MenuBar
 
@@ -165,6 +170,30 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
             }
         };
 
+        final TextView storeroom_item_1 = (TextView) findViewById(R.id.menu_item_1);
+        storeroom_item_1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(home.this, TabStoreRoom.class);
+                startActivity(intent);
+                // request your webservice here. Possible use of AsyncTask and ProgressDialog
+                // show the result here - dialog or Toast
+            }
+
+        });
+        final TextView storeroom_item_3 = (TextView) findViewById(R.id.menu_item_3);
+        storeroom_item_3.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(home.this, Phonebook.class);
+                startActivity(intent);
+                // request your webservice here. Possible use of AsyncTask and ProgressDialog
+                // show the result here - dialog or Toast
+            }
+
+        });
     }
 
 
@@ -281,15 +310,11 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
 
     @Override
     public void onClick(View view) {
-//        switch (view.getId())
-//        {
-//            case R.id.sign_out_button:
-//                signOut();
-//                break;
-//        }
-        if (view.getId() == R.id.sign_out_button) {
-            Intent intent = new Intent(this, Phonebook.class);
-            startActivity(intent);
+        switch (view.getId())
+        {
+            case R.id.sign_out_button:
+                signOut();
+                break;
         }
 
     }
