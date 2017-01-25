@@ -22,6 +22,7 @@
                 android:scaleType="centerCrop" />
 
 
+
             <TextView
                 android:id="@+id/event"
                 android:layout_width="match_parent"
@@ -47,6 +48,7 @@
             android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:paddingBottom="5dp"
             android:paddingLeft="0dp"
             android:paddingRight="5dp"
