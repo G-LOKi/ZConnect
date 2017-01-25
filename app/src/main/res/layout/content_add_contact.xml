@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.zconnect.login.zconnect.AddContact"
+    tools:context="com.zconnect.login.zconnect.Phonebook_File.AddContact"
     tools:showIn="@layout/activity_add_contact">
 
     <com.facebook.drawee.view.SimpleDraweeView

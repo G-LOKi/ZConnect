@@ -44,7 +44,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Phonebook"
+            android:name=".Phonebook_File.Phonebook"
             android:label="@string/title_activity_phonebook"
             android:theme="@style/AppTheme">
             <meta-data
@@ -52,18 +52,18 @@
                 android:value=".Search" />
         </activity>
         <activity
-            android:name=".AddContact"
+            android:name=".Phonebook_File.AddContact"
             android:label="@string/title_activity_add_contact"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".PhonebookDetails"
+            android:name=".Phonebook_File.PhonebookDetails"
             android:label="Details"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".PhonebookSearch"
+            android:name=".Phonebook_File.PhonebookSearch"
             android:label="Search Results"
             android:launchMode="singleTop"
-            android:parentActivityName=".Phonebook">
+            android:parentActivityName=".Phonebook_File.Phonebook">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

@@ -1,4 +1,4 @@
-package com.zconnect.login.zconnect;
+package com.zconnect.login.zconnect.Phonebook_File;
 
 import android.net.Uri;
 import android.os.Build;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.zconnect.login.zconnect.R;
 
 public class PhonebookDetails extends AppCompatActivity {
     String name, number, email, desc, imagelink;
