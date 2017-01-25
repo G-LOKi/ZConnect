@@ -102,7 +102,7 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
 
 
         // Getting Database Reference
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(parent + "/Users");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(parent + "/Users/");
 
     }
 
@@ -217,7 +217,7 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         Map<String, Object> childUpdates = new HashMap<>();
 
 
-        childUpdates.put("/Users" + userId, postValues  );
+        childUpdates.put(userId, postValues  );
 
         mDatabase.updateChildren(childUpdates);
     }
@@ -279,7 +279,7 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
                 if(!dataSnapshot.hasChild(user_id))
                 {
                     writeNewPost(user_id,email);
-                    Intent intent = new Intent(logIn.this,home.class);
+                    Intent intent = new Intent(logIn.this,NewUser.class);
                     startActivity(intent);
 
                 }

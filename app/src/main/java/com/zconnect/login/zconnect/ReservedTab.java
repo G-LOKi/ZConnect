@@ -43,6 +43,7 @@ public class ReservedTab extends Fragment {
     private List<String> reserveList;
     private FirebaseAuth mAuth;
     String reserveString;
+    Query query;
 
     public ReservedTab() {
         // Required empty public constructor
@@ -63,25 +64,25 @@ public class ReservedTab extends Fragment {
         mReservedProducts = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
 
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         final String userId = user.getUid();
+        query = mDatabase.orderByChild("UsersReserved/"+ userId).equalTo(user.getDisplayName());
 
-
-
-        mReservedProducts.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                reserveString = (String)dataSnapshot.child(userId +"/Reserved").getValue();
-                reserveList = new ArrayList<String>(Arrays.asList(reserveString.split(" ")));
-//                Toast.makeText(getContext(), reserveString, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        mReservedProducts.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                reserveString = (String)dataSnapshot.child(userId +"/Reserved").getValue();
+//                reserveList = new ArrayList<String>(Arrays.asList(reserveString.split(" ")));
+////                Toast.makeText(getContext(), reserveString, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
         return view;
@@ -95,19 +96,19 @@ public class ReservedTab extends Fragment {
                 Product.class,
                 R.layout.reserved_products_row,
                 ProductViewHolder.class,
-                mDatabase
+                query
         ) {
             @Override
             protected void populateViewHolder(ProductViewHolder viewHolder, Product model, int position) {
 
 
-               if(reserveList.contains(model.getKey())) {
+//               if(reserveList.contains(model.getKey())) {
                     viewHolder.setProductName(model.getProductName());
                     viewHolder.setProductDesc(model.getProductDescription());
                     viewHolder.setImage(getApplicationContext(), model.getImage());
 
-                }else {
-               }
+//                }else {
+//               }
 
             }
         };
