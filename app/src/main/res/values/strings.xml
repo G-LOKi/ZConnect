@@ -66,5 +66,12 @@
     <string name="item_1">item1</string>
     <string name="item_2">item 2</string>
     <string name="description">Hurrey</string>
+    <string name="title_activity_phonebook">Phonebook</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_add_contact">AddContact</string>
+    <string name="title_activity_phonebook_display">PhonebookDisplay</string>
 
 </resources>
