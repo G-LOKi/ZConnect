@@ -68,5 +68,7 @@
     <string name="description">Hurrey</string>
     <string name="title_activity_store_room">StoreRoom</string>
     <string name="add_name">Add name</string>
+    <string name="title_activity_shop_details">ShopDetails</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>

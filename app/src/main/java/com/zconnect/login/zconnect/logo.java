@@ -9,6 +9,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+
+import com.zconnect.login.zconnect.Shop.ShopDetails;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,13 +28,20 @@ public class logo extends AppCompatActivity {
 
         // Calling xml view file
         this.setContentView(R.layout.activity_logo);
+        Button mButton = (Button) findViewById(R.id.MagicIsland);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(logo.this, ShopDetails.class));
 
+            }
+        });
         // Time Delay for the logo activity
-        new Timer().schedule(new TimerTask(){
+     /**   new Timer().schedule(new TimerTask(){
             public void run() {
                 startActivity(new Intent(logo.this, logIn.class));
                 finish();
             }
-        }, 2500);
+        }, 2500);*/
     }
 }

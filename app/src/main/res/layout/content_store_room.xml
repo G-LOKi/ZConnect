@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.zconnect.login.zconnect.StoreRoom"
+    tools:context="com.zconnect.login.zconnect.Store.StoreRoom"
     tools:showIn="@layout/activity_store_room">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/productList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/productList"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
