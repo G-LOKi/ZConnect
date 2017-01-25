@@ -133,7 +133,7 @@ public class PhonebookSearch extends AppCompatActivity {
 
                         //need to add a try catch block before release
 
-                        // Storage of EventFormat by individual de-serialization
+                        // storage of EventFormat by individual de-serialization
 
                         PhonebookDisplayItem foo = new PhonebookDisplayItem();
 

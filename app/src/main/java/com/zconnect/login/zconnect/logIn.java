@@ -58,8 +58,8 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         //Buttons
         signInButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(this);
-        Button button = (Button) findViewById(R.id.button2);
-        button.setOnClickListener(this);
+
+
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -265,10 +265,7 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
                     break;
 
             }
-        if (view.getId() == R.id.button2) {
-            Intent intent = new Intent(this, Phonebook.class);
-            startActivity(intent);
-        }
+
     }
 
     @Override

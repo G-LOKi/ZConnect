@@ -114,7 +114,7 @@ public class Phonebook extends AppCompatActivity {
 
         adapter.addFragment(new PhonebookStudents(), "Students");
         adapter.addFragment(new PhonebookAdmin(), "Admin");
-        adapter.addFragment(new PhonebookOthers(), "Others");
+        adapter.addFragment(new PhonebookOthers(), "others");
         viewPager.setAdapter(adapter);
     }
 

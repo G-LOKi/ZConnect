@@ -100,6 +100,15 @@ tools:context=".home"
             android:layout_below="@+id/menu_item_2"
             android:background="#b5b5b5" />
 
+        <TextView
+            android:id="@+id/menu_item_3"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/menu_item_divider_3"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical"
+            android:text="@string/item_3">
+        </TextView>
     </RelativeLayout>
 
     <LinearLayout
