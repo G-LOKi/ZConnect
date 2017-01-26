@@ -83,7 +83,6 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".NewUser" />
         <activity android:name=".MyProducts" />
-        <activity android:name=".Event" />
         <activity android:name=".AddEvent" />
         <activity android:name=".AllEvents" />
         <activity android:name=".OpenEventDetail"></activity>
