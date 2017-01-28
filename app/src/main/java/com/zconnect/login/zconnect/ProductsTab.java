@@ -1,8 +1,6 @@
 package com.zconnect.login.zconnect;
 
 
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,7 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -38,6 +35,7 @@ public class ProductsTab extends Fragment {
     private DatabaseReference mDatabase;
     private boolean flag=false;
     private FirebaseAuth mAuth;
+    //notify
     private NotificationCompat.Builder mBuilder;
 
     public ProductsTab() {
@@ -61,19 +59,19 @@ public class ProductsTab extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
         mDatabase.keepSynced(true);
 
-        mBuilder = new NotificationCompat.Builder(getContext());
-        mBuilder.setSmallIcon(R.drawable.messenger_bubble_small_blue)
-                .setContentTitle("Notification!")
-                .setContentText("Lorem Ipsum dolor sit et");
-
-        Intent resultIntent = new Intent(getContext(), Phonebook.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getContext());
-        stackBuilder.addParentStack(Phonebook.class);
-
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(resultPendingIntent);
+//        mBuilder = new NotificationCompat.Builder(getContext());
+//        mBuilder.setSmallIcon(R.drawable.messenger_bubble_small_blue)
+//                .setContentTitle("Notification!")
+//                .setContentText("Lorem Ipsum dolor sit et");
+//
+//        Intent resultIntent = new Intent(getContext(), Phonebook.class);
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getContext());
+//        stackBuilder.addParentStack(Phonebook.class);
+//
+//        // Adds the Intent that starts the Activity to the top of the stack
+//        stackBuilder.addNextIntent(resultIntent);
+//        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+//        mBuilder.setContentIntent(resultPendingIntent);
 
         return view;
     }
