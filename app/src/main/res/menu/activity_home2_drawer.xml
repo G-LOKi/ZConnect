@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_infone"
+            android:icon="@drawable/ic_phone_black_24dp"
+            android:title="Infone" />
+        <item
+            android:id="@+id/nav_storeroom"
+            android:icon="@drawable/storeroom"
+            android:title="Storeroom" />
+        <item
+            android:id="@+id/nav_event"
+            android:icon="@drawable/ic_event_black_24dp"
+            android:title="Event" />
+
+    </group>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_signout"
+                android:icon="@drawable/ic_power_settings_new_black_24dp"
+                android:title="Sign Out" />
+
+        </menu>
+    </item>
+
+</menu>
