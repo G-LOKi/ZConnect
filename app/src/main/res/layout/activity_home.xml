@@ -109,6 +109,37 @@ tools:context=".home"
             android:gravity="center_vertical"
             android:text="@string/item_3">
         </TextView>
+        <View
+            android:id="@+id/menu_item_divider_4"
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_below="@+id/menu_item_3"
+            android:background="#b5b5b5" />
+
+        <TextView
+            android:id="@+id/menu_item_4"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/menu_item_divider_4"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical"
+            android:text="@string/item_4">
+        </TextView>
+        <Button
+            android:id="@+id/sign_out_button"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sign_out"
+            android:theme="@style/ThemeOverlay.MyDarkButton"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="450dp" />
+
+
     </RelativeLayout>
 
     <LinearLayout
@@ -153,17 +184,7 @@ tools:context=".home"
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/sign_out_button"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/sign_out"
-        android:theme="@style/ThemeOverlay.MyDarkButton"
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="450dp" />
+
 
     <TextView
         android:layout_width="fill_parent"
@@ -177,6 +198,11 @@ tools:context=".home"
         android:paddingTop="8dp"
         android:textSize="25dp"
         android:textColor="@color/abc_tint_switch_thumb" />
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/everything">
 
+                </android.support.v7.widget.RecyclerView>
 </FrameLayout>
 

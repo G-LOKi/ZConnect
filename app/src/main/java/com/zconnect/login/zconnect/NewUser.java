@@ -10,16 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 
 public class NewUser extends AppCompatActivity {
@@ -48,7 +46,7 @@ public class NewUser extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startPosting();
-                startActivity(new Intent(NewUser.this, home.class));
+                startActivity(new Intent(NewUser.this, com.zconnect.login.zconnect.home.class));
             }
         });
     }
@@ -96,7 +94,7 @@ public class NewUser extends AppCompatActivity {
 //                    map1.put("PhoneNumber", PhoneNumber);
 //                    mDatabase.setValue(map1);
                     mProgress.dismiss();
-                    startActivity(new Intent(NewUser.this,home.class));
+                    startActivity(new Intent(NewUser.this, com.zconnect.login.zconnect.home.class));
 //                }
         //    });
         }

@@ -1,4 +1,4 @@
-package com.zconnect.login.zconnect.Events;
+package com.zconnect.login.zconnect;
 
 
 import android.content.Context;
@@ -12,9 +12,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-
-import com.zconnect.login.zconnect.R;
-import com.zconnect.login.zconnect.Products.StoreRoom;
 
 import java.util.ArrayList;
 

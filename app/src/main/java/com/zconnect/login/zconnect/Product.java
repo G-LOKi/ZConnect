@@ -1,4 +1,4 @@
-package com.zconnect.login.zconnect.Products;
+package com.zconnect.login.zconnect;
 
 /**
  * Created by Lokesh Garg on 14-11-2016.

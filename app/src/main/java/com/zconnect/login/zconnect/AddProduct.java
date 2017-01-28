@@ -1,4 +1,4 @@
-package com.zconnect.login.zconnect.Events;
+package com.zconnect.login.zconnect;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,8 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.zconnect.login.zconnect.R;
-import com.zconnect.login.zconnect.Products.TabStoreRoom;
 
 public class AddProduct extends AppCompatActivity {
 

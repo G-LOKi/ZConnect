@@ -1,13 +1,14 @@
 package com.zconnect.login.zconnect;
-
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 
-import com.zconnect.login.zconnect.Shop.Details_of_shop.ShopDetails;
+import android.view.WindowManager;
+
+import com.zconnect.login.zconnect.shop.categories.Shop;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class logo extends AppCompatActivity {
@@ -21,20 +22,13 @@ public class logo extends AppCompatActivity {
 
         // Calling xml view file
         this.setContentView(R.layout.activity_logo);
-        Button mButton = (Button) findViewById(R.id.MagicIsland);
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(logo.this, ShopDetails.class));
 
-            }
-        });
         // Time Delay for the logo activity
-     /**   new Timer().schedule(new TimerTask(){
+        new Timer().schedule(new TimerTask(){
             public void run() {
-                startActivity(new Intent(logo.this, logIn.class));
+                startActivity(new Intent(logo.this, Shop.class));
                 finish();
             }
-        }, 2500);*/
+        }, 2500);
     }
 }
