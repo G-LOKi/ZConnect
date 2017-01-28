@@ -7,15 +7,17 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    CardView card1, card2, card3, card4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +30,34 @@ public class HomeActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+        card1 = (CardView) findViewById(R.id.card1);
+        card2 = (CardView) findViewById(R.id.card2);
+        card3 = (CardView) findViewById(R.id.card3);
+        card4 = (CardView) findViewById(R.id.card4);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        card1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Phonebook.class);
+                startActivity(intent);
+            }
+        });
+        card2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), TabStoreRoom.class);
+                startActivity(intent);
+            }
+        });
+        card3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AllEvents.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
