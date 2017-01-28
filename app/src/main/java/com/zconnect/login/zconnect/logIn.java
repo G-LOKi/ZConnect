@@ -16,8 +16,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -32,7 +30,6 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
-import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,11 +46,14 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog mProgressDialog;
     private DatabaseReference mDatabase;
+    private boolean flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
+        flag = true;
 
         //Buttons
         signInButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.sign_in_button);
@@ -192,41 +192,41 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    public void signOut() {
-        // Firebase sign out
-        mAuth.signOut();
-        // Google sign out
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                        Toast.makeText(logIn.this, "Sign Out", Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-    }
+//    public void signOut() {
+//        // Firebase sign out
+//        mAuth.signOut();
+//        // Google sign out
+//        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+//                new ResultCallback<Status>() {
+//                    @Override
+//                    public void onResult(@NonNull Status status) {
+//                        Toast.makeText(logIn.this, "Sign Out", Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//        );
+//    }
 
-    private void revokeAccess() {
-        // Firebase sign out
-        mAuth.signOut();
-
-        // Google revoke access
-        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                        updateUI(null);
-                    }
-                }
-        );
-    }
+//    private void revokeAccess() {
+//        // Firebase sign out
+//        mAuth.signOut();
+//
+//        // Google revoke access
+//        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
+//                new ResultCallback<Status>() {
+//                    @Override
+//                    public void onResult(@NonNull Status status) {
+//                        updateUI(null);
+//                    }
+//                }
+//        );
+//    }
 
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
             checkUser();
-            Intent intent = new Intent(logIn.this,home.class);
-            startActivity(intent);
+
+
         }
 
     }
@@ -242,10 +242,15 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild(user_id))
                 {
+                    flag = false;
                     writeNewPost(user_id,email);
                     Intent intent = new Intent(logIn.this,NewUser.class);
                     startActivity(intent);
-
+                } else {
+                    if (flag) {
+                        Intent intent = new Intent(logIn.this, home.class);
+                        startActivity(intent);
+                    }
                 }
             }
 

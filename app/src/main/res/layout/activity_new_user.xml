@@ -10,41 +10,111 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.zconnect.login.zconnect.NewUser">
 
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/contact_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@android:color/holo_blue_light" />
+
+
     <Button
-        android:text="Save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/Save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="141dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="Save" />
 
     <EditText
+        android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/desc"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/PhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/email"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:ems="10"
+        android:hint="Phone number"
         android:inputType="phone"
-        android:ems="10"
-        android:layout_above="@+id/Save"
-        android:layout_alignLeft="@+id/Username"
-        android:layout_alignStart="@+id/Username"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="11dp"
-        android:layout_marginBottom="29dp"
-        android:id="@+id/PhoneNumber" />
+        android:maxLength="10"
+        android:padding="10dp" />
 
     <EditText
+        android:id="@+id/Username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Username "
+        android:layout_above="@+id/email"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="42dp"
         android:ems="10"
-        android:id="@+id/Username"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="61dp" />
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:padding="10dp" />
 
+    <EditText
+        android:id="@+id/desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Save"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="89dp"
+        android:ems="10"
+        android:hint="About me"
+        android:inputType="textPersonName"
+        android:padding="10dp" />
+
+    <RadioGroup
+        android:id="@+id/radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Save"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal">
+
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="23dp"
+            android:text="Student" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/radioButton"
+            android:layout_alignBottom="@+id/radioButton"
+            android:layout_toEndOf="@+id/radioButton"
+            android:layout_toRightOf="@+id/radioButton"
+            android:text="Admin" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/radioButton2"
+            android:layout_alignBottom="@+id/radioButton2"
+            android:layout_marginLeft="67dp"
+            android:layout_marginStart="67dp"
+            android:layout_toEndOf="@+id/Save"
+            android:layout_toRightOf="@+id/Save"
+            android:text="Others" />
+    </RadioGroup>
 </RelativeLayout>

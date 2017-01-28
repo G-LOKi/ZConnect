@@ -85,7 +85,8 @@
         <activity android:name=".MyProducts" />
         <activity android:name=".AddEvent" />
         <activity android:name=".AllEvents" />
-        <activity android:name=".OpenEventDetail"></activity>
+        <activity android:name=".OpenEventDetail" />
+        <activity android:name=".OpenProductDetail" />
     </application>
 
 </manifest>

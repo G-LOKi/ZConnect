@@ -62,6 +62,7 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
     private RelativeLayout menuPanel;
     private int panelWidth;
     private ImageView menuViewButton;
+
 /////MenuBar
 
     @Override
