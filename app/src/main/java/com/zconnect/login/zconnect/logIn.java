@@ -1,13 +1,19 @@
 package com.zconnect.login.zconnect;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -32,7 +38,6 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
-import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +49,7 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
     String parent = "/ZConnect";
     private GoogleApiClient mGoogleApiClient;
     private com.google.android.gms.common.SignInButton signInButton;
-    private Button signOutButton;
+    private Button signOutButton, button;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog mProgressDialog;
@@ -58,8 +63,14 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         //Buttons
         signInButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(this);
-
-
+        button = (Button) findViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+        });
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -225,7 +236,7 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         hideProgressDialog();
         if (user != null) {
             checkUser();
-            Intent intent = new Intent(logIn.this,home.class);
+            Intent intent = new Intent(logIn.this, HomeActivity.class);
             startActivity(intent);
         }
 
@@ -258,16 +269,25 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
 
     @Override
     public void onClick(View view) {
-            switch (view.getId())
-            {
-                case R.id.sign_in_button:
-                    signIn();
-                    break;
+        if (view.getId() == R.id.sign_in_button) {
+            if (!isNetworkAvailable(getApplicationContext())) {
 
+                Snackbar snack = Snackbar.make(signInButton, "No Internet. Can't Sign In.", Snackbar.LENGTH_LONG);
+                TextView snackBarText = (TextView) snack.getView().findViewById(android.support.design.R.id.snackbar_text);
+                snackBarText.setTextColor(Color.WHITE);
+                snack.getView().setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                snack.show();
+            } else {
+                signIn();
             }
+        }
 
     }
 
+    public boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not

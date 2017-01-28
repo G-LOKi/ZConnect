@@ -85,7 +85,11 @@
         <activity android:name=".MyProducts" />
         <activity android:name=".AddEvent" />
         <activity android:name=".AllEvents" />
-        <activity android:name=".OpenEventDetail"></activity>
+        <activity android:name=".OpenEventDetail" />
+        <activity
+            android:name=".HomeActivity"
+            android:label="ZConnect"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
