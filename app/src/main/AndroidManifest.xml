@@ -49,7 +49,7 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".Search" />
+                android:value=".Phonebook_File.PhonebookSearch" />
         </activity>
         <activity
             android:name=".Phonebook_File.AddContact"
