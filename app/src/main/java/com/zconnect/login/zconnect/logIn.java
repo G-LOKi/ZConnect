@@ -38,7 +38,6 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
-import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -201,19 +200,19 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-//    public void signOut() {
-//        // Firebase sign out
-//        mAuth.signOut();
-//        // Google sign out
-//        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-//                new ResultCallback<Status>() {
-//                    @Override
-//                    public void onResult(@NonNull Status status) {
-//                        Toast.makeText(logIn.this, "Sign Out", Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//        );
-//    }
+    public void signOut() {
+        // Firebase sign out
+        mAuth.signOut();
+        // Google sign out
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+                        Toast.makeText(logIn.this, "Sign Out", Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+    }
 
 //    private void revokeAccess() {
 //        // Firebase sign out

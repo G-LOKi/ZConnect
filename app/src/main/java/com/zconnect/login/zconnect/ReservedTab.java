@@ -3,6 +3,7 @@ package com.zconnect.login.zconnect;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,13 +28,14 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ReservedTab extends Fragment {
 
+    String reserveString;
+    Query query;
     private DatabaseReference mReservedProducts;
     private DatabaseReference mDatabase;
     private RecyclerView mProductList;
     private List<String> reserveList;
     private FirebaseAuth mAuth;
-    String reserveString;
-    Query query;
+    private NotificationCompat.Builder mBuilder;
 
     public ReservedTab() {
         // Required empty public constructor
@@ -53,7 +55,6 @@ public class ReservedTab extends Fragment {
 
         mReservedProducts = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
-
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -120,14 +121,14 @@ public class ReservedTab extends Fragment {
     public static class ProductViewHolder extends RecyclerView.ViewHolder{
 
 
-        private DatabaseReference ReserveReference;
         View mView;
+        String[] keyList;
+        String ReservedUid;
+        private DatabaseReference ReserveReference;
         private Switch mReserve;
         private TextView ReserveStatus;
         private ImageButton deleteButton;
         private FirebaseAuth mAuth;
-        String [] keyList;
-        String ReservedUid;
 
         public ProductViewHolder(View itemView) {
             super(itemView);

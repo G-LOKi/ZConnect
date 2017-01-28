@@ -16,6 +16,7 @@ import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,7 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -76,6 +78,7 @@ public class HomeActivity extends AppCompatActivity
             Intent intent = new Intent(this, TabStoreRoom.class);
             startActivity(intent);
         } else if (id == R.id.nav_signout) {
+
 
         }
 
