@@ -1,9 +1,13 @@
 package com.zconnect.login.zconnect;
 
 
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -33,7 +38,8 @@ public class ProductsTab extends Fragment {
     private DatabaseReference mDatabase;
     private boolean flag=false;
     private FirebaseAuth mAuth;
-
+    //notify
+    private NotificationCompat.Builder mBuilder;
 
     public ProductsTab() {
         // Required empty public constructor
@@ -55,6 +61,20 @@ public class ProductsTab extends Fragment {
         // StoreRoom feature Reference
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
         mDatabase.keepSynced(true);
+
+//        mBuilder = new NotificationCompat.Builder(getContext());
+//        mBuilder.setSmallIcon(R.drawable.messenger_bubble_small_blue)
+//                .setContentTitle("Notification!")
+//                .setContentText("Lorem Ipsum dolor sit et");
+//
+//        Intent resultIntent = new Intent(getContext(), Phonebook.class);
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getContext());
+//        stackBuilder.addParentStack(Phonebook.class);
+//
+//        // Adds the Intent that starts the Activity to the top of the stack
+//        stackBuilder.addNextIntent(resultIntent);
+//        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+//        mBuilder.setContentIntent(resultPendingIntent);
 
         return view;
     }
@@ -79,6 +99,8 @@ public class ProductsTab extends Fragment {
                 viewHolder.setProductName(model.getProductName());
                 viewHolder.setProductDesc(model.getProductDescription());
                 viewHolder.setImage(getApplicationContext(), model.getImage());
+                viewHolder.openProduct(model.getKey());
+
 
                 viewHolder.mListener = new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -139,6 +161,20 @@ public class ProductsTab extends Fragment {
             mReserve = (Switch)mView.findViewById(R.id.switch1);
             ReserveStatus = (TextView)mView.findViewById(R.id.switch1);
             StoreRoom.keepSynced(true);
+        }
+
+        public void openProduct(final String key) {
+            mView.setOnClickListener(new View.OnClickListener()
+
+            {
+                @Override
+                public void onClick(View view) {
+
+                    Intent i = new Intent(mView.getContext(), OpenProductDetail.class);
+                    i.putExtra("key", key);
+                    mView.getContext().startActivity(i);
+                }
+            });
         }
 
         // Setting default switch

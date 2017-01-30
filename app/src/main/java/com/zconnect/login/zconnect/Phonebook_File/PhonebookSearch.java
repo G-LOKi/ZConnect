@@ -30,7 +30,7 @@ public class PhonebookSearch extends AppCompatActivity {
     private PhonebookAdapter searchAdapter;
     private Toolbar toolbar;
     private TextView errorMessage;
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Phonebook");
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("ZConnect").child("Phonebook");
     private Vector<PhonebookItem> searchContact = new Vector<>();
 
     @Override
