@@ -7,12 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.view.WindowManager;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
@@ -61,7 +59,7 @@ public class logo extends AppCompatActivity {
         // Time Delay ofor the logo activity
         new Timer().schedule(new TimerTask(){
             public void run() {
-                startActivity(new Intent(logo.this, logIn.class));
+                startActivity(new Intent(logo.this, HomeActivity.class));
                 finish();
             }
         }, 2500);

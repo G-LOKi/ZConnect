@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
@@ -138,7 +137,6 @@ class everythingViewHolder extends RecyclerView.ViewHolder
         simpleDraweeView.setImageURI(Uri.parse(phonebookDisplayItem.getImageurl()));
         TextView name = (TextView) mView.findViewById(R.id.everything_name1);
         name.setText(phonebookDisplayItem.getName());
-        Toast.makeText(context, phonebookDisplayItem.getName(), Toast.LENGTH_LONG).show();
         TextView number = (TextView) mView.findViewById(R.id.everything_number1);
         number.setText(phonebookDisplayItem.getNumber());
         mRel.setOnClickListener(new View.OnClickListener() {

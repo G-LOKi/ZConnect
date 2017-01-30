@@ -70,6 +70,10 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".Phonebook_File.PhonebookSearch" />
+                android:value=".Phonebook_File.PhonebookSearch" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
         </activity>
         <activity
             android:name="com.zconnect.login.zconnect.Phonebook_File.AddContact"
@@ -100,11 +104,19 @@
         <activity
             android:name="com.zconnect.login.zconnect.TabStoreRoom"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
         <activity android:name="com.zconnect.login.zconnect.NewUser" />
         <activity android:name="com.zconnect.login.zconnect.MyProducts" />
         <activity android:name="com.zconnect.login.zconnect.AddEvent" />
-        <activity android:name="com.zconnect.login.zconnect.AllEvents" />
+        <activity android:name="com.zconnect.login.zconnect.AllEvents" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
         <activity android:name="com.zconnect.login.zconnect.OpenEventDetail" />
         <activity android:name="com.zconnect.login.zconnect.OpenProductDetail" />
         <activity

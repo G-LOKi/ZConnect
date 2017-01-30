@@ -18,7 +18,7 @@ import com.zconnect.login.zconnect.R;
 public class Search extends AppCompatActivity {
     String textInput;
     DatabaseReference mdata;
-    RecyclerView mView ;
+    RecyclerView mView;
     private LinearLayoutManager linearLayoutManager;
 
 
@@ -27,9 +27,9 @@ public class Search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_contacts);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-         final EditText mtext = (EditText) findViewById(R.id.editText);
+        final EditText mtext = (EditText) findViewById(R.id.editText);
 
-       TextWatcher mTextWatcher = new TextWatcher() {
+        TextWatcher mTextWatcher = new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
@@ -47,7 +47,6 @@ public class Search extends AppCompatActivity {
         mtext.addTextChangedListener(mTextWatcher);
 
 
-
     }
 
     void listView() {
@@ -59,16 +58,15 @@ public class Search extends AppCompatActivity {
         mView.setLayoutManager(linearLayoutManager);
 
         mdata = FirebaseDatabase.getInstance().getReference("ZConnect").child("Phonebook");
-        Toast.makeText(getApplicationContext(),mdata.toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), mdata.toString(), Toast.LENGTH_LONG).show();
         mdata.keepSynced(true);
         Query mQuery = mdata.orderByChild("name").startAt(textInput);
 
-        FirebaseRecyclerAdapter<Phonebook_search,ViewHolder> firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<Phonebook_search, ViewHolder>(
+        FirebaseRecyclerAdapter<Phonebook_search, ViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Phonebook_search, ViewHolder>(
                 Phonebook_search.class,
                 R.layout.phonebook,
                 ViewHolder.class,
                 mQuery) {
-
 
 
             @Override
@@ -97,7 +95,8 @@ public class Search extends AppCompatActivity {
         };
         mView.setAdapter(firebaseRecyclerAdapter);
 
-           }}
+    }
+}
 
 
 

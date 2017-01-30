@@ -3,19 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginEnd="10dp"
-    android:layout_marginBottom="10dp"
-    android:background="@drawable/layout_border"
-    >
-        <LinearLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/EventsAndDescriptionEverything">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/layout_border"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/EventsAndDescriptionEverything"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/Image_everything"
@@ -27,13 +28,13 @@
                 app:srcCompat="@drawable/beanbags" />
 
 
-          <TextView
-            android:id="@+id/title_everything"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:padding="12dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            <TextView
+                android:id="@+id/title_everything"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:padding="12dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 
             <TextView
@@ -51,17 +52,17 @@
                 android:textAlignment="textEnd"
                 android:textColor="@color/grey" />
 
-                     <TextView
-                    android:id="@+id/description_or_price"
-                     android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                        android:gravity="right"
-                     android:paddingBottom="10dp"
-                     android:paddingLeft="0dp"
-                     android:paddingRight="10dp"
-                     android:paddingTop="5dp"
-                     android:textColor="@color/authui_inputTextColorDarkDisabled"
-                     android:textSize="16dp" />
+            <TextView
+                android:id="@+id/description_or_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:paddingBottom="10dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:textColor="@color/authui_inputTextColorDarkDisabled"
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/reminder_or_call"
@@ -72,96 +73,96 @@
                 android:layout_marginEnd="5dp"
                 android:elevation="9dp" />
 
-         </LinearLayout>
+        </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="12dp"
-                android:layout_marginEnd="10dp"
-                android:id="@+id/ContactCardEverything">
-
-
-                <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/everything_item_format_image"
-                    android:layout_width="60dip"
-                    android:layout_height="60dip"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="4dp"
-                    android:layout_marginTop="4dp"
-                    android:scaleType="centerCrop"
-                    app:actualImageScaleType="centerCrop"
-                    fresco:placeholderImageScaleType="centerCrop"
-                    fresco:roundAsCircle="true"
-                    fresco:srcCompat="@drawable/books" />
-
-                    <TextView
-                        android:id="@+id/everything_name_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/everything_item_format_image"
-                        android:padding="10dp"
-                        android:text="NAME"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/colon1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/everything_name_textview"
-                        android:padding="10dp"
-                        android:text=":"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/everything_name1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/colon1"
-                        android:fontFamily="monospace"
-                        android:padding="10dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/everything_number_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/everything_name_textview"
-                        android:layout_toRightOf="@+id/everything_item_format_image"
-                        android:padding="10dp"
-                        android:text="NUMBER"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/colon2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/everything_name_textview"
-                        android:layout_toRightOf="@+id/everything_number_textview"
-                        android:padding="10dp"
-                        android:text=":"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/everything_number1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/everything_name_textview"
-                        android:layout_toRightOf="@+id/colon2"
-                        android:fontFamily="monospace"
-                        android:padding="10dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp" />
+        <RelativeLayout
+            android:id="@+id/ContactCardEverything"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:padding="12dp">
 
 
-                </RelativeLayout>
+            <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/everything_item_format_image"
+                android:layout_width="60dip"
+                android:layout_height="60dip"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_margin="4dp"
+                android:layout_marginTop="4dp"
+                android:scaleType="centerCrop"
+                app:actualImageScaleType="centerCrop"
+                fresco:placeholderImageScaleType="centerCrop"
+                fresco:roundAsCircle="true"
+                fresco:srcCompat="@drawable/books" />
+
+            <TextView
+                android:id="@+id/everything_name_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/everything_item_format_image"
+                android:padding="10dp"
+                android:text="NAME"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/colon1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/everything_name_textview"
+                android:padding="10dp"
+                android:text=":"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/everything_name1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/colon1"
+                android:fontFamily="monospace"
+                android:padding="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/everything_number_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/everything_name_textview"
+                android:layout_toRightOf="@+id/everything_item_format_image"
+                android:padding="10dp"
+                android:text="NUMBER"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/colon2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/everything_name_textview"
+                android:layout_toRightOf="@+id/everything_number_textview"
+                android:padding="10dp"
+                android:text=":"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/everything_number1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/everything_name_textview"
+                android:layout_toRightOf="@+id/colon2"
+                android:fontFamily="monospace"
+                android:padding="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
 
-</LinearLayout>
+        </RelativeLayout>
+
+
+    </LinearLayout>
 </android.support.v7.widget.CardView>
