@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/drawable-mdpi/ic_action_voice_search.png",
+        "source": "/home/f390/.android/build-cache/206b0d7a427f4a14d6a95b7516f8475052897fcf/output/res/drawable-mdpi/ic_action_voice_search.png"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/drawable-mdpi/ic_action_voice_search_inverted.png",
+        "source": "/home/f390/.android/build-cache/206b0d7a427f4a14d6a95b7516f8475052897fcf/output/res/drawable-mdpi/ic_action_voice_search_inverted.png"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/drawable-mdpi/ic_suggestion.png",
+        "source": "/home/f390/.android/build-cache/206b0d7a427f4a14d6a95b7516f8475052897fcf/output/res/drawable-mdpi/ic_suggestion.png"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/drawable-mdpi/ic_action_navigation_arrow_back_inverted.png",
+        "source": "/home/f390/.android/build-cache/206b0d7a427f4a14d6a95b7516f8475052897fcf/output/res/drawable-mdpi/ic_action_navigation_arrow_back_inverted.png"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/drawable-mdpi/ic_action_action_search.png",
+        "source": "/home/f390/.android/build-cache/206b0d7a427f4a14d6a95b7516f8475052897fcf/output/res/drawable-mdpi/ic_action_action_search.png"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/drawable-mdpi/ic_action_navigation_close_inverted.png",
+        "source": "/home/f390/.android/build-cache/206b0d7a427f4a14d6a95b7516f8475052897fcf/output/res/drawable-mdpi/ic_action_navigation_close_inverted.png"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/drawable-mdpi/ic_action_navigation_close.png",
+        "source": "/home/f390/.android/build-cache/206b0d7a427f4a14d6a95b7516f8475052897fcf/output/res/drawable-mdpi/ic_action_navigation_close.png"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/drawable-mdpi/ic_action_navigation_arrow_back.png",
+        "source": "/home/f390/.android/build-cache/206b0d7a427f4a14d6a95b7516f8475052897fcf/output/res/drawable-mdpi/ic_action_navigation_arrow_back.png"
+    }
+]

@@ -4,10 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-    <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:name=".ZConnect"
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -50,7 +51,7 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".Search" />
+                android:value=".Phonebook_File.PhonebookSearch" />
         </activity>
         <activity
             android:name=".Phonebook_File.AddContact"
@@ -68,14 +69,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-        <activity
-            android:name=".Store.StoreRoom"
-            android:label="@string/title_activity_store_room"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".Store.AddProduct" />
-        <activity android:name=".Phonebook.Search" />
-        <activity android:name=".Shop.ShopList.ListOfShop" />
-        <activity android:name=".Shop.Categories.Store" />
 
             <meta-data
                 android:name="android.app.searchable"
@@ -92,25 +85,14 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".NewUser" />
         <activity android:name=".MyProducts" />
-        <activity android:name=".shop.ShopList.ListOfShop" />
-
         <activity android:name=".AddEvent" />
         <activity android:name=".AllEvents" />
-        <activity android:name=".OpenEventDetail"></activity>
-        <activity android:name=".Phonebook.Search"></activity>
-
-
-        <activity android:name=".shop.categories.Shop"></activity>
-
-        <activity android:name=".NewUser" />
-
-        <activity android:name=".OpenEventDetail"></activity>
+        <activity android:name=".OpenEventDetail" />
+        <activity android:name=".OpenProductDetail" />
         <activity
-            android:name=".shop.Details_of_shop.ShopDetails"
-            android:label="@string/title_activity_shop_details"
-
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:name=".HomeActivity"
+            android:label="ZConnect"
+            android:theme="@style/AppTheme" />
     </application>
+
 </manifest>

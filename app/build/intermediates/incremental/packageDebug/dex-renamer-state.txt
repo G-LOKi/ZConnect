@@ -1,0 +1,7 @@
+#Tue Jan 31 01:37:24 IST 2017
+base.0=/home/f390/StudioProjects/ZConnect2/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_e1f689b1401f561c8ff81182d2d606e9839c02d9
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=/home/f390/StudioProjects/ZConnect2/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_73ecb0337f6cc50d6bcfe83465c6b32805b68530/classes.dex
+base.1=/home/f390/StudioProjects/ZConnect2/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_73ecb0337f6cc50d6bcfe83465c6b32805b68530
+file.0=/home/f390/StudioProjects/ZConnect2/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_e1f689b1401f561c8ff81182d2d606e9839c02d9/classes.dex

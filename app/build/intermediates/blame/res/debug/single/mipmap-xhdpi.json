@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/mipmap-xhdpi/ic_delete_forever_black_24dp.png",
+        "source": "/home/f390/StudioProjects/ZConnect2/app/src/main/res/mipmap-xhdpi/ic_delete_forever_black_24dp.png"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/mipmap-xhdpi/ic_add_circle_black_24dp.png",
+        "source": "/home/f390/StudioProjects/ZConnect2/app/src/main/res/mipmap-xhdpi/ic_add_circle_black_24dp.png"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/mipmap-xhdpi/ic_launcher.png",
+        "source": "/home/f390/StudioProjects/ZConnect2/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    }
+]

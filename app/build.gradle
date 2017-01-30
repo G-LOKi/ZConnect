@@ -3,17 +3,21 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
-
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
     defaultConfig {
         applicationId "com.zconnect.login.zconnect"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -21,6 +25,7 @@ android {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
     }
+
 }
 
 dependencies {
@@ -28,7 +33,10 @@ dependencies {
 //    compile 'com.firebaseui:firebase-ui:1.0.0'
 //    compile 'com.firebaseui:firebase-ui-database:1.0.0'
 
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    //compile 'com.android.support:multidex:1.0.1'
+
+
+    compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.google.firebase:firebase-database:10.0.1'
     compile 'com.google.firebase:firebase-storage:10.0.1'
@@ -43,8 +51,11 @@ dependencies {
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.facebook.fresco:fresco:0.12.0'
     compile 'com.github.jjobes:slideDateTimePicker:1.0.2'
+    compile 'com.google.android.gms:play-services:10.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     testCompile 'junit:junit:4.12'
 }
+
 
 
 apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_twitter.xml",
+        "source": "/home/f390/.android/build-cache/2df42f5c3d3537be4b74c3f70b895497ad28a703/output/res/drawable-anydpi-v21/ic_twitter.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_facebook.xml",
+        "source": "/home/f390/.android/build-cache/2df42f5c3d3537be4b74c3f70b895497ad28a703/output/res/drawable-anydpi-v21/ic_facebook.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_google.xml",
+        "source": "/home/f390/.android/build-cache/2df42f5c3d3537be4b74c3f70b895497ad28a703/output/res/drawable-anydpi-v21/ic_google.xml"
+    }
+]

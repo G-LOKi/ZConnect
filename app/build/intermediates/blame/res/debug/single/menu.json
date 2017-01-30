@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/menu/menu_main.xml",
+        "source": "/home/f390/StudioProjects/ZConnect2/app/src/main/res/menu/menu_main.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/menu/menu_add_contact.xml",
+        "source": "/home/f390/StudioProjects/ZConnect2/app/src/main/res/menu/menu_add_contact.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/menu/home.xml",
+        "source": "/home/f390/StudioProjects/ZConnect2/app/src/main/res/menu/home.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/menu/activity_home2_drawer.xml",
+        "source": "/home/f390/StudioProjects/ZConnect2/app/src/main/res/menu/activity_home2_drawer.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/menu/add_menu.xml",
+        "source": "/home/f390/StudioProjects/ZConnect2/app/src/main/res/menu/add_menu.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/menu/menu_phonebook.xml",
+        "source": "/home/f390/StudioProjects/ZConnect2/app/src/main/res/menu/menu_phonebook.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/menu/menu_storeroom.xml",
+        "source": "/home/f390/StudioProjects/ZConnect2/app/src/main/res/menu/menu_storeroom.xml"
+    }
+]

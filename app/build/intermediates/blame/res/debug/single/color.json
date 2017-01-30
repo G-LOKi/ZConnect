@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/abc_secondary_text_material_light.xml",
+        "source": "/home/f390/.android/build-cache/f31bf41af527765c10e894638ab90849f565f38c/output/res/color/abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/common_google_signin_btn_text_dark.xml",
+        "source": "/home/f390/.android/build-cache/2a340342159dce2b4614fc19df6e2e1abf2f27c8/output/res/color/common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/abc_primary_text_material_dark.xml",
+        "source": "/home/f390/.android/build-cache/f31bf41af527765c10e894638ab90849f565f38c/output/res/color/abc_primary_text_material_dark.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/switch_thumb_material_dark.xml",
+        "source": "/home/f390/.android/build-cache/f31bf41af527765c10e894638ab90849f565f38c/output/res/color/switch_thumb_material_dark.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/abc_primary_text_disable_only_material_light.xml",
+        "source": "/home/f390/.android/build-cache/f31bf41af527765c10e894638ab90849f565f38c/output/res/color/abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/abc_primary_text_disable_only_material_dark.xml",
+        "source": "/home/f390/.android/build-cache/f31bf41af527765c10e894638ab90849f565f38c/output/res/color/abc_primary_text_disable_only_material_dark.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/abc_primary_text_material_light.xml",
+        "source": "/home/f390/.android/build-cache/f31bf41af527765c10e894638ab90849f565f38c/output/res/color/abc_primary_text_material_light.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/wallet_primary_text_holo_light.xml",
+        "source": "/home/f390/.android/build-cache/2ebb6f1aff217bc08b6d208894839e547af3c507/output/res/color/wallet_primary_text_holo_light.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/com_facebook_button_text_color.xml",
+        "source": "/home/f390/.android/build-cache/3c951e0553faa35efa09c177f87abff264cdc14f/output/res/color/com_facebook_button_text_color.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/abc_secondary_text_material_dark.xml",
+        "source": "/home/f390/.android/build-cache/f31bf41af527765c10e894638ab90849f565f38c/output/res/color/abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/com_facebook_send_button_text_color.xml",
+        "source": "/home/f390/.android/build-cache/3c951e0553faa35efa09c177f87abff264cdc14f/output/res/color/com_facebook_send_button_text_color.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/switch_thumb_material_light.xml",
+        "source": "/home/f390/.android/build-cache/f31bf41af527765c10e894638ab90849f565f38c/output/res/color/switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/abc_search_url_text.xml",
+        "source": "/home/f390/.android/build-cache/f31bf41af527765c10e894638ab90849f565f38c/output/res/color/abc_search_url_text.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/common_google_signin_btn_text_light.xml",
+        "source": "/home/f390/.android/build-cache/2a340342159dce2b4614fc19df6e2e1abf2f27c8/output/res/color/common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/design_error.xml",
+        "source": "/home/f390/.android/build-cache/ed8e1b500b6a648e8fe2b087ca4d52a5e2128c92/output/res/color/design_error.xml"
+    },
+    {
+        "merged": "/home/f390/StudioProjects/ZConnect2/app/build/intermediates/res/merged/debug/color/wallet_secondary_text_holo_dark.xml",
+        "source": "/home/f390/.android/build-cache/2ebb6f1aff217bc08b6d208894839e547af3c507/output/res/color/wallet_secondary_text_holo_dark.xml"
+    }
+]
