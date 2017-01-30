@@ -8,32 +8,35 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.zconnect.login.zconnect.shop.Details_of_shop.TabView1">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/image_Shop_offer"
             android:layout_width="match_parent"
-            android:layout_height="380dp"
+            android:layout_height="480dp"
             app:srcCompat="@drawable/beanbags" />
 
         <TextView
             android:id="@+id/Description_shop_offer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/Name_Shop_offer"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignStart="@+id/Name_Shop_offer"
+            android:layout_below="@+id/Name_Shop_offer"
             android:ems="10"
             android:hint="Description"
-            android:inputType="textPersonName"
-            android:layout_below="@+id/Name_Shop_offer"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignLeft="@+id/Name_Shop_offer"
-            android:layout_alignStart="@+id/Name_Shop_offer" />
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/Name_Shop_offer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="45sp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
@@ -45,5 +48,5 @@
             android:inputType="textPersonName" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
 </ScrollView>

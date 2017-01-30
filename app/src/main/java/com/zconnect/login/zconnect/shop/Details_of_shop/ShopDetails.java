@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +26,9 @@ public class ShopDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        dataIntent = intent.getExtras();
+        shopName = (String) dataIntent.get("name");
         setContentView(R.layout.activity_shop_details);
         FacebookSdk.sdkInitialize(getApplication());
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -32,12 +36,10 @@ public class ShopDetails extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        Intent intent = getIntent();
-        dataIntent = intent.getExtras();
-        shopName = (String) dataIntent.get("name");
+
+        Toast.makeText(getApplicationContext(), shopName, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -58,8 +60,7 @@ public class ShopDetails extends AppCompatActivity {
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        DatabaseReference mData = FirebaseDatabase.getInstance().getReference("ZConnect").child("Shop").child("ShopNames"); //Todo Add database path here.
-
+        DatabaseReference mData = FirebaseDatabase.getInstance().getReference("ZConnect/Shop/ShopDetails");
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -68,9 +69,10 @@ public class ShopDetails extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return TabView1.newInstance(position + 1, mData.child(shopName).child("Main-Page"));
+                    return TabView1.newInstance(position + 1, mData.child("Main-Page").child("RedChillies"));//Todo change structure
+
                 case 1:
-                    return TabView2.newInstance(position, mData.child(shopName).child("Coupons"));
+                    return TabView2.newInstance(position, mData.child("Coupons"));//Todo change structure
 
             }
             return null;

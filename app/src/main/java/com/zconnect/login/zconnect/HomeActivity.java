@@ -48,7 +48,6 @@ public class HomeActivity extends AppCompatActivity
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         mEverything.setLayoutManager(linearLayoutManager);
-        linearLayoutManager.removeAllViews();
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);

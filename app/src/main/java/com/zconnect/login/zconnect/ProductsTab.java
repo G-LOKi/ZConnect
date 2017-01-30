@@ -1,8 +1,6 @@
 package com.zconnect.login.zconnect;
 
 
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,7 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -36,7 +33,7 @@ public class ProductsTab extends Fragment {
 
     private RecyclerView mProductList;
     private DatabaseReference mDatabase;
-    private boolean flag=false;
+    private boolean flag = false;
     private FirebaseAuth mAuth;
     //notify
     private NotificationCompat.Builder mBuilder;
@@ -85,7 +82,7 @@ public class ProductsTab extends Fragment {
         super.onStart();
 
         // Firebase predefined Recycler Adapter
-        FirebaseRecyclerAdapter<Product,ProductsTab.ProductViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Product, ProductsTab.ProductViewHolder>(
+        FirebaseRecyclerAdapter<Product, ProductsTab.ProductViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Product, ProductsTab.ProductViewHolder>(
 
                 Product.class,
                 R.layout.products_row,
@@ -145,7 +142,7 @@ public class ProductsTab extends Fragment {
         Switch mReserve;
         TextView ReserveStatus;
         // Flag Variable to get each Reserve Id
-        String [] keyList;
+        String[] keyList;
         // Flag to get combined user Id
         String ReservedUid;
         private DatabaseReference Users = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
@@ -158,8 +155,8 @@ public class ProductsTab extends Fragment {
         public ProductViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            mReserve = (Switch)mView.findViewById(R.id.switch1);
-            ReserveStatus = (TextView)mView.findViewById(R.id.switch1);
+            mReserve = (Switch) mView.findViewById(R.id.switch1);
+            ReserveStatus = (TextView) mView.findViewById(R.id.switch1);
             StoreRoom.keepSynced(true);
         }
 
@@ -178,8 +175,7 @@ public class ProductsTab extends Fragment {
         }
 
         // Setting default switch
-        public void defaultSwitch(final String key)
-        {
+        public void defaultSwitch(final String key) {
             // Getting User ID
             mAuth = FirebaseAuth.getInstance();
             FirebaseUser user = mAuth.getCurrentUser();
@@ -294,21 +290,23 @@ public class ProductsTab extends Fragment {
 //        };
 
         //Set name of product
-        public void setProductName(String productName){
+        public void setProductName(String productName) {
 
             TextView post_name = (TextView) mView.findViewById(R.id.productName);
             post_name.setText(productName);
 
         }
+
         //Set Product Description
-        public void setProductDesc(String productDesc){
+        public void setProductDesc(String productDesc) {
 
             TextView post_desc = (TextView) mView.findViewById(R.id.productDescription);
             post_desc.setText(productDesc);
 
         }
+
         //Set Product Image
-        public void setImage(Context ctx, String image){
+        public void setImage(Context ctx, String image) {
 
             ImageView post_image = (ImageView) mView.findViewById(R.id.postImg);
             Picasso.with(ctx).load(image).into(post_image);

@@ -99,6 +99,10 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity android:name=".OpenEventDetail" />
+        <activity android:name=".shop.Details_of_shop.ShopDetails" />
+        <activity android:name=".shop.categories.Shop" />
+        <activity android:name=".shop.ShopList.ListOfShop" />
+
         <activity android:name=".OpenProductDetail" />
         <activity
             android:name=".HomeActivity"

@@ -9,10 +9,11 @@
     tools:context="com.zconnect.login.zconnect.shop.Details_of_shop.TabView1">
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
         android:id="@+id/ImageWalaView"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
+
 
 </RelativeLayout>

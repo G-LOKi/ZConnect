@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/StoreImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="230dp"
         android:adjustViewBounds="true"
         android:contextClickable="true"
-        android:cropToPadding="true" />
+        android:cropToPadding="true"
+        app:srcCompat="@drawable/beanbags" />
 
     <TextView
         android:id="@+id/Title_store"
@@ -51,6 +50,7 @@
             android:visibility="visible" />
 
     </LinearLayout>
+
     <Button
         android:id="@+id/Direction"
         android:layout_width="match_parent"

@@ -7,24 +7,24 @@ package com.zconnect.login.zconnect.shop.Details_of_shop;
 public class modelData {
     String Url, Title, Description;
 
-    public modelData(String url, String title, String description) {
-        Url = url;
-        Title = title;
-        Description = description;
+    public modelData(String abc, String def, String ghi) {
+        Url = abc;
+        Title = def;
+        Description = ghi;
     }
 
     public modelData() {
     }
 
-    public String getUrl() {
+    public String getUl() {
         return Url;
     }
 
-    public String getTitle() {
+    public String getTitl() {
         return Title;
     }
 
-    public String getDescription() {
+    public String getDesc() {
         return Description;
     }
 }

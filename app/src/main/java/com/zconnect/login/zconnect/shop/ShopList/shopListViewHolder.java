@@ -6,10 +6,9 @@ import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.zconnect.login.zconnect.R;
 import com.zconnect.login.zconnect.shop.Details_of_shop.ShopDetails;
 
@@ -33,15 +32,7 @@ public class shopListViewHolder extends RecyclerView.ViewHolder
         mView.getContext().startActivity(goToDetails);
     }
 
-    public void createClicklistener(final String ShopName) {
-        mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                call_detailsOfShops(ShopName);
 
-            }
-        });
-    }
 
     public void setTitle(String title) {
         TextView postTitle = (TextView) mView.findViewById(R.id.Title_store);
@@ -67,17 +58,15 @@ public class shopListViewHolder extends RecyclerView.ViewHolder
 
     }
 
-    public void setImage(Context context, String url, final String ShopName) {
-        ImageView imageView = (ImageView) mView.findViewById(R.id.StoreImage);
-        Picasso.with(context).load(url).into(imageView);
+    public void setImage(String url, final String title) {
+        SimpleDraweeView imageView = (SimpleDraweeView) mView.findViewById(R.id.StoreImage);
+        imageView.setImageURI(Uri.parse(url));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                call_detailsOfShops(ShopName);
+                call_detailsOfShops(title);
             }
         });
-
-
     }
 
     public void makeButton(final double lat, final double lon, final Context context) {

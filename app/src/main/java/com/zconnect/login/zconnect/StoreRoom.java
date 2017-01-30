@@ -33,7 +33,7 @@ public class StoreRoom extends AppCompatActivity {
     private RecyclerView mProductList;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
-    private boolean flag=false;
+    private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,21 +41,20 @@ public class StoreRoom extends AppCompatActivity {
         setContentView(R.layout.activity_store_room);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-            Intent intent =getIntent();
-            if (intent!=null)
-            {
-                category= intent.getStringExtra("Category");
-            }
+        Intent intent = getIntent();
+        if (intent != null) {
+            category = intent.getStringExtra("Category");
+        }
         Toast.makeText(this, category, Toast.LENGTH_SHORT).show();
         mProductList = (RecyclerView) findViewById(R.id.productList);
-            mProductList.setHasFixedSize(true);
-            mProductList.setLayoutManager(new LinearLayoutManager(this));
+        mProductList.setHasFixedSize(true);
+        mProductList.setLayoutManager(new LinearLayoutManager(this));
 
         mAuth = FirebaseAuth.getInstance();
 
 
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
-            queryCategory = mDatabase.orderByChild("Category").equalTo(category);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
+        queryCategory = mDatabase.orderByChild("Category").equalTo(category);
         mDatabase.keepSynced(true);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -75,7 +74,7 @@ public class StoreRoom extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<Product,ProductViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Product, ProductViewHolder>(
+        FirebaseRecyclerAdapter<Product, ProductViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Product, ProductViewHolder>(
 
                 Product.class,
                 R.layout.products_row,
@@ -126,7 +125,7 @@ public class StoreRoom extends AppCompatActivity {
         mProductList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder{
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
 
         public CompoundButton.OnCheckedChangeListener mListener;
         View mView;
@@ -134,20 +133,19 @@ public class StoreRoom extends AppCompatActivity {
         String ReservedUid;
         private Switch mReserve;
         private TextView ReserveStatus;
-        private DatabaseReference StoreRoom= FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
+        private DatabaseReference StoreRoom = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
         private FirebaseAuth mAuth;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            mReserve = (Switch)mView.findViewById(R.id.switch1);
-            ReserveStatus = (TextView)mView.findViewById(R.id.switch1);
+            mReserve = (Switch) mView.findViewById(R.id.switch1);
+            ReserveStatus = (TextView) mView.findViewById(R.id.switch1);
             StoreRoom.keepSynced(true);
 
         }
 
-        public void defaultSwitch(final String key)
-        {
+        public void defaultSwitch(final String key) {
             // Getting User ID
             mAuth = FirebaseAuth.getInstance();
             FirebaseUser user = mAuth.getCurrentUser();
@@ -158,11 +156,9 @@ public class StoreRoom extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     mReserve.setOnCheckedChangeListener(null);
-                    if(dataSnapshot.child(key).child("UsersReserved").hasChild(userId))
-                    {
+                    if (dataSnapshot.child(key).child("UsersReserved").hasChild(userId)) {
                         mReserve.setChecked(true);
-                    }
-                    else{
+                    } else {
                         mReserve.setChecked(false);
                     }
                     mReserve.setOnCheckedChangeListener(mListener);
@@ -179,21 +175,21 @@ public class StoreRoom extends AppCompatActivity {
 
         }
 
-        public void setProductName(String productName){
+        public void setProductName(String productName) {
 
             TextView post_name = (TextView) mView.findViewById(R.id.productName);
             post_name.setText(productName);
 
         }
 
-        public void setProductDesc(String productDesc){
+        public void setProductDesc(String productDesc) {
 
             TextView post_desc = (TextView) mView.findViewById(R.id.productDescription);
             post_desc.setText(productDesc);
 
         }
 
-        public void setImage(Context ctx,String image){
+        public void setImage(Context ctx, String image) {
 
 
             ImageView post_image = (ImageView) mView.findViewById(R.id.postImg);

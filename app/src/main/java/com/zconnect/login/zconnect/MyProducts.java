@@ -26,7 +26,7 @@ public class MyProducts extends AppCompatActivity {
     //private DatabaseReference mReservedProducts;
     private DatabaseReference mDatabase;
     private RecyclerView mProductList;
-//    private List<String> reserveList;
+    //    private List<String> reserveList;
     private FirebaseAuth mAuth;
 
     @Override
@@ -38,7 +38,7 @@ public class MyProducts extends AppCompatActivity {
         mProductList.setHasFixedSize(true);
         mProductList.setLayoutManager(new LinearLayoutManager(MyProducts.this));
 
-       // mReservedProducts = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
+        // mReservedProducts = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
 
 
@@ -87,7 +87,7 @@ public class MyProducts extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        viewHolder.ReserveReference = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom/"+product_key);
+                        viewHolder.ReserveReference = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom/" + product_key);
                         viewHolder.ReserveReference.getRef().removeValue();
                     }
                 });
@@ -97,11 +97,11 @@ public class MyProducts extends AppCompatActivity {
         mProductList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder{
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
         private DatabaseReference ReserveReference;
-//        private Switch mReserve;
+        //        private Switch mReserve;
 //        private TextView ReserveStatus;
         private ImageButton deleteButton;
 //        private FirebaseAuth mAuth;
@@ -112,24 +112,24 @@ public class MyProducts extends AppCompatActivity {
             super(itemView);
             mView = itemView;
             //to delete reserved items
-            deleteButton = (ImageButton)mView.findViewById(R.id.delete);
+            deleteButton = (ImageButton) mView.findViewById(R.id.delete);
         }
 
-        public void setProductName(String productName){
+        public void setProductName(String productName) {
 
             TextView post_name = (TextView) mView.findViewById(R.id.productName);
             post_name.setText(productName);
 
         }
 
-        public void setProductDesc(String productDesc){
+        public void setProductDesc(String productDesc) {
 
             TextView post_desc = (TextView) mView.findViewById(R.id.productDescription);
             post_desc.setText(productDesc);
 
         }
 
-        public void setImage(Context ctx, String image){
+        public void setImage(Context ctx, String image) {
 
 
             ImageView post_image = (ImageView) mView.findViewById(R.id.postImg);

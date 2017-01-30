@@ -6,17 +6,19 @@ package com.zconnect.login.zconnect.shop.ShopList;
 
 public class shopList {
 
-    Double longitude, lattitude;
-    String address, Title, FirebaseUID, Image_Url, phnNo;
+    private Double longitude, lattitude;
+    private String address, Title, Image_Url, phnNo;
 
-    public shopList(Double longitude, Double lattitude, String address, String title, String firebaseUID, String image_Url, String phnNo) {
+    public shopList(Double longitude, Double lattitude, String address, String title, String image_Url, String phnNo) {
         this.longitude = longitude;
         this.lattitude = lattitude;
         this.address = address;
         Title = title;
-        FirebaseUID = firebaseUID;
         Image_Url = image_Url;
         this.phnNo = phnNo;
+    }
+
+    public shopList() {
     }
 
     public Double getLongitude() {
@@ -33,10 +35,6 @@ public class shopList {
 
     public String getTitle() {
         return Title;
-    }
-
-    public String getFirebaseUID() {
-        return FirebaseUID;
     }
 
     public String getImage_Url() {

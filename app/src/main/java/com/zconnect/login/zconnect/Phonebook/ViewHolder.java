@@ -11,32 +11,32 @@ class ViewHolder extends RecyclerView.ViewHolder
 
 {
     View mView;
+
     public ViewHolder(View itemView) {
 
         super(itemView);
-        mView=itemView;
+        mView = itemView;
 
 
     }
-    public void destroy()
-    {
+
+    public void destroy() {
         View v1 = mView.findViewById(R.id.textNumber);
         ((ViewGroup) v1.getParent()).removeView(v1);
-        v1.layout(0,0,0,0);
+        v1.layout(0, 0, 0, 0);
 
         View v2 = mView.findViewById(R.id.textName);
         ((ViewGroup) v2.getParent()).removeView(v2);
     }
 
-    public void setTitle(String title)
-    {
-        TextView postTitle= (TextView) mView.findViewById(R.id.textName);
+    public void setTitle(String title) {
+        TextView postTitle = (TextView) mView.findViewById(R.id.textName);
         postTitle.setText(title);
 
     }
-    public void setAddress(String description)
-    {
-        TextView postDesc= (TextView) mView.findViewById(R.id.textNumber);
+
+    public void setAddress(String description) {
+        TextView postDesc = (TextView) mView.findViewById(R.id.textNumber);
         postDesc.setText(description);
 
     }
