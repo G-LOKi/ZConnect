@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">@color/material_deep_teal_500</color>
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="grey">#777777</color>
     <color name="black_overlay">#660000</color>

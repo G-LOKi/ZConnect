@@ -349,5 +349,3 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
     }
 
 }
-
-

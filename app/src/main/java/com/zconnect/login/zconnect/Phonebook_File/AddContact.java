@@ -40,7 +40,7 @@ public class AddContact extends AppCompatActivity {
     private android.support.design.widget.TextInputEditText editTextDetails;
     private android.support.design.widget.TextInputEditText editTextNumber;
     private StorageReference mStorage = FirebaseStorage.getInstance().getReference();
-    private DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("ZConnect").child("Phonebook");
+    private DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("ZConnect");
     private ProgressDialog mProgress;
     private RadioButton radioButtonS, radioButtonA, radioButtonO;
     private String name, email, details, number, category = null, imageurl;
@@ -170,16 +170,24 @@ public class AddContact extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
-
-                    DatabaseReference newPost = ref.push();
-                    // String key = newPost.getKey();
-                    newPost.child("name").setValue(name);
-                    newPost.child("desc").setValue(details);
-                    newPost.child("imageurl").setValue(downloadUri.toString());
-                    newPost.child("number").setValue(number);
-                    newPost.child("category").setValue(category);
-                    newPost.child("email").setValue(email);
-
+                    {
+                        DatabaseReference newPost = ref.child("Phonebook").push();
+                        // String key = newPost.getKey();
+                        newPost.child("name").setValue(name);
+                        newPost.child("desc").setValue(details);
+                        newPost.child("imageurl").setValue(downloadUri.toString());
+                        newPost.child("number").setValue(number);
+                        newPost.child("category").setValue(category);
+                        newPost.child("email").setValue(email);
+                    }
+                    {
+                        DatabaseReference newPost = ref.child("everything").push();
+                        newPost.child("Title").setValue(name);
+                        newPost.child("Description").setValue(details);
+                        newPost.child("Url").setValue(downloadUri.toString());
+                        newPost.child("Phone_no").setValue(number);
+                        newPost.child("multiUse1").setValue(email);
+                    }
                     mProgress.dismiss();
                     startActivity(new Intent(AddContact.this, Phonebook.class));
                 }
