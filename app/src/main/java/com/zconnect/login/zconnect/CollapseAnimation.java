@@ -7,10 +7,10 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.LinearLayout;
 
 
-public class CollapseAnimation extends TranslateAnimation implements TranslateAnimation.AnimationListener{
+public class CollapseAnimation extends TranslateAnimation implements TranslateAnimation.AnimationListener {
 
-    private LinearLayout slidingLayout;
     int panelWidth;
+    private LinearLayout slidingLayout;
 
     public CollapseAnimation(LinearLayout layout, int width, int fromXType, float fromXValue, int toXType,
                              float toXValue, int fromYType, float fromYValue, int toYType, float toYValue) {
@@ -21,7 +21,7 @@ public class CollapseAnimation extends TranslateAnimation implements TranslateAn
         slidingLayout = layout;
         panelWidth = width;
         setDuration(400);
-        setFillAfter( false );
+        setFillAfter(false);
         setInterpolator(new AccelerateDecelerateInterpolator());
         setAnimationListener(this);
 
@@ -34,6 +34,7 @@ public class CollapseAnimation extends TranslateAnimation implements TranslateAn
         slidingLayout.startAnimation(this);
 
     }
+
     public void onAnimationEnd(Animation animation) {
 
     }

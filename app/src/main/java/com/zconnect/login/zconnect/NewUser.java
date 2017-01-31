@@ -103,9 +103,9 @@ public class NewUser extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startPosting();
+                startActivity(new Intent(NewUser.this, home.class));
             }
         });
-
     }
 
     @Override
