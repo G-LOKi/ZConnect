@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".ZConnect"
@@ -49,6 +50,7 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.app.default_searchable"
+                android:value=".Phonebook_File.PhonebookSearch" />
                 android:value=".Phonebook_File.PhonebookSearch" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -97,11 +99,15 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity android:name=".OpenEventDetail" />
+        <activity android:name=".shop.Details_of_shop.ShopDetails" />
+        <activity android:name=".shop.categories.Shop" />
+        <activity android:name=".shop.ShopList.ListOfShop" />
+
         <activity android:name=".OpenProductDetail" />
         <activity
             android:name=".HomeActivity"
             android:label="ZConnect"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

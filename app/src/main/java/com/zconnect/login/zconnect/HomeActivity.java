@@ -7,17 +7,29 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
+import com.zconnect.login.zconnect.Phonebook_File.PhonebookDisplayItem;
+
+import java.util.Calendar;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    CardView card1, card2, card3, card4;
+    LinearLayoutManager linearLayoutManager;
+    RecyclerView mEverything;
+    RelativeLayout mType12;
+    LinearLayout mtype3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,34 +42,33 @@ public class HomeActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        card1 = (CardView) findViewById(R.id.card1);
-        card2 = (CardView) findViewById(R.id.card2);
-        card3 = (CardView) findViewById(R.id.card3);
-        card4 = (CardView) findViewById(R.id.card4);
+        mEverything = (RecyclerView) findViewById(R.id.everything);
+        mEverything.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        mEverything.setLayoutManager(linearLayoutManager);
+
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+//        makeRecyclerView();
 
-        card1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Phonebook.class);
-                startActivity(intent);
-            }
-        });
-        card2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), TabStoreRoom.class);
-                startActivity(intent);
-            }
-        });
-        card3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AllEvents.class);
-                startActivity(intent);
-            }
-        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        makeRecyclerView();
+    }
+
+    public void removeLinearLayout() {
+        mType12 = (RelativeLayout) findViewById(R.id.ContactCardEverything);
+        mType12.setVisibility(View.GONE);
+    }
+
+    public void removeRelativeLayout() {
+
     }
 
     @Override
@@ -111,5 +122,51 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    void makeRecyclerView() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("ZConnect").child("everything");
+        FirebaseRecyclerAdapter<Home_data, everythingViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home_data, everythingViewHolder>(
+                Home_data.class,
+                R.layout.everything_row,
+                everythingViewHolder.class,
+                mDatabase) {
+
+
+            @Override
+            protected void populateViewHolder(everythingViewHolder viewHolder, Home_data model, int position) {
+
+
+                if (model.getType() == 0) {
+
+                    viewHolder.removeView();
+                    viewHolder.setTitle(model.getTitle());
+                    viewHolder.setDescription(model.getDescription());
+                    viewHolder.setImage(getApplicationContext(), model.getUrl());
+                    Calendar cal = Calendar.getInstance();
+                    viewHolder.setDate(model.getmultiUse2(), false, getApplicationContext());
+                    viewHolder.makeButton(model.getTitle(), model.getDescription(), Long.parseLong(model.getmultiUse1()) - cal.getTimeInMillis());
+                } else if (model.getType() == 1) {
+                    viewHolder.removeView();
+                    viewHolder.setTitle(model.getTitle());
+                    viewHolder.setDescription(model.getDescription());
+                    viewHolder.setImage(getApplicationContext(), model.getUrl());
+                    viewHolder.setDate(String.valueOf(model.getPhone_no()), true, getApplicationContext());
+
+
+                } else if (model.getType() == 2) {
+
+                    PhonebookDisplayItem displayItem = new PhonebookDisplayItem(model.getUrl(), model.getTitle(), model.getDescription(), String.valueOf(model.getPhone_no()), model.getmultiUse1(), model.getmultiUse2());
+                    viewHolder.makeContactView(getApplicationContext(), displayItem);
+
+                }
+                //Toast.makeText(getApplicationContext(),"Check 1",Toast.LENGTH_LONG);
+
+
+            }
+
+
+        };
+        mEverything.setAdapter(firebaseRecyclerAdapter);
     }
 }

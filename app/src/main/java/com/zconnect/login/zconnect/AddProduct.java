@@ -30,7 +30,7 @@ public class AddProduct extends AppCompatActivity {
     private Uri mImageUri = null;
     private ImageButton mAddImage;
     private Button mPostBtn;
-    private EditText mProductName;
+    private EditText mProductName, mPosterNumber;
     private EditText mProductDescription;
     private StorageReference mStorage;
     private DatabaseReference mDatabase;
@@ -50,10 +50,11 @@ public class AddProduct extends AppCompatActivity {
         mProductDescription = (EditText)findViewById(R.id.description);
         mPostBtn = (Button)findViewById(R.id.postButton);
         mStorage = FirebaseStorage.getInstance().getReference();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect");
         spinner1 = (Spinner) findViewById(R.id.spinner1);
         mAuth = FirebaseAuth.getInstance();
         mProgress = new ProgressDialog(this);
+        mPosterNumber = (EditText) findViewById(R.id.PosterPhoneNo);
 
         mAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,16 +105,27 @@ public class AddProduct extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
+                    { //Store in Storeroom
+                        DatabaseReference newPost = mDatabase.child("storeroom").push();
+                        String key = newPost.getKey();
+                        newPost.child("Category").setValue(String.valueOf(spinner1.getSelectedItem()));
+                        newPost.child("Key").setValue(key);
+                        newPost.child("ProductName").setValue(productNameValue);
+                        newPost.child("ProductDescription").setValue(productDescriptionValue);
+                        newPost.child("Image").setValue(downloadUri.toString());
+                        newPost.child("PostedBy").setValue(mAuth.getCurrentUser().getUid());
+                        newPost.child("SellerUsername").setValue(sellerName);
+                    }
+                    {
+                        { //Store in everything
+                            DatabaseReference newPost = mDatabase.child("everything").push();
+                            newPost.child("Title").setValue(productNameValue);
+                            newPost.child("Description").setValue(productDescriptionValue);
+                            newPost.child("Url").setValue(downloadUri.toString());
+                            newPost.child("Phone_no").setValue(mPosterNumber.getText().toString());
 
-                    DatabaseReference newPost = mDatabase.push();
-                    String key = newPost.getKey();
-                    newPost.child("Category").setValue(String.valueOf(spinner1.getSelectedItem()));
-                    newPost.child("Key").setValue(key);
-                    newPost.child("ProductName").setValue(productNameValue);
-                    newPost.child("ProductDescription").setValue(productDescriptionValue);
-                    newPost.child("Image").setValue(downloadUri.toString());
-                    newPost.child("PostedBy").setValue(mAuth.getCurrentUser().getUid());
-                    newPost.child("SellerUsername").setValue(sellerName);
+                        }
+                    }
                     mProgress.dismiss();
                     startActivity(new Intent(AddProduct.this,TabStoreRoom.class));
                 }
