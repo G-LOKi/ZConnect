@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -21,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
 import com.zconnect.login.zconnect.Phonebook_File.PhonebookDisplayItem;
+import com.zconnect.login.zconnect.shop.categories.Shop;
 
 import java.util.Calendar;
 
@@ -62,14 +62,6 @@ public class HomeActivity extends AppCompatActivity
         makeRecyclerView();
     }
 
-    public void removeLinearLayout() {
-        mType12 = (RelativeLayout) findViewById(R.id.ContactCardEverything);
-        mType12.setVisibility(View.GONE);
-    }
-
-    public void removeRelativeLayout() {
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -113,6 +105,9 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_storeroom) {
             Intent intent = new Intent(this, TabStoreRoom.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_shop) {
+            Intent intent = new Intent(this, Shop.class);
             startActivity(intent);
         } else if (id == R.id.nav_signout) {
 

@@ -10,11 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.view.WindowManager;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
-import com.zconnect.login.zconnect.shop.categories.Shop;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,7 +26,6 @@ public class logo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fresco.initialize(getApplicationContext());
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
         mBuilder = new NotificationCompat.Builder(this);
@@ -60,7 +57,7 @@ public class logo extends AppCompatActivity {
         // Time Delay ofor the logo activity
         new Timer().schedule(new TimerTask(){
             public void run() {
-                startActivity(new Intent(logo.this, Shop.class));
+                startActivity(new Intent(logo.this, logIn.class));
                 finish();
             }
         }, 2500);
