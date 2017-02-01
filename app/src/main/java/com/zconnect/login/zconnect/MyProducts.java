@@ -2,15 +2,12 @@ package com.zconnect.login.zconnect;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -21,44 +18,34 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+public class MyProducts extends AppCompatActivity {
 
-import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class ReservedTab extends Fragment {
-
-    private DatabaseReference mReservedProducts;
+    //    String reserveString;
+    Query query;
+    //private DatabaseReference mReservedProducts;
     private DatabaseReference mDatabase;
     private RecyclerView mProductList;
-    private List<String> reserveList;
+    //    private List<String> reserveList;
     private FirebaseAuth mAuth;
-    String reserveString;
-    Query query;
-
-    public ReservedTab() {
-        // Required empty public constructor
-    }
-
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_store_room, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_store_room);
 
-
-        mProductList = (RecyclerView) view.findViewById(R.id.productList);
+        mProductList = (RecyclerView) findViewById(R.id.productList);
         mProductList.setHasFixedSize(true);
-        mProductList.setLayoutManager(new LinearLayoutManager(getContext()));
+        mProductList.setLayoutManager(new LinearLayoutManager(MyProducts.this));
 
-        mReservedProducts = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
+        // mReservedProducts = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
 
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         final String userId = user.getUid();
-        query = mDatabase.orderByChild("UsersReserved/"+ userId).equalTo(user.getDisplayName());
+        query = mDatabase.orderByChild("PostedBy").equalTo(userId);
 
 //        mReservedProducts.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -73,9 +60,6 @@ public class ReservedTab extends Fragment {
 //
 //            }
 //        });
-
-
-        return view;
     }
 
     @Override
@@ -89,26 +73,22 @@ public class ReservedTab extends Fragment {
                 query
         ) {
             @Override
-            protected void populateViewHolder(final ProductViewHolder viewHolder, Product model, int position) {
+            protected void populateViewHolder(final MyProducts.ProductViewHolder viewHolder, Product model, int position) {
 
-                    final String product_key = getRef(position).getKey();
+                final String product_key = getRef(position).getKey();
 
 //               if(reserveList.contains(model.getKey())) {
-                    viewHolder.setProductName(model.getProductName());
-                    viewHolder.setProductDesc(model.getProductDescription());
-                    viewHolder.setImage(getApplicationContext(), model.getImage());
+                viewHolder.setProductName(model.getProductName());
+                viewHolder.setProductDesc(model.getProductDescription());
+                viewHolder.setImage(getApplicationContext(), model.getImage());
 //                }else {
 //               }
                 viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        viewHolder.ReserveReference = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom/"+product_key+"/UsersReserved");
-
-                        mAuth = FirebaseAuth.getInstance();
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        final String userId = user.getUid();
-                        viewHolder.ReserveReference.child(userId).removeValue();
+                        viewHolder.ReserveReference = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom/" + product_key);
+                        viewHolder.ReserveReference.getRef().removeValue();
                     }
                 });
 
@@ -117,40 +97,39 @@ public class ReservedTab extends Fragment {
         mProductList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder{
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
 
-
-        private DatabaseReference ReserveReference;
         View mView;
-        private Switch mReserve;
-        private TextView ReserveStatus;
+        private DatabaseReference ReserveReference;
+        //        private Switch mReserve;
+//        private TextView ReserveStatus;
         private ImageButton deleteButton;
-        private FirebaseAuth mAuth;
-        String [] keyList;
-        String ReservedUid;
+//        private FirebaseAuth mAuth;
+//        String [] keyList;
+//        String ReservedUid;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             //to delete reserved items
-            deleteButton = (ImageButton)mView.findViewById(R.id.delete);
+            deleteButton = (ImageButton) mView.findViewById(R.id.delete);
         }
 
-        public void setProductName(String productName){
+        public void setProductName(String productName) {
 
             TextView post_name = (TextView) mView.findViewById(R.id.productName);
             post_name.setText(productName);
 
         }
 
-        public void setProductDesc(String productDesc){
+        public void setProductDesc(String productDesc) {
 
             TextView post_desc = (TextView) mView.findViewById(R.id.productDescription);
             post_desc.setText(productDesc);
 
         }
 
-        public void setImage(Context ctx, String image){
+        public void setImage(Context ctx, String image) {
 
 
             ImageView post_image = (ImageView) mView.findViewById(R.id.postImg);
@@ -162,5 +141,3 @@ public class ReservedTab extends Fragment {
     }
 
 }
-
-

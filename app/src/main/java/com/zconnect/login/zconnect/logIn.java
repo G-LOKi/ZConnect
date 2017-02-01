@@ -1,13 +1,19 @@
 package com.zconnect.login.zconnect;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -32,7 +38,6 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
-import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,11 +54,14 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog mProgressDialog;
     private DatabaseReference mDatabase;
+    private boolean flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
+        flag = true;
 
         //Buttons
         signInButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.sign_in_button);
@@ -206,27 +214,27 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
         );
     }
 
-    private void revokeAccess() {
-        // Firebase sign out
-        mAuth.signOut();
-
-        // Google revoke access
-        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                        updateUI(null);
-                    }
-                }
-        );
-    }
+//    private void revokeAccess() {
+//        // Firebase sign out
+//        mAuth.signOut();
+//
+//        // Google revoke access
+//        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
+//                new ResultCallback<Status>() {
+//                    @Override
+//                    public void onResult(@NonNull Status status) {
+//                        updateUI(null);
+//                    }
+//                }
+//        );
+//    }
 
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
             checkUser();
-            Intent intent = new Intent(logIn.this,home.class);
-            startActivity(intent);
+
+
         }
 
     }
@@ -242,10 +250,15 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild(user_id))
                 {
+                    flag = false;
                     writeNewPost(user_id,email);
                     Intent intent = new Intent(logIn.this,NewUser.class);
                     startActivity(intent);
-
+                } else {
+                    if (flag) {
+                        Intent intent = new Intent(logIn.this, HomeActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
 
@@ -258,16 +271,25 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
 
     @Override
     public void onClick(View view) {
-            switch (view.getId())
-            {
-                case R.id.sign_in_button:
-                    signIn();
-                    break;
+        if (view.getId() == R.id.sign_in_button) {
+            if (!isNetworkAvailable(getApplicationContext())) {
 
+                Snackbar snack = Snackbar.make(signInButton, "No Internet. Can't Sign In.", Snackbar.LENGTH_LONG);
+                TextView snackBarText = (TextView) snack.getView().findViewById(android.support.design.R.id.snackbar_text);
+                snackBarText.setTextColor(Color.WHITE);
+                snack.getView().setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                snack.show();
+            } else {
+                signIn();
             }
+        }
 
     }
 
+    public boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
@@ -327,5 +349,3 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
     }
 
 }
-
-

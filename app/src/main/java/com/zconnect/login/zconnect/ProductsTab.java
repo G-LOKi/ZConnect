@@ -2,13 +2,12 @@ package com.zconnect.login.zconnect;
 
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,27 +23,20 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import static com.facebook.FacebookSdk.getApplicationContext;
-import static com.facebook.GraphRequest.TAG;
 
 public class ProductsTab extends Fragment {
 
 
     private RecyclerView mProductList;
     private DatabaseReference mDatabase;
-    private boolean flag=false;
+    private boolean flag = false;
     private FirebaseAuth mAuth;
-
+    //notify
+    private NotificationCompat.Builder mBuilder;
 
     public ProductsTab() {
         // Required empty public constructor
@@ -67,6 +59,20 @@ public class ProductsTab extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
         mDatabase.keepSynced(true);
 
+//        mBuilder = new NotificationCompat.Builder(getContext());
+//        mBuilder.setSmallIcon(R.drawable.messenger_bubble_small_blue)
+//                .setContentTitle("Notification!")
+//                .setContentText("Lorem Ipsum dolor sit et");
+//
+//        Intent resultIntent = new Intent(getContext(), Phonebook.class);
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getContext());
+//        stackBuilder.addParentStack(Phonebook.class);
+//
+//        // Adds the Intent that starts the Activity to the top of the stack
+//        stackBuilder.addNextIntent(resultIntent);
+//        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+//        mBuilder.setContentIntent(resultPendingIntent);
+
         return view;
     }
 
@@ -76,7 +82,7 @@ public class ProductsTab extends Fragment {
         super.onStart();
 
         // Firebase predefined Recycler Adapter
-        FirebaseRecyclerAdapter<Product,ProductsTab.ProductViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Product, ProductsTab.ProductViewHolder>(
+        FirebaseRecyclerAdapter<Product, ProductsTab.ProductViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Product, ProductsTab.ProductViewHolder>(
 
                 Product.class,
                 R.layout.products_row,
@@ -90,6 +96,8 @@ public class ProductsTab extends Fragment {
                 viewHolder.setProductName(model.getProductName());
                 viewHolder.setProductDesc(model.getProductDescription());
                 viewHolder.setImage(getApplicationContext(), model.getImage());
+                viewHolder.openProduct(model.getKey());
+
 
                 viewHolder.mListener = new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -128,40 +136,46 @@ public class ProductsTab extends Fragment {
     // Each View Holder Class
     public static class ProductViewHolder extends RecyclerView.ViewHolder{
 
+        public CompoundButton.OnCheckedChangeListener mListener;
         View mView;
-
-        private DatabaseReference Users = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
-        private DatabaseReference StoreRoom= FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
-        private DatabaseReference CurrentProduct;
-
         //Switch View
         Switch mReserve;
         TextView ReserveStatus;
-
-        public CompoundButton.OnCheckedChangeListener mListener;
-
-
-        // Auth to get Current User
-        private FirebaseAuth mAuth;
-
         // Flag Variable to get each Reserve Id
-        String [] keyList;
-
+        String[] keyList;
         // Flag to get combined user Id
         String ReservedUid;
+        private DatabaseReference Users = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
+        private DatabaseReference StoreRoom = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
+        private DatabaseReference CurrentProduct;
+        // Auth to get Current User
+        private FirebaseAuth mAuth;
 
         // Constructor
         public ProductViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            mReserve = (Switch)mView.findViewById(R.id.switch1);
-            ReserveStatus = (TextView)mView.findViewById(R.id.switch1);
+            mReserve = (Switch) mView.findViewById(R.id.switch1);
+            ReserveStatus = (TextView) mView.findViewById(R.id.switch1);
             StoreRoom.keepSynced(true);
         }
 
+        public void openProduct(final String key) {
+            mView.setOnClickListener(new View.OnClickListener()
+
+            {
+                @Override
+                public void onClick(View view) {
+
+                    Intent i = new Intent(mView.getContext(), OpenProductDetail.class);
+                    i.putExtra("key", key);
+                    mView.getContext().startActivity(i);
+                }
+            });
+        }
+
         // Setting default switch
-        public void defaultSwitch(final String key)
-        {
+        public void defaultSwitch(final String key) {
             // Getting User ID
             mAuth = FirebaseAuth.getInstance();
             FirebaseUser user = mAuth.getCurrentUser();
@@ -276,21 +290,23 @@ public class ProductsTab extends Fragment {
 //        };
 
         //Set name of product
-        public void setProductName(String productName){
+        public void setProductName(String productName) {
 
             TextView post_name = (TextView) mView.findViewById(R.id.productName);
             post_name.setText(productName);
 
         }
+
         //Set Product Description
-        public void setProductDesc(String productDesc){
+        public void setProductDesc(String productDesc) {
 
             TextView post_desc = (TextView) mView.findViewById(R.id.productDescription);
             post_desc.setText(productDesc);
 
         }
+
         //Set Product Image
-        public void setImage(Context ctx, String image){
+        public void setImage(Context ctx, String image) {
 
             ImageView post_image = (ImageView) mView.findViewById(R.id.postImg);
             Picasso.with(ctx).load(image).into(post_image);

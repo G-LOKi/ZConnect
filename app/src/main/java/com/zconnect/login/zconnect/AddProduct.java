@@ -3,8 +3,8 @@ package com.zconnect.login.zconnect;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -14,30 +14,31 @@ import android.widget.Spinner;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 public class AddProduct extends AppCompatActivity {
 
+    private static final int GALLERY_REQUEST = 7;
     private Uri mImageUri = null;
-
     private ImageButton mAddImage;
     private Button mPostBtn;
-
-    private EditText mProductName;
+    private EditText mProductName, mPosterNumber;
     private EditText mProductDescription;
-
     private StorageReference mStorage;
     private DatabaseReference mDatabase;
+    private DatabaseReference mUsername;
     private ProgressDialog mProgress;
     private Spinner spinner1;
     private FirebaseAuth mAuth;
-
-
-    private static final int GALLERY_REQUEST = 7;
+    private String sellerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +50,11 @@ public class AddProduct extends AppCompatActivity {
         mProductDescription = (EditText)findViewById(R.id.description);
         mPostBtn = (Button)findViewById(R.id.postButton);
         mStorage = FirebaseStorage.getInstance().getReference();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect");
         spinner1 = (Spinner) findViewById(R.id.spinner1);
         mAuth = FirebaseAuth.getInstance();
         mProgress = new ProgressDialog(this);
+        mPosterNumber = (EditText) findViewById(R.id.PosterPhoneNo);
 
         mAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,24 +80,52 @@ public class AddProduct extends AppCompatActivity {
         mProgress.show();
         final String productNameValue = mProductName.getText().toString().trim();
         final String productDescriptionValue = mProductDescription.getText().toString().trim();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        final String userId = user.getUid();
+        mUsername = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
 
-        if(!TextUtils.isEmpty(productNameValue) && !TextUtils.isEmpty(productDescriptionValue)&& mImageUri!=null)
+        mUsername.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                sellerName = (String) dataSnapshot.child(userId).child("Username").getValue();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        if (!TextUtils.isEmpty(productNameValue) && !TextUtils.isEmpty(productDescriptionValue) && mImageUri != null)
         {
             StorageReference filepath = mStorage.child("ProductImage").child(mImageUri.getLastPathSegment());
             filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
+                    { //Store in Storeroom
+                        DatabaseReference newPost = mDatabase.child("storeroom").push();
+                        String key = newPost.getKey();
+                        newPost.child("Category").setValue(String.valueOf(spinner1.getSelectedItem()));
+                        newPost.child("Key").setValue(key);
+                        newPost.child("ProductName").setValue(productNameValue);
+                        newPost.child("ProductDescription").setValue(productDescriptionValue);
+                        newPost.child("Image").setValue(downloadUri.toString());
+                        newPost.child("PostedBy").setValue(mAuth.getCurrentUser().getUid());
+                        newPost.child("SellerUsername").setValue(sellerName);
+                    }
+                    {
+                        { //Store in everything
+                            DatabaseReference newPost = mDatabase.child("everything").push();
+                            newPost.child("Title").setValue(productNameValue);
+                            newPost.child("Description").setValue(productDescriptionValue);
+                            newPost.child("Url").setValue(downloadUri.toString());
+                            newPost.child("Phone_no").setValue(mPosterNumber.getText().toString());
 
-                    DatabaseReference newPost = mDatabase.push();
-                    String key = newPost.getKey();
-                    newPost.child("Category").setValue(String.valueOf(spinner1.getSelectedItem()));
-                    newPost.child("Key").setValue(key);
-                    newPost.child("ProductName").setValue(productNameValue);
-                    newPost.child("ProductDescription").setValue(productDescriptionValue);
-                    newPost.child("Image").setValue(downloadUri.toString());
-                    newPost.child("PostedBy").setValue(mAuth.getCurrentUser().getUid());
-
+                        }
+                    }
                     mProgress.dismiss();
                     startActivity(new Intent(AddProduct.this,TabStoreRoom.class));
                 }

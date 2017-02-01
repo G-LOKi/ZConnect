@@ -1,24 +1,28 @@
 package com.zconnect.login.zconnect;
 
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
+import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.facebook.FacebookSdk;
 
 public class TabStoreRoom extends AppCompatActivity {
 
+
+    Toolbar mActionBarToolbar;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -28,13 +32,10 @@ public class TabStoreRoom extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    Toolbar mActionBarToolbar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,26 @@ public class TabStoreRoom extends AppCompatActivity {
         mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mActionBarToolbar);
         getSupportActionBar().setTitle("StoreRoom");
+        if (mActionBarToolbar != null) {
+            mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int colorPrimary = ContextCompat.getColor(this, R.color.colorPrimary);
+            getWindow().setStatusBarColor(colorPrimary);
+            getWindow().setNavigationBarColor(colorPrimary);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
+
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
@@ -66,6 +87,8 @@ public class TabStoreRoom extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -94,7 +117,7 @@ public class TabStoreRoom extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_storeroom) {
-           // Add the onclicklistner code
+            // Add the onclicklistner code
             startActivity(new Intent(TabStoreRoom.this, MyProducts.class));
             return true;
         }
@@ -151,7 +174,7 @@ public class TabStoreRoom extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch(position){
+            switch (position) {
                 case 0:
                     ProductsTab productsTab = new ProductsTab();
                     return productsTab;
