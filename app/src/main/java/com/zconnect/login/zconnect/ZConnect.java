@@ -17,7 +17,7 @@ public class ZConnect extends Application {
         //this will speed download process and is required by this library
         //more info http://frescolib.org/
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        Fresco.initialize(this);
+        Fresco.initialize(getApplicationContext());
 
 
     }

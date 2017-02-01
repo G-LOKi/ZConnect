@@ -66,6 +66,7 @@
     <string name="item_1">Store room</string>
     <string name="item_2">Events</string>
     <string name="item_3">Phonebook</string>
+    <string name="item_4">Shop</string>
     <string name="description">Hurrey</string>
     <string name="title_activity_phonebook">Phonebook</string>
 
@@ -104,5 +105,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="title_activity_shop_details">ShopDetails</string>
 
 </resources>

@@ -3,7 +3,6 @@ package com.zconnect.login.zconnect;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,7 +34,6 @@ public class ReservedTab extends Fragment {
     private RecyclerView mProductList;
     private List<String> reserveList;
     private FirebaseAuth mAuth;
-    private NotificationCompat.Builder mBuilder;
 
     public ReservedTab() {
         // Required empty public constructor
@@ -56,10 +54,11 @@ public class ReservedTab extends Fragment {
         mReservedProducts = FirebaseDatabase.getInstance().getReference().child("ZConnect/Users");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom");
 
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         final String userId = user.getUid();
-        query = mDatabase.orderByChild("UsersReserved/"+ userId).equalTo(user.getDisplayName());
+        query = mDatabase.orderByChild("UsersReserved/" + userId).equalTo(user.getDisplayName());
 
 //        mReservedProducts.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -92,19 +91,19 @@ public class ReservedTab extends Fragment {
             @Override
             protected void populateViewHolder(final ProductViewHolder viewHolder, Product model, int position) {
 
-                    final String product_key = getRef(position).getKey();
+                final String product_key = getRef(position).getKey();
 
 //               if(reserveList.contains(model.getKey())) {
-                    viewHolder.setProductName(model.getProductName());
-                    viewHolder.setProductDesc(model.getProductDescription());
-                    viewHolder.setImage(getApplicationContext(), model.getImage());
+                viewHolder.setProductName(model.getProductName());
+                viewHolder.setProductDesc(model.getProductDescription());
+                viewHolder.setImage(getApplicationContext(), model.getImage());
 //                }else {
 //               }
                 viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        viewHolder.ReserveReference = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom/"+product_key+"/UsersReserved");
+                        viewHolder.ReserveReference = FirebaseDatabase.getInstance().getReference().child("ZConnect/storeroom/" + product_key + "/UsersReserved");
 
                         mAuth = FirebaseAuth.getInstance();
                         FirebaseUser user = mAuth.getCurrentUser();
@@ -118,7 +117,7 @@ public class ReservedTab extends Fragment {
         mProductList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder{
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
 
 
         View mView;
@@ -134,24 +133,24 @@ public class ReservedTab extends Fragment {
             super(itemView);
             mView = itemView;
             //to delete reserved items
-            deleteButton = (ImageButton)mView.findViewById(R.id.delete);
+            deleteButton = (ImageButton) mView.findViewById(R.id.delete);
         }
 
-        public void setProductName(String productName){
+        public void setProductName(String productName) {
 
             TextView post_name = (TextView) mView.findViewById(R.id.productName);
             post_name.setText(productName);
 
         }
 
-        public void setProductDesc(String productDesc){
+        public void setProductDesc(String productDesc) {
 
             TextView post_desc = (TextView) mView.findViewById(R.id.productDescription);
             post_desc.setText(productDesc);
 
         }
 
-        public void setImage(Context ctx, String image){
+        public void setImage(Context ctx, String image) {
 
 
             ImageView post_image = (ImageView) mView.findViewById(R.id.postImg);

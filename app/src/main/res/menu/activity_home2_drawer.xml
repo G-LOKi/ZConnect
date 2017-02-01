@@ -14,6 +14,10 @@
             android:id="@+id/nav_event"
             android:icon="@drawable/ic_event_black_24dp"
             android:title="Event" />
+        <item
+            android:id="@+id/nav_shop"
+            android:icon="@drawable/beanbags"
+            android:title="Shop" />
 
     </group>
 

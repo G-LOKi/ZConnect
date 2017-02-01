@@ -54,7 +54,7 @@ public class logo extends AppCompatActivity {
         // Calling xml view file
         this.setContentView(R.layout.activity_logo);
 
-        // Time Delay for the logo activity
+        // Time Delay ofor the logo activity
         new Timer().schedule(new TimerTask(){
             public void run() {
                 startActivity(new Intent(logo.this, logIn.class));
