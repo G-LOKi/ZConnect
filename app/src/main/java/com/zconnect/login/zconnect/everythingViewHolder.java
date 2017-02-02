@@ -18,9 +18,6 @@ import com.zconnect.login.zconnect.Phonebook_File.PhonebookDisplayItem;
 
 import java.util.Calendar;
 
-import static android.support.v7.recyclerview.R.styleable.RecyclerView;
-
-
 class everythingViewHolder extends RecyclerView.ViewHolder
 
 {

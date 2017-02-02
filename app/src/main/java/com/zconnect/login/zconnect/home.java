@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -36,8 +38,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
+import com.zconnect.login.zconnect.shop.categories.Shop;
 
-public class home extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
+public class home extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "SignOutActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -45,11 +48,9 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
     FrameLayout.LayoutParams slidingPanelParameters;
     LinearLayout.LayoutParams headerPanelParameters;
     LinearLayout.LayoutParams listViewParameters;
+    RecyclerView mEverything;
     private GoogleApiClient mGoogleApiClient;
     private com.google.android.gms.common.SignInButton signInButton;
-
-
-    /////Menu Bar
     private Button signOutButton;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -62,6 +63,7 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
     private RelativeLayout menuPanel;
     private int panelWidth;
     private ImageView menuViewButton;
+    private LinearLayoutManager linearLayoutManager;
 
 /////MenuBar
 
@@ -69,13 +71,19 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mEverything = (RecyclerView) findViewById(R.id.everything);
+        mEverything.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        mEverything.setLayoutManager(linearLayoutManager);
 
         /////MenuBar
 
         //Initialize
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        panelWidth = (int) ((metrics.widthPixels)*0.33);
+        panelWidth = (int) ((metrics.widthPixels) * 0.33);
 
         headerPanel = (RelativeLayout) findViewById(R.id.header);
         headerPanelParameters = (LinearLayout.LayoutParams) headerPanel.getLayoutParams();
@@ -99,13 +107,14 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
         listViewParameters = (LinearLayout.LayoutParams) listView.getLayoutParams();
         listViewParameters.width = metrics.widthPixels;
         listView.setLayoutParams(listViewParameters);
+        mEverything.setLayoutManager(linearLayoutManager);
 
 
         //Slide the Panel
         menuViewButton = (ImageView) findViewById(R.id.menuViewButton);
         menuViewButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!isExpanded){
+                if (!isExpanded) {
                     isExpanded = true;
 
                     //Expand
@@ -113,12 +122,12 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
                             Animation.RELATIVE_TO_PARENT, 0.0f,
                             Animation.RELATIVE_TO_PARENT, -0.33f, 0, 0.0f, 0, 0.0f);
                     // if you want left to right just remove ( - ) before 0.33f
-                }else{
+                } else {
                     isExpanded = false;
 
                     //Collapse
-                    new CollapseAnimation(slidingPanel,panelWidth,
-                            TranslateAnimation.RELATIVE_TO_PARENT,-0.33f,
+                    new CollapseAnimation(slidingPanel, panelWidth,
+                            TranslateAnimation.RELATIVE_TO_PARENT, -0.33f,
                             TranslateAnimation.RELATIVE_TO_PARENT, 0.0f, 0, 0.0f, 0, 0.0f);
                     // if you want left to right just remove ( - ) before 0.33f
 
@@ -199,6 +208,20 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
             public void onClick(View v) {
                 Intent intent = new Intent(home.this, Phonebook.class);
                 startActivity(intent);
+
+                // request your webservice here. Possible use of AsyncTask and ProgressDialog
+                // show the result here - dialog or Toast
+            }
+
+        });
+        final TextView storeroom_item_4 = (TextView) findViewById(R.id.menu_item_4);
+        storeroom_item_4.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(home.this, Shop.class);
+                startActivity(intent);
+
                 // request your webservice here. Possible use of AsyncTask and ProgressDialog
                 // show the result here - dialog or Toast
             }
@@ -207,12 +230,11 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
     }
 
 
-
-
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+        //makeRecyclerView();
     }
 
     @Override
@@ -236,7 +258,7 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
 //            Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
-            }else {
+            } else {
 
                 updateUI(null);
             }
@@ -307,28 +329,24 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
 //                findViewById(R.id.sign_in_button).setVisibility(View.GONE);
 //                findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
 
-        }
-
-        else {
+        } else {
 //                Intent intent = new Intent(logIn.this,logIn.class);
 //                startActivity(intent);
-
-            Intent intent = new Intent(home.this,logIn.class);
-            startActivity(intent);
+//
+//            Intent intent = new Intent(home.this,logIn.class);
+//            startActivity(intent);
         }
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.sign_out_button:
                 signOut();
                 break;
         }
 
     }
-
 
 
 //
@@ -350,10 +368,6 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
 //        }
 //
 //    }
-
-
-
-
 
 
     @Override
@@ -381,10 +395,55 @@ public class home extends AppCompatActivity implements View.OnClickListener, Goo
         }
     }
 
-    public String getUid() {
-        return FirebaseAuth.getInstance().getCurrentUser().getUid();
-    }
 
+//    void makeRecyclerView()
+//    {
+//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("ZConnect").child("everything");
+//        FirebaseRecyclerAdapter<Home_data, everythingViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home_data, everythingViewHolder>(
+//                Home_data.class,
+//                R.layout.everything_row,
+//                everythingViewHolder.class,
+//                mDatabase) {
+//            @Override
+//            protected void populateViewHolder(everythingViewHolder viewHolder, Home_data model, int position) {
+//                viewHolder.setTitle(model.getTitl());
+//
+//                viewHolder.setDescription(model.getDesc());
+////                viewHolder.setImage(getApplicationContext(), model.getImage());
+////
+////                String Date = model.getDa()+"/"+model.getMon()+"/"+model.getYea()+"";
+////                String Time = model.getHo()+":"+model.getMin()+"";
+////                if(model.getTypeOfevent()==0) {
+////                    viewHolder.setDate(Date);
+////                    viewHolder.setTime(Time);
+////
+////
+////                    Calendar cal = Calendar.getInstance();
+////                    SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+////
+////                    try {
+////                        java.util.Date endDate = outputFormat.parse(model.getYea() + "-" + model.getMon() + "-" + model.getDa() + " " + model.getHo() + ":" + model.getMin());
+////
+////                        viewHolder.makeButton(model.getTitl(), model.getDesc(), endDate.getTime() - cal.getTimeInMillis());
+////
+////                    } catch (ParseException e) {
+////                        e.printStackTrace();
+////                    }
+////
+////                }
+////                else if(model.getTypeOfevent()==1) {
+////                            //TODO change this
+////
+////                }
+////                //Toast.makeText(getApplicationContext(),"Check 1",Toast.LENGTH_LONG);
+////
+//
+//            }
+//
+//
+//        };
+//        mEverything.setAdapter(firebaseRecyclerAdapter);
+//            }
 
 }
 

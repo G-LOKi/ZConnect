@@ -56,7 +56,7 @@ public class AddEvent extends AppCompatActivity {
         mEventDescription = (EditText) findViewById(R.id.EventDescription);
         mPostBtn = (Button) findViewById(R.id.postButton);
         mStorage = FirebaseStorage.getInstance().getReference();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect/Events/Posts");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("ZConnect");
 
         CalendarButton = (Button) findViewById(R.id.Calender_button);
 
@@ -104,16 +104,26 @@ public class AddEvent extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
-                    DatabaseReference newPost = mDatabase.push();
-                    String key = newPost.getKey();
-                    newPost.child("Key").setValue(key);
-                    newPost.child("EventName").setValue(eventNameValue);
-                    newPost.child("EventDescription").setValue(eventDescriptionValue);
-                    newPost.child("EventImage").setValue(downloadUri.toString());
-                    newPost.child("EventDate").setValue(eventDate);
-                    newPost.child("FormatDate").setValue(dateString);
+                    {
+                        DatabaseReference newPost = mDatabase.child("/Events/Posts").push();
+                        String key = newPost.getKey();
+                        newPost.child("Key").setValue(key);
+                        newPost.child("EventName").setValue(eventNameValue);
+                        newPost.child("EventDescription").setValue(eventDescriptionValue);
+                        newPost.child("EventImage").setValue(downloadUri.toString());
+                        newPost.child("EventDate").setValue(eventDate);
+                        newPost.child("FormatDate").setValue(dateString);
 
+                    }
+                    {
+                        DatabaseReference newPost = mDatabase.child("ZConnect/everything").push();
+                        newPost.child("Title").setValue(eventNameValue);
+                        newPost.child("Description").setValue(eventDescriptionValue);
+                        newPost.child("Url").setValue(downloadUri.toString());
+                        newPost.child("multiUse2").setValue(eventDate);
+                        newPost.child("multiUse1").setValue(dateString);
 
+                    }
                     mProgress.dismiss();
                     startActivity(new Intent(AddEvent.this, AllEvents.class));
                 }
