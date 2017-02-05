@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,11 +40,14 @@ public class AddContact extends AppCompatActivity {
     private android.support.design.widget.TextInputEditText editTextEmail;
     private android.support.design.widget.TextInputEditText editTextDetails;
     private android.support.design.widget.TextInputEditText editTextNumber;
+    private String cat;
     private StorageReference mStorage = FirebaseStorage.getInstance().getReference();
     private DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("ZConnect").child("Phonebook");
+
     private ProgressDialog mProgress;
     private RadioButton radioButtonS, radioButtonA, radioButtonO;
-    private String name, email, details, number, category = null, imageurl;
+    private String name, email, details, number, hostel, category = null;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +83,14 @@ public class AddContact extends AppCompatActivity {
         radioButtonS = (RadioButton) findViewById(R.id.radioButton);
         radioButtonA = (RadioButton) findViewById(R.id.radioButton2);
         radioButtonO = (RadioButton) findViewById(R.id.radioButton3);
+        spinner = (Spinner) findViewById(R.id.spinner);
         radioButtonS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 category = "S";
+                cat = "Student";
+                hostel = "hostel";
+                spinner.setVisibility(View.VISIBLE);
             }
         });
 
@@ -90,6 +98,9 @@ public class AddContact extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 category = "A";
+                cat = "Admin";
+                hostel = "none";
+                spinner.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -98,6 +109,10 @@ public class AddContact extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 category = "O";
+                cat = "Others";
+                hostel = "none";
+                spinner.setVisibility(View.INVISIBLE);
+
             }
         });
 
@@ -164,14 +179,14 @@ public class AddContact extends AppCompatActivity {
         details = editTextDetails.getText().toString().trim();
         number = editTextNumber.getText().toString().trim();
 //        imageurl = imageuri.toString();
-        if (name != null && number != null && email != null && details != null && category != null && imageuri != null) {
+        if (name != null && number != null && email != null && details != null && cat != null && category != null && hostel != null && imageuri != null) {
             StorageReference filepath = mStorage.child("PhonebookImage").child(imageuri.getLastPathSegment());
             filepath.putFile(imageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
 
-                    DatabaseReference newPost = ref.push();
+                    DatabaseReference newPost = ref.child(cat).push();
                     // String key = newPost.getKey();
                     newPost.child("name").setValue(name);
                     newPost.child("desc").setValue(details);
@@ -179,6 +194,13 @@ public class AddContact extends AppCompatActivity {
                     newPost.child("number").setValue(number);
                     newPost.child("category").setValue(category);
                     newPost.child("email").setValue(email);
+                    if (hostel.equals("none")) {
+                        newPost.child("hostel").setValue(hostel);
+                    } else {
+                        hostel = String.valueOf(spinner.getSelectedItem());
+                        newPost.child("hostel").setValue(hostel);
+                    }
+
 
                     mProgress.dismiss();
                     startActivity(new Intent(AddContact.this, Phonebook.class));

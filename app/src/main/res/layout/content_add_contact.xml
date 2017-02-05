@@ -119,6 +119,7 @@
             android:text="Others" />
     </RadioGroup>
 
+
     <android.support.design.widget.TextInputLayout
         android:id="@+id/contact_details_text_input_layout"
         android:layout_width="match_parent"
@@ -137,6 +138,23 @@
             android:hint="Description"
             android:text=""
             android:textColor="@android:color/black" />
+
     </android.support.design.widget.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/contact_details_text_input_layout"
+        android:layout_marginBottom="31dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/hostel"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingStart="16dp"
+        android:prompt="@string/hostel_prompt" />
 </RelativeLayout>
 

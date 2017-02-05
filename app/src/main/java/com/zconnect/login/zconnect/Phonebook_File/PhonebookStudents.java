@@ -7,29 +7,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.zconnect.login.zconnect.R;
 
 import java.util.Vector;
 
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
-
 
 public class PhonebookStudents extends Fragment {
-    Vector<PhonebookItem> phonebookItems = new Vector<>();
-    Vector<PhonebookDisplayItem> phonebookDisplayItems = new Vector<>();
-    private PhonebookAdapter adapter;
+    Vector<PhonebookStudentHostelItem> phonebookStudentHostelItems;
+    private PhonebookStudentHostelRV adapter;
     private RecyclerView recyclerView;
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("ZConnect").child("Phonebook");
-    private ProgressBar progressBar;
-
+    private String hostel[] = {"AH-1", "AH-2", "AH-3", "AH-4", "AH-5", "AH-6", "AH-7", "AH-8", "CH-1", "CH-2", "CH-3", "CH-4", "CH-5", "CH-6"};
     public PhonebookStudents() {
         // Required empty public constructor
     }
@@ -43,57 +31,31 @@ public class PhonebookStudents extends Fragment {
 
         //Reference views---------------------------------------------------------------------------
         recyclerView = (RecyclerView) view.findViewById(R.id.student_phone_rv);
-        progressBar = (ProgressBar) view.findViewById(R.id.student_phone_progress);
+
 
         //MAIN--------------------------------------------------------------------------------------
-
-        //Keep databaseReference in sync even without needing to call valueEventListener
-        databaseReference.keepSynced(true);
 
 
         //setHasFixedSize is used to optimise RV if we know for sure that this view's bounds do not
         // change with data
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
-        //Setup layout manager. VERY IMP ALWAYS
-        adapter = new PhonebookAdapter(phonebookItems, getContext());
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        phonebookStudentHostelItems = data();      //Setup layout manager. VERY IMP ALWAYS
+        adapter = new PhonebookStudentHostelRV(phonebookStudentHostelItems, getContext());
         recyclerView.setAdapter(adapter);
 
 
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                progressBar.setVisibility(VISIBLE);
-                phonebookItems.clear();
-                phonebookDisplayItems.clear();
-                for (DataSnapshot shot : dataSnapshot.getChildren()) {
-
-                    phonebookDisplayItems.add(shot.getValue(PhonebookDisplayItem.class));
-                }
-                for (int i = 0; i < phonebookDisplayItems.size(); i++) {
-                    if (phonebookDisplayItems.get(i).getCategory() != null && phonebookDisplayItems.get(i).getCategory().equals("S")) {
-                        phonebookItems.add(new PhonebookItem(phonebookDisplayItems.get(i).getImageurl(), phonebookDisplayItems.get(i).getName(), phonebookDisplayItems.get(i).getNumber(), phonebookDisplayItems.get(i)));
-                    }
-
-                }
-                adapter.notifyDataSetChanged();
-                progressBar.setVisibility(INVISIBLE);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                progressBar.setVisibility(INVISIBLE);
-            }
-        });
-
-
+    public Vector<PhonebookStudentHostelItem> data() {
+        Vector<PhonebookStudentHostelItem> phonebookStudentHostelItems = new Vector<>();
+        for (int i = 0; i < 14; i++) {
+            PhonebookStudentHostelItem phonebookStudentHostelItem1 = new PhonebookStudentHostelItem();
+            phonebookStudentHostelItem1.setHostel(hostel[i]);
+            phonebookStudentHostelItems.add(phonebookStudentHostelItem1);
+    }
+        return phonebookStudentHostelItems;
     }
 
 }

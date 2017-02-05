@@ -38,6 +38,7 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
+import com.zconnect.login.zconnect.Phonebook_File.Phonebook;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +66,13 @@ public class logIn extends AppCompatActivity implements View.OnClickListener, Go
 
         //Buttons
         signInButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.sign_in_button);
-        signInButton.setOnClickListener(this);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Phonebook.class);
+                startActivity(intent);
+            }
+        });
 
 
         // Configure sign-in to request the user's ID, email address, and basic

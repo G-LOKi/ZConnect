@@ -66,8 +66,6 @@ public class PhonebookAdapter extends RecyclerView.Adapter<PhonebookAdapter.View
 
                     PhonebookDisplayItem phonebookDisplayItem;
                     phonebookDisplayItem = phonebookItem.get(getAdapterPosition()).getPhonebookDisplayItem();
-
-                    //intent.putExtra("Workshop", workshopItemformat1);
                     intent.putExtra("desc", phonebookDisplayItem.getDesc());
                     intent.putExtra("name", phonebookDisplayItem.getName());
                     intent.putExtra("number", phonebookDisplayItem.getNumber());
@@ -83,6 +81,4 @@ public class PhonebookAdapter extends RecyclerView.Adapter<PhonebookAdapter.View
 
         }
     }
-
-
 }
