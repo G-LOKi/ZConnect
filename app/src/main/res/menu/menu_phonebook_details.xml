@@ -6,6 +6,6 @@
         android:id="@+id/action_report"
         android:icon="@drawable/ic_report_white_24dp"
         android:orderInCategory="1"
-        android:title="Report"
+        android:title="Report Problem"
         app:showAsAction="collapseActionView|ifRoom" />
 </menu>
