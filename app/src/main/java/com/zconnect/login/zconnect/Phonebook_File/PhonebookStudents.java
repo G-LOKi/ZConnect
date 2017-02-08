@@ -39,7 +39,7 @@ public class PhonebookStudents extends Fragment {
         //setHasFixedSize is used to optimise RV if we know for sure that this view's bounds do not
         // change with data
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         phonebookStudentHostelItems = data();      //Setup layout manager. VERY IMP ALWAYS
         adapter = new PhonebookStudentHostelRV(phonebookStudentHostelItems, getContext());
         recyclerView.setAdapter(adapter);
