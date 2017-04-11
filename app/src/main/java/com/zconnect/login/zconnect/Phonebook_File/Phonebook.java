@@ -111,9 +111,8 @@ public class Phonebook extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        adapter.addFragment(new PhonebookStudents(), "Students");
         adapter.addFragment(new PhonebookAdmin(), "Admin");
+        adapter.addFragment(new PhonebookStudents(), "Students");
         adapter.addFragment(new PhonebookOthers(), "others");
         viewPager.setAdapter(adapter);
     }

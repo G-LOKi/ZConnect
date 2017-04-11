@@ -11,19 +11,28 @@ public class PhonebookDisplayItem {
     private String number;
     private String category;
     private String email;
+    private String hostel;
 
-    public PhonebookDisplayItem(String imageurl, String name, String desc, String number, String email, String category) {
+    public PhonebookDisplayItem(String imageurl, String name, String desc, String number, String category, String email, String hostel) {
         this.imageurl = imageurl;
         this.name = name;
-        this.category = category;
         this.desc = desc;
         this.number = number;
+        this.category = category;
         this.email = email;
+        this.hostel = hostel;
     }
 
     public PhonebookDisplayItem() {
     }
 
+    public String getHostel() {
+        return hostel;
+    }
+
+    public void setHostel(String hostel) {
+        this.hostel = hostel;
+    }
 
     public String getName() {
         return name;

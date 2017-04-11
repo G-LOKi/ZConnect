@@ -101,6 +101,10 @@
         <activity
             android:name=".HomeActivity"
             android:label="ZConnect"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Phonebook_File.PhonebookHostelWise"
+            android:label="@string/title_activity_phonebook_hostel_wise"
             android:theme="@style/AppTheme"></activity>
     </application>
 

@@ -27,7 +27,7 @@ public class PhonebookAdmin extends Fragment {
     Vector<PhonebookDisplayItem> phonebookDisplayItems = new Vector<>();
     private PhonebookAdapter adapter;
     private RecyclerView recyclerView;
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("ZConnect").child("Phonebook");
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("ZConnect").child("Phonebook").child("Admin");
     private ProgressBar progressBar;
 
     public PhonebookAdmin() {

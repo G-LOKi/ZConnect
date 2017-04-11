@@ -86,7 +86,7 @@
     <string name="ok">OK</string>
     <string name="request">Request</string>
 
-
+    <string name="hostel_prompt">Choose Hostel</string>
     <string-array name="categories">
         <item>Electronics</item>
         <item>BeanBags</item>
@@ -100,9 +100,26 @@
         <item>Others</item>
 
     </string-array>
+    <string-array name="hostel">
+        <item>AH-1</item>
+        <item>AH-2</item>
+        <item>AH-3</item>
+        <item>AH-4</item>
+        <item>AH-5</item>
+        <item>AH-6</item>
+        <item>AH-7</item>
+        <item>AH-8</item>
+        <item>CH-1</item>
+        <item>CH-2</item>
+        <item>CH-3</item>
+        <item>CH-4</item>
+        <item>CH-5</item>
+        <item>CH-6</item>
+    </string-array>
     <string name="title_activity_home">HomeActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_phonebook_hostel_wise">PhonebookHostelWise</string>
 
 </resources>
